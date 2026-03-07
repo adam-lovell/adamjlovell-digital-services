@@ -1,6 +1,4 @@
-// Reviews: submit and display
-const STORAGE_KEY = 'lovellReviews';
-
+// Reviews: load from reviews.json, submit via Formspree
 const serviceLabels = {
     website: 'Website Development',
     tutoring: 'Math & Science Tutoring',
@@ -8,47 +6,38 @@ const serviceLabels = {
     other: 'Other',
 };
 
-function getReviews() {
-    try {
-        return JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
-    } catch {
-        return [];
-    }
-}
-
-function saveReview(review) {
-    const reviews = getReviews();
-    reviews.unshift({
-        ...review,
-        id: Date.now().toString(36) + Math.random().toString(36).slice(2),
-        date: new Date().toISOString(),
-    });
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(reviews));
-}
-
 function renderStars(rating) {
-    const full = '★';
-    const empty = '☆';
     let stars = '';
     for (let i = 1; i <= 5; i++) {
-        stars += i <= rating ? full : empty;
+        stars += i <= rating ? '★' : '☆';
     }
     return `<span class="text-primary-400">${stars}</span>`;
 }
 
-function renderReviews() {
+function escapeHtml(str) {
+    const div = document.createElement('div');
+    div.textContent = str;
+    return div.innerHTML;
+}
+
+function formatDate(dateStr) {
+    const d = new Date(dateStr);
+    return d.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+}
+
+function renderReviews(reviews) {
     const container = document.getElementById('reviews-container');
     const placeholder = document.getElementById('reviews-placeholder');
-    const reviews = getReviews();
+    if (!container) return;
+
+    container.querySelectorAll('.review-card').forEach(el => el.remove());
 
     if (reviews.length === 0) {
         if (placeholder) placeholder.classList.remove('hidden');
-        container.querySelectorAll('.review-card').forEach(el => el.remove());
         return;
     }
 
     if (placeholder) placeholder.classList.add('hidden');
-    container.querySelectorAll('.review-card').forEach(el => el.remove());
 
     reviews.forEach((r) => {
         const card = document.createElement('div');
@@ -68,32 +57,48 @@ function renderReviews() {
     });
 }
 
-function escapeHtml(str) {
-    const div = document.createElement('div');
-    div.textContent = str;
-    return div.innerHTML;
-}
+document.addEventListener('DOMContentLoaded', async () => {
+    // Load reviews from static JSON file
+    try {
+        const res = await fetch('reviews.json');
+        if (res.ok) {
+            const reviews = await res.json();
+            renderReviews(reviews);
+        }
+    } catch (err) {
+        console.error('Could not load reviews:', err);
+    }
 
-function formatDate(iso) {
-    const d = new Date(iso);
-    return d.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
-}
-
-document.addEventListener('DOMContentLoaded', () => {
-    renderReviews();
-
+    // Form submits to Formspree — you get an email, then add the review to reviews.json
     const form = document.getElementById('review-form');
     if (form) {
-        form.addEventListener('submit', (e) => {
+        form.addEventListener('submit', async (e) => {
             e.preventDefault();
-            saveReview({
-                name: document.getElementById('reviewer-name').value.trim(),
-                service: document.getElementById('review-service').value,
-                rating: document.getElementById('review-rating').value,
-                text: document.getElementById('review-text').value.trim(),
-            });
-            form.reset();
-            renderReviews();
+            const btn = form.querySelector('button[type="submit"]');
+            btn.disabled = true;
+            btn.textContent = 'Submitting...';
+
+            const data = new FormData(form);
+
+            try {
+                const res = await fetch(form.action, {
+                    method: 'POST',
+                    body: data,
+                    headers: { 'Accept': 'application/json' },
+                });
+                if (res.ok) {
+                    form.reset();
+                    btn.textContent = 'Review Sent — Thank You!';
+                    setTimeout(() => { btn.textContent = 'Submit Review'; btn.disabled = false; }, 3000);
+                } else {
+                    throw new Error('Submit failed');
+                }
+            } catch {
+                alert('Could not send review. Please try again.');
+                btn.disabled = false;
+                btn.textContent = 'Submit Review';
+            }
         });
     }
+});
 });
