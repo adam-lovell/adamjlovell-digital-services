@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adam J. Lovell | Freelance Portfolio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['DM Sans', 'system-ui', 'sans-serif'],
+                        display: ['Outfit', 'system-ui', 'sans-serif'],
+                    },
+                    colors: {
+                        primary: { 50: '#fef7ee', 100: '#fdedd6', 200: '#fad7ac', 300: '#f6ba77', 400: '#f19340', 500: '#ed751a', 600: '#de5b10', 700: '#b84410', 800: '#933715', 900: '#772f14', 950: '#401509' },
+                        slate: { 850: '#172033', 950: '#0d1321' }
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body class="font-sans bg-slate-950 text-slate-100 antialiased min-h-screen">
+    <!-- Navigation -->
+    <nav class="fixed top-0 left-0 right-0 z-50 bg-slate-950/90 backdrop-blur-md border-b border-slate-800/50">
+        <div class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
+            <a href="index.html" class="font-display font-bold text-xl text-primary-400">Adam J. Lovell</a>
+            <ul class="hidden md:flex items-center gap-8 text-sm font-medium text-slate-400">
+                <li><a href="index.html" class="text-primary-400 hover:text-primary-300 transition">Home</a></li>
+                <li><a href="website-development.html" class="hover:text-slate-100 transition">Web Dev</a></li>
+                <li><a href="tutoring.html" class="hover:text-slate-100 transition">Tutoring</a></li>
+                <li><a href="romulus-beats.html" class="hover:text-slate-100 transition">Romulus Beats</a></li>
+                <li><a href="reviews.html" class="hover:text-slate-100 transition">Reviews</a></li>
+                <li><a href="contact.html" class="px-4 py-2 bg-primary-500 text-white rounded-lg hover:bg-primary-600 transition">Contact</a></li>
+            </ul>
+            <button id="mobile-menu-btn" class="md:hidden p-2 text-slate-400 hover:text-white">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+            </button>
+        </div>
+        <div id="mobile-menu" class="md:hidden hidden border-t border-slate-800 px-6 py-4 space-y-4">
+            <a href="index.html" class="block text-primary-400">Home</a>
+            <a href="website-development.html" class="block">Web Dev</a>
+            <a href="tutoring.html" class="block">Tutoring</a>
+            <a href="romulus-beats.html" class="block">Romulus Beats</a>
+            <a href="reviews.html" class="block">Reviews</a>
+            <a href="contact.html" class="block text-primary-400 font-medium">Contact</a>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <section class="pt-32 pb-20 px-6">
+        <div class="max-w-6xl mx-auto text-center">
+            <p class="text-primary-500 font-medium mb-4 tracking-wider uppercase text-sm">Freelance Professional</p>
+            <h1 class="font-display text-5xl md:text-7xl font-bold tracking-tight mb-6 leading-tight">
+                Building Digital Experiences<br>
+                <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary-400 to-primary-600">& Empowering Minds</span>
+            </h1>
+            <p class="text-xl text-slate-400 max-w-2xl mx-auto mb-12">
+                Web development, math & science tutoring, and premium beats. Your one-stop for digital solutions and academic support.
+            </p>
+            <div class="flex flex-wrap gap-4 justify-center">
+                <a href="contact.html" class="px-8 py-4 bg-primary-500 text-white rounded-xl font-semibold hover:bg-primary-600 transition shadow-lg shadow-primary-500/25">Get in Touch</a>
+                <a href="reviews.html" class="px-8 py-4 border border-slate-600 text-slate-300 rounded-xl font-semibold hover:border-primary-500 hover:text-primary-400 transition">See Reviews</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Overview -->
+    <section class="py-24 px-6 bg-slate-900/50">
+        <div class="max-w-6xl mx-auto">
+            <h2 class="font-display text-3xl md:text-4xl font-bold text-center mb-4">What I Offer</h2>
+            <p class="text-slate-400 text-center max-w-2xl mx-auto mb-16">Three distinct services tailored to your needs</p>
+            <div class="grid md:grid-cols-3 gap-8">
+                <a href="website-development.html" class="group p-8 rounded-2xl bg-slate-800/50 border border-slate-700/50 hover:border-primary-500/50 hover:shadow-xl hover:shadow-primary-500/10 transition-all">
+                    <div class="w-14 h-14 rounded-xl bg-primary-500/20 flex items-center justify-center mb-6 group-hover:bg-primary-500/30 transition">
+                        <svg class="w-7 h-7 text-primary-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg>
+                    </div>
+                    <h3 class="font-display text-xl font-semibold mb-3">Website Development</h3>
+                    <p class="text-slate-400 text-sm leading-relaxed">Custom websites built for your business. Modern, fast, and tailored to your vision.</p>
+                    <span class="inline-block mt-4 text-primary-400 font-medium group-hover:translate-x-1 transition">Learn more →</span>
+                </a>
+                <a href="tutoring.html" class="group p-8 rounded-2xl bg-slate-800/50 border border-slate-700/50 hover:border-primary-500/50 hover:shadow-xl hover:shadow-primary-500/10 transition-all">
+                    <div class="w-14 h-14 rounded-xl bg-primary-500/20 flex items-center justify-center mb-6 group-hover:bg-primary-500/30 transition">
+                        <svg class="w-7 h-7 text-primary-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
+                    </div>
+                    <h3 class="font-display text-xl font-semibold mb-3">Math & Science Tutoring</h3>
+                    <p class="text-slate-400 text-sm leading-relaxed">Personalized tutoring for high school students. Algebra, calculus, physics, chemistry & more.</p>
+                    <span class="inline-block mt-4 text-primary-400 font-medium group-hover:translate-x-1 transition">Learn more →</span>
+                </a>
+                <a href="romulus-beats.html" class="group p-8 rounded-2xl bg-slate-800/50 border border-slate-700/50 hover:border-primary-500/50 hover:shadow-xl hover:shadow-primary-500/10 transition-all">
+                    <div class="w-14 h-14 rounded-xl bg-primary-500/20 flex items-center justify-center mb-6 group-hover:bg-primary-500/30 transition">
+                        <svg class="w-7 h-7 text-primary-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"/></svg>
+                    </div>
+                    <h3 class="font-display text-xl font-semibold mb-3">Romulus Beats</h3>
+                    <p class="text-slate-400 text-sm leading-relaxed">Premium beats for producers and artists. Browse and license professional instrumentals.</p>
+                    <span class="inline-block mt-4 text-primary-400 font-medium group-hover:translate-x-1 transition">Visit store →</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="py-24 px-6">
+        <div class="max-w-4xl mx-auto text-center">
+            <h2 class="font-display text-3xl font-bold mb-4">Ready to work together?</h2>
+            <p class="text-slate-400 mb-8">Whether you need a website, tutoring, or beats—I'm here to help.</p>
+            <a href="contact.html" class="inline-flex items-center gap-2 px-8 py-4 bg-primary-500 text-white rounded-xl font-semibold hover:bg-primary-600 transition">
+                Send a Message
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+            </a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="border-t border-slate-800 py-12 px-6">
+        <div class="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
+            <p class="font-display font-semibold text-primary-400">Adam J. Lovell</p>
+            <div class="flex gap-8 text-sm text-slate-400">
+                <a href="website-development.html" class="hover:text-slate-100 transition">Web Dev</a>
+                <a href="tutoring.html" class="hover:text-slate-100 transition">Tutoring</a>
+                <a href="romulus-beats.html" class="hover:text-slate-100 transition">Romulus Beats</a>
+                <a href="reviews.html" class="hover:text-slate-100 transition">Reviews</a>
+                <a href="contact.html" class="hover:text-slate-100 transition">Contact</a>
+            </div>
+            <p class="text-slate-500 text-sm">© 2025 Adam J. Lovell</p>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+</body>
+</html>

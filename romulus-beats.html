@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Romulus Beats | Adam J. Lovell</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['DM Sans', 'system-ui', 'sans-serif'], display: ['Outfit', 'system-ui', 'sans-serif'] },
+                    colors: { primary: { 400: '#f19340', 500: '#ed751a', 600: '#de5b10', 700: '#b84410' }, slate: { 800: '#1e293b', 900: '#0f172a', 950: '#0d1321' } }
+                }
+            }
+        }
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body class="font-sans bg-slate-950 text-slate-100 antialiased min-h-screen">
+    <nav class="fixed top-0 left-0 right-0 z-50 bg-slate-950/90 backdrop-blur-md border-b border-slate-800/50">
+        <div class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
+            <a href="index.html" class="font-display font-bold text-xl text-primary-400">Adam J. Lovell</a>
+            <ul class="hidden md:flex items-center gap-8 text-sm font-medium text-slate-400">
+                <li><a href="index.html" class="hover:text-slate-100 transition">Home</a></li>
+                <li><a href="website-development.html" class="hover:text-slate-100 transition">Web Dev</a></li>
+                <li><a href="tutoring.html" class="hover:text-slate-100 transition">Tutoring</a></li>
+                <li><a href="romulus-beats.html" class="text-primary-400">Romulus Beats</a></li>
+                <li><a href="reviews.html" class="hover:text-slate-100 transition">Reviews</a></li>
+                <li><a href="contact.html" class="px-4 py-2 bg-primary-500 text-white rounded-lg hover:bg-primary-600 transition">Contact</a></li>
+            </ul>
+            <button id="mobile-menu-btn" class="md:hidden p-2 text-slate-400 hover:text-white">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+            </button>
+        </div>
+        <div id="mobile-menu" class="md:hidden hidden border-t border-slate-800 px-6 py-4 space-y-4">
+            <a href="index.html" class="block">Home</a>
+            <a href="website-development.html" class="block">Web Dev</a>
+            <a href="tutoring.html" class="block">Tutoring</a>
+            <a href="romulus-beats.html" class="block text-primary-400">Romulus Beats</a>
+            <a href="reviews.html" class="block">Reviews</a>
+            <a href="contact.html" class="block text-primary-400 font-medium">Contact</a>
+        </div>
+    </nav>
+
+    <section class="pt-32 pb-16 px-6">
+        <div class="max-w-4xl mx-auto">
+            <p class="text-primary-500 font-medium mb-2 tracking-wider uppercase text-sm">Store</p>
+            <h1 class="font-display text-4xl md:text-6xl font-bold tracking-tight mb-6">Romulus Beats</h1>
+            <p class="text-xl text-slate-400 leading-relaxed">Professional beats and instrumentals for producers and artists. License premium tracks for your projects—from rap to R&B to pop.</p>
+        </div>
+    </section>
+
+    <section class="py-16 px-6 bg-slate-900/50">
+        <div class="max-w-6xl mx-auto">
+            <h2 class="font-display text-2xl font-bold mb-8">Browse Beats</h2>
+            <p class="text-slate-400 mb-12">Add your beat catalog links below. For now, this section showcases the store concept—connect your Beatstars, SoundCloud, or other platform when ready.</p>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="group p-6 rounded-2xl bg-slate-800/50 border border-slate-700/50 hover:border-primary-500/50 transition">
+                    <div class="aspect-square rounded-xl bg-slate-700/50 mb-4 flex items-center justify-center group-hover:bg-slate-700/70 transition">
+                        <svg class="w-16 h-16 text-slate-500" fill="currentColor" viewBox="0 0 24 24"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg>
+                    </div>
+                    <h3 class="font-display font-semibold mb-1">Beat #1</h3>
+                    <p class="text-slate-500 text-sm">Add your beat title</p>
+                    <p class="text-primary-400 text-sm mt-2">Link your store →</p>
+                </div>
+                <div class="group p-6 rounded-2xl bg-slate-800/50 border border-slate-700/50 hover:border-primary-500/50 transition">
+                    <div class="aspect-square rounded-xl bg-slate-700/50 mb-4 flex items-center justify-center group-hover:bg-slate-700/70 transition">
+                        <svg class="w-16 h-16 text-slate-500" fill="currentColor" viewBox="0 0 24 24"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg>
+                    </div>
+                    <h3 class="font-display font-semibold mb-1">Beat #2</h3>
+                    <p class="text-slate-500 text-sm">Add your beat title</p>
+                    <p class="text-primary-400 text-sm mt-2">Link your store →</p>
+                </div>
+                <div class="group p-6 rounded-2xl bg-slate-800/50 border border-slate-700/50 hover:border-primary-500/50 transition">
+                    <div class="aspect-square rounded-xl bg-slate-700/50 mb-4 flex items-center justify-center group-hover:bg-slate-700/70 transition">
+                        <svg class="w-16 h-16 text-slate-500" fill="currentColor" viewBox="0 0 24 24"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg>
+                    </div>
+                    <h3 class="font-display font-semibold mb-1">Beat #3</h3>
+                    <p class="text-slate-500 text-sm">Add your beat title</p>
+                    <p class="text-primary-400 text-sm mt-2">Link your store →</p>
+                </div>
+            </div>
+            <div class="mt-12 p-8 rounded-2xl bg-slate-800/30 border border-slate-700/50 text-center">
+                <h3 class="font-display font-semibold text-lg mb-2">Connect Your Beat Store</h3>
+                <p class="text-slate-400 text-sm mb-6">Replace the placeholder cards above with links to your Beatstars, Airbit, SoundCloud, or other platform. Edit <code class="text-primary-400 bg-slate-900 px-1 rounded">romulus-beats.html</code> to add your catalog.</p>
+                <a href="contact.html?service=beats" class="inline-flex items-center gap-2 px-6 py-3 bg-primary-500 text-white rounded-xl font-semibold hover:bg-primary-600 transition text-sm">Inquire About Beats</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-24 px-6">
+        <div class="max-w-4xl mx-auto text-center">
+            <h2 class="font-display text-2xl font-bold mb-4">Interested in custom beats?</h2>
+            <p class="text-slate-400 mb-8">Need something specific? Reach out for custom production and licensing inquiries.</p>
+            <a href="contact.html?service=beats" class="inline-flex items-center gap-2 px-8 py-4 bg-primary-500 text-white rounded-xl font-semibold hover:bg-primary-600 transition">
+                Contact Me
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+            </a>
+        </div>
+    </section>
+
+    <footer class="border-t border-slate-800 py-12 px-6">
+        <div class="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
+            <p class="font-display font-semibold text-primary-400">Adam J. Lovell</p>
+            <div class="flex gap-8 text-sm text-slate-400">
+                <a href="website-development.html" class="hover:text-slate-100 transition">Web Dev</a>
+                <a href="tutoring.html" class="hover:text-slate-100 transition">Tutoring</a>
+                <a href="romulus-beats.html" class="hover:text-slate-100 transition">Romulus Beats</a>
+                <a href="reviews.html" class="hover:text-slate-100 transition">Reviews</a>
+                <a href="contact.html" class="hover:text-slate-100 transition">Contact</a>
+            </div>
+            <p class="text-slate-500 text-sm">© 2025 Adam J. Lovell</p>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+</body>
+</html>

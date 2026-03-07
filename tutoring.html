@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Math & Science Tutoring | Adam J. Lovell</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['DM Sans', 'system-ui', 'sans-serif'], display: ['Outfit', 'system-ui', 'sans-serif'] },
+                    colors: { primary: { 400: '#f19340', 500: '#ed751a', 600: '#de5b10', 700: '#b84410' }, slate: { 800: '#1e293b', 900: '#0f172a', 950: '#0d1321' } }
+                }
+            }
+        }
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body class="font-sans bg-slate-950 text-slate-100 antialiased min-h-screen">
+    <nav class="fixed top-0 left-0 z-50 bg-slate-950/90 backdrop-blur-md border-b border-slate-800/50 right-0">
+        <div class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
+            <a href="index.html" class="font-display font-bold text-xl text-primary-400">Adam J. Lovell</a>
+            <ul class="hidden md:flex items-center gap-8 text-sm font-medium text-slate-400">
+                <li><a href="index.html" class="hover:text-slate-100 transition">Home</a></li>
+                <li><a href="website-development.html" class="hover:text-slate-100 transition">Web Dev</a></li>
+                <li><a href="tutoring.html" class="text-primary-400">Tutoring</a></li>
+                <li><a href="romulus-beats.html" class="hover:text-slate-100 transition">Romulus Beats</a></li>
+                <li><a href="reviews.html" class="hover:text-slate-100 transition">Reviews</a></li>
+                <li><a href="contact.html" class="px-4 py-2 bg-primary-500 text-white rounded-lg hover:bg-primary-600 transition">Contact</a></li>
+            </ul>
+            <button id="mobile-menu-btn" class="md:hidden p-2 text-slate-400 hover:text-white">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+            </button>
+        </div>
+        <div id="mobile-menu" class="md:hidden hidden border-t border-slate-800 px-6 py-4 space-y-4">
+            <a href="index.html" class="block">Home</a>
+            <a href="website-development.html" class="block">Web Dev</a>
+            <a href="tutoring.html" class="block text-primary-400">Tutoring</a>
+            <a href="romulus-beats.html" class="block">Romulus Beats</a>
+            <a href="reviews.html" class="block">Reviews</a>
+            <a href="contact.html" class="block text-primary-400 font-medium">Contact</a>
+        </div>
+    </nav>
+
+    <section class="pt-32 pb-16 px-6">
+        <div class="max-w-4xl mx-auto">
+            <p class="text-primary-500 font-medium mb-2 tracking-wider uppercase text-sm">Service</p>
+            <h1 class="font-display text-4xl md:text-6xl font-bold tracking-tight mb-6">Math & Science Tutoring</h1>
+            <p class="text-xl text-slate-400 leading-relaxed">Personalized one-on-one tutoring for high school students. I help students build confidence, improve grades, and master challenging concepts in math and science.</p>
+        </div>
+    </section>
+
+    <section class="py-16 px-6 bg-slate-900/50">
+        <div class="max-w-6xl mx-auto">
+            <h2 class="font-display text-2xl font-bold mb-8">Subjects I Teach</h2>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="p-6 rounded-xl bg-slate-800/50 border border-slate-700/50">
+                    <h3 class="font-display font-semibold mb-1">Mathematics</h3>
+                    <p class="text-slate-400 text-sm">Algebra I & II, Geometry, Pre-Calculus, Calculus (AB/BC)</p>
+                </div>
+                <div class="p-6 rounded-xl bg-slate-800/50 border border-slate-700/50">
+                    <h3 class="font-display font-semibold mb-1">Physics</h3>
+                    <p class="text-slate-400 text-sm">Honors Physics, AP Physics 1 & 2, AP Physics C</p>
+                </div>
+                <div class="p-6 rounded-xl bg-slate-800/50 border border-slate-700/50">
+                    <h3 class="font-display font-semibold mb-1">Chemistry</h3>
+                    <p class="text-slate-400 text-sm">General Chemistry, Honors Chem, AP Chemistry</p>
+                </div>
+                <div class="p-6 rounded-xl bg-slate-800/50 border border-slate-700/50">
+                    <h3 class="font-display font-semibold mb-1">Biology</h3>
+                    <p class="text-slate-400 text-sm">Honors Biology, AP Biology</p>
+                </div>
+                <div class="p-6 rounded-xl bg-slate-800/50 border border-slate-700/50">
+                    <h3 class="font-display font-semibold mb-1">SAT/ACT Prep</h3>
+                    <p class="text-slate-400 text-sm">Math and Science sections</p>
+                </div>
+                <div class="p-6 rounded-xl bg-slate-800/50 border border-slate-700/50">
+                    <h3 class="font-display font-semibold mb-1">Other</h3>
+                    <p class="text-slate-400 text-sm">Statistics, Computer Science fundamentals</p>
+                </div>
+            </div>
+            <div class="mt-12 p-8 rounded-2xl bg-slate-800/30 border border-slate-700/50">
+                <h3 class="font-display font-semibold text-lg mb-3">Why Choose Me?</h3>
+                <ul class="space-y-2 text-slate-400 text-sm">
+                    <li class="flex items-start gap-2"><span class="text-primary-500 mt-0.5">•</span> Patient, student-focused approach tailored to your learning style</li>
+                    <li class="flex items-start gap-2"><span class="text-primary-500 mt-0.5">•</span> Flexible scheduling for busy high school schedules</li>
+                    <li class="flex items-start gap-2"><span class="text-primary-500 mt-0.5">•</span> In-person and online sessions available</li>
+                    <li class="flex items-start gap-2"><span class="text-primary-500 mt-0.5">•</span> Emphasis on understanding, not just memorization</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-24 px-6">
+        <div class="max-w-4xl mx-auto text-center">
+            <h2 class="font-display text-2xl font-bold mb-4">Book a session</h2>
+            <p class="text-slate-400 mb-8">Let's discuss your goals and set up your first tutoring session.</p>
+            <a href="contact.html?service=tutoring" class="inline-flex items-center gap-2 px-8 py-4 bg-primary-500 text-white rounded-xl font-semibold hover:bg-primary-600 transition">
+                Get Started
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+            </a>
+        </div>
+    </section>
+
+    <footer class="border-t border-slate-800 py-12 px-6">
+        <div class="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
+            <p class="font-display font-semibold text-primary-400">Adam J. Lovell</p>
+            <div class="flex gap-8 text-sm text-slate-400">
+                <a href="website-development.html" class="hover:text-slate-100 transition">Web Dev</a>
+                <a href="tutoring.html" class="hover:text-slate-100 transition">Tutoring</a>
+                <a href="romulus-beats.html" class="hover:text-slate-100 transition">Romulus Beats</a>
+                <a href="reviews.html" class="hover:text-slate-100 transition">Reviews</a>
+                <a href="contact.html" class="hover:text-slate-100 transition">Contact</a>
+            </div>
+            <p class="text-slate-500 text-sm">© 2025 Adam J. Lovell</p>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+</body>
+</html>
