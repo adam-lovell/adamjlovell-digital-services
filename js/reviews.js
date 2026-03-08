@@ -58,9 +58,9 @@ function renderReviews(reviews) {
 }
 
 document.addEventListener('DOMContentLoaded', async () => {
-    // Load reviews from static JSON file
+    // Load reviews from jsonblob
     try {
-        const res = await fetch('reviews.json');
+        const res = await fetch('https://jsonblob.com/api/jsonBlob/019ccac9-edd6-7f6e-86d9-8aea22c56106');
         if (res.ok) {
             const reviews = await res.json();
             renderReviews(reviews);
