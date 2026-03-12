@@ -58,9 +58,9 @@ function renderReviews(reviews) {
 }
 
 document.addEventListener('DOMContentLoaded', async () => {
-    // Load reviews from jsonblob
+    // Load reviews from local JSON file
     try {
-        const res = await fetch('https://jsonblob.com/api/jsonBlob/019ccac9-edd6-7f6e-86d9-8aea22c56106');
+        const res = await fetch('reviews.json');
         if (res.ok) {
             const reviews = await res.json();
             renderReviews(reviews);
@@ -100,5 +100,4 @@ document.addEventListener('DOMContentLoaded', async () => {
             }
         });
     }
-});
 });
