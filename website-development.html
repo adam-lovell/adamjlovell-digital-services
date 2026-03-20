@@ -88,6 +88,25 @@
         </div>
     </section>
 
+    <!-- Reviews Slider -->
+    <section class="py-16 px-6">
+        <div class="max-w-6xl mx-auto text-center">
+            <h2 class="font-display text-2xl font-bold mb-8">What Clients Say</h2>
+            <div class="overflow-hidden relative max-w-4xl mx-auto">
+                <div class="absolute left-0 top-0 bottom-0 w-16 bg-gradient-to-r from-slate-950 to-transparent z-10 pointer-events-none"></div>
+                <div class="absolute right-0 top-0 bottom-0 w-16 bg-gradient-to-l from-slate-950 to-transparent z-10 pointer-events-none"></div>
+                <div id="review-slider" class="flex gap-6 slider-track"></div>
+            </div>
+            <a href="reviews.html" class="inline-block mt-6 text-sm text-slate-500 hover:text-primary-400 transition">View all reviews →</a>
+            <style>
+                .slider-track { animation: slide 20s linear infinite; }
+                .slider-track:hover { animation-play-state: paused; }
+                @keyframes slide { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+                .review-slide { min-width: 320px; max-width: 360px; flex-shrink: 0; }
+            </style>
+        </div>
+    </section>
+
     <footer class="border-t border-slate-800 py-12 px-6">
         <div class="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
             <p class="font-display font-semibold text-primary-400">Adam J. Lovell</p>
@@ -103,5 +122,31 @@
     </footer>
 
     <script src="js/main.js"></script>
+    <script>
+    (async function() {
+        const slider = document.getElementById('review-slider');
+        if (!slider) return;
+        try {
+            const res = await fetch('reviews.json');
+            if (!res.ok) return;
+            const reviews = await res.json();
+            if (!reviews.length) return;
+            const stars = r => '★'.repeat(r) + '☆'.repeat(5 - r);
+            const esc = s => { const d = document.createElement('div'); d.textContent = s; return d.innerHTML; };
+            const labels = { website: 'Web Dev', tutoring: 'Tutoring', beats: 'Beats', other: 'Other' };
+            const html = reviews.map(r => `
+                <div class="review-slide p-5 rounded-xl bg-slate-800/60 border border-slate-700/50 text-left">
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="font-display font-semibold text-sm">${esc(r.name)}</span>
+                        <span class="text-primary-400 text-sm">${stars(r.rating)}</span>
+                    </div>
+                    <p class="text-slate-400 text-sm leading-relaxed line-clamp-3">${esc(r.text)}</p>
+                    <p class="text-primary-500 text-xs mt-2">${esc(labels[r.service] || r.service)}</p>
+                </div>
+            `).join('');
+            slider.innerHTML = html + html;
+        } catch {}
+    })();
+    </script>
 </body>
 </html>
