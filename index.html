@@ -277,6 +277,19 @@
         .hatch-opening .hatch-top  { animation: hatch-open-top 1.5s cubic-bezier(0.4,0,0.2,1) 0.3s  forwards; }
         .hatch-opening .hatch-bot  { animation: hatch-open-bot 1.5s cubic-bezier(0.4,0,0.2,1) 0.3s  forwards; }
         .hatch-opening .hatch-inner{ animation: hatch-reveal    0.9s ease                      1.75s forwards; }
+
+        /* ── SERVICE SPOTLIGHT PANELS ── */
+        @keyframes spotlight-fade-up {
+            0%   { opacity:0; transform:translateY(52px) scale(0.97); filter:blur(6px); }
+            100% { opacity:1; transform:translateY(0)    scale(1);    filter:blur(0);   }
+        }
+        .spotlight-panel { opacity:0; }
+        .spotlight-panel.lit { animation: spotlight-fade-up 1s cubic-bezier(0.16,1,0.3,1) forwards; }
+        @keyframes orbit-glow {
+            0%,100% { box-shadow: 0 0 40px 8px var(--og,rgba(0,163,255,0.15)); }
+            50%     { box-shadow: 0 0 80px 20px var(--og,rgba(0,163,255,0.30)); }
+        }
+        .orbit-glow { animation: orbit-glow 3.5s ease-in-out infinite; }
     </style>
 </head>
 <body class="font-sans bg-slate-950 text-slate-100 antialiased min-h-screen">
@@ -331,13 +344,12 @@
         </div>
 
         <div class="max-w-6xl mx-auto text-center relative">
-            <h1 id="boot-h1" class="boot-hidden font-display text-5xl md:text-7xl font-bold tracking-tight mb-6 leading-tight">
+            <h1 id="boot-h1" class="boot-hidden font-display text-5xl md:text-7xl font-bold tracking-tight mb-8 leading-tight">
                 Welcome Aboard<br>
-                <span class="hero-gradient">Neptune.</span>
+                <span class="hero-gradient">Neptune</span>
             </h1>
-            <p id="boot-sub" class="boot-hidden text-slate-300 max-w-2xl mx-auto mb-12">
-                <span class="text-xl block mb-5">Welcome aboard the Neptune. Your captain: Adam J. Lovell.<br>Scroll to see what Neptune can offer you and your crew.</span>
-                <span class="font-mono text-sm text-warp-500/55 tracking-wider">// Some sail the surface. Neptune goes deeper. //</span>
+            <p id="boot-sub" class="boot-hidden text-slate-400 max-w-xl mx-auto mb-16 leading-relaxed">
+                <span class="font-mono text-sm text-warp-500/50 tracking-widest block">// Some sail the surface. Neptune goes deeper. //</span>
             </p>
             <div id="boot-cta" class="boot-hidden flex flex-wrap gap-4 justify-center">
                 <a href="contact.html" class="flare-container ripple-btn relative px-8 py-4 bg-warp-500 text-white rounded-xl font-semibold hover:bg-warp-600 transition shadow-lg shadow-warp-500/25">
@@ -365,10 +377,13 @@
     <!-- ═════════════════════════════════════════════════════ -->
     <section id="submersion" class="relative overflow-hidden" style="height:280px; background:linear-gradient(180deg,#1c0d06 0%,#0e1826 28%,#061422 58%,#040e1c 100%);">
 
-        <!-- Warm setting sun — amber radial on horizon -->
-        <div class="absolute pointer-events-none" style="top:4px;left:50%;transform:translateX(-50%);width:360px;height:68px;border-radius:50%;background:radial-gradient(ellipse at center bottom,rgba(255,148,28,0.62) 0%,rgba(255,85,18,0.3) 40%,rgba(180,50,10,0.08) 65%,transparent 80%);animation:sun-breathe 4.5s ease-in-out infinite;"></div>
+        <!-- Warm setting sun — large amber orb on horizon -->
+        <!-- Hard solar disc -->
+        <div class="absolute pointer-events-none" style="top:-54px;left:50%;transform:translateX(-50%);width:180px;height:180px;border-radius:50%;background:radial-gradient(ellipse at center,rgba(255,210,80,0.96) 0%,rgba(255,160,40,0.88) 36%,rgba(255,100,20,0.55) 62%,transparent 78%);animation:sun-breathe 4.5s ease-in-out infinite;box-shadow:0 0 80px 40px rgba(255,140,20,0.28),0 0 160px 80px rgba(255,80,0,0.12);"></div>
+        <!-- Wide glow halo -->
+        <div class="absolute pointer-events-none" style="top:-72px;left:50%;transform:translateX(-50%);width:520px;height:220px;border-radius:50%;background:radial-gradient(ellipse at center bottom,rgba(255,130,20,0.28) 0%,rgba(255,80,10,0.12) 45%,transparent 72%);animation:sun-breathe 4.5s ease-in-out infinite;"></div>
         <!-- Warm sky wash -->
-        <div class="absolute top-0 left-0 right-0 pointer-events-none" style="height:90px;background:linear-gradient(180deg,rgba(185,75,18,0.15) 0%,rgba(255,120,35,0.07) 42%,transparent 100%);"></div>
+        <div class="absolute top-0 left-0 right-0 pointer-events-none" style="height:120px;background:linear-gradient(180deg,rgba(210,90,10,0.22) 0%,rgba(255,130,35,0.10) 45%,transparent 100%);"></div>
         <!-- Horizon line glow -->
         <div class="absolute pointer-events-none" style="top:32px;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent 0%,rgba(255,140,50,0.18) 20%,rgba(255,200,80,0.55) 50%,rgba(255,140,50,0.18) 80%,transparent 100%);"></div>
 
@@ -567,14 +582,22 @@
             <div class="grid md:grid-cols-3 gap-5">
 
                 <!-- DECK ALPHA — Website Development -->
-                <a href="website-development.html" class="deck-panel hud-panel underwater-entry group relative" style="animation-delay:0.75s; background:rgba(0,163,255,0.035); border:1px solid rgba(0,163,255,0.22); transition:transform 0.3s ease,filter 0.3s ease,border-color 0.3s ease;">
+                <a href="website-development.html" class="deck-panel hud-panel underwater-entry group relative overflow-hidden" style="animation-delay:0.75s; border:1px solid rgba(0,163,255,0.22); transition:transform 0.3s ease,filter 0.3s ease,border-color 0.3s ease;min-height:420px;display:block;">
+                    <!-- Video background -->
+                    <video class="absolute inset-0 w-full h-full object-cover opacity-30 group-hover:opacity-45 transition-opacity duration-700" autoplay muted loop playsinline
+                        src="https://cdn.coverr.co/videos/coverr-developer-typing-code-2323/1080p.mp4"
+                        poster="https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=800&q=80&auto=format&fit=crop"
+                        onerror="this.style.display='none'">
+                    </video>
+                    <!-- Dark gradient overlay -->
+                    <div class="absolute inset-0" style="background:linear-gradient(180deg,rgba(2,8,20,0.5) 0%,rgba(2,8,20,0.75) 55%,rgba(2,8,20,0.96) 100%);"></div>
                     <div class="hud-scan-line" style="background:linear-gradient(90deg,transparent,rgba(0,163,255,0.45),transparent);animation:hud-scan 5.5s linear 1.2s infinite;"></div>
                     <span class="absolute" style="top:6px;left:6px;width:10px;height:10px;border-top:1px solid rgba(0,163,255,0.55);border-left:1px solid rgba(0,163,255,0.55);pointer-events:none;"></span>
                     <span class="absolute" style="top:6px;right:6px;width:10px;height:10px;border-top:1px solid rgba(0,163,255,0.55);border-right:1px solid rgba(0,163,255,0.55);pointer-events:none;"></span>
                     <span class="absolute" style="bottom:6px;left:6px;width:10px;height:10px;border-bottom:1px solid rgba(0,163,255,0.55);border-left:1px solid rgba(0,163,255,0.55);pointer-events:none;"></span>
                     <span class="absolute" style="bottom:6px;right:6px;width:10px;height:10px;border-bottom:1px solid rgba(0,163,255,0.55);border-right:1px solid rgba(0,163,255,0.55);pointer-events:none;"></span>
-                    <div style="height:3px; background:linear-gradient(90deg,transparent,#00A3FF,rgba(0,163,255,0.2));"></div>
-                    <div class="p-7">
+                    <div style="position:relative;z-index:2;height:3px;background:linear-gradient(90deg,transparent,#00A3FF,rgba(0,163,255,0.2));"></div>
+                    <div class="p-7 relative" style="z-index:2;">
                         <div class="flex items-center gap-2 mb-5">
                             <span class="depth-blink" style="width:7px;height:7px;border-radius:50%;background:#00A3FF;box-shadow:0 0 8px 2px rgba(0,163,255,0.9);display:inline-block;"></span>
                             <span class="font-mono text-warp-500/40 text-xs tracking-widest">DECK_ALPHA · SVC_001</span>
@@ -582,22 +605,30 @@
                         <div class="w-14 h-14 rounded-xl mb-5 flex items-center justify-center transition-transform duration-300 group-hover:scale-110" style="background:rgba(0,163,255,0.09);border:1px solid rgba(0,163,255,0.25);">
                             <svg class="w-6 h-6 text-warp-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg>
                         </div>
-                        <h3 class="font-display text-lg font-semibold mb-2 text-white group-hover:text-warp-300 transition">Website Development</h3>
-                        <p class="text-slate-400 text-sm leading-relaxed mb-6">Custom websites built for your business. Modern, fast, and tailored to your vision.</p>
+                        <h3 class="font-display text-xl font-semibold mb-3 text-white group-hover:text-warp-300 transition">Website Development</h3>
+                        <p class="text-slate-400 text-sm leading-relaxed mb-8">Custom websites built for your business. Modern, fast, and tailored to your vision.</p>
                         <span class="enter-deck-btn" style="color:#00A3FF; border-color:rgba(0,163,255,0.35);">ENTER DECK →</span>
                     </div>
                     <div class="deck-panel-flare" style="background:radial-gradient(ellipse at 20% 20%, rgba(0,163,255,0.11) 0%, transparent 65%);"></div>
                 </a>
 
                 <!-- DECK BETA — Calculus Tutoring -->
-                <a href="tutoring.html" class="deck-panel tutor-card hud-panel underwater-entry group relative" style="animation-delay:0.95s; background:rgba(16,185,129,0.035); border:1px solid rgba(16,185,129,0.22); transition:transform 0.3s ease,filter 0.3s ease,border-color 0.3s ease;">
+                <a href="tutoring.html" class="deck-panel tutor-card hud-panel underwater-entry group relative overflow-hidden" style="animation-delay:0.95s; border:1px solid rgba(16,185,129,0.22); transition:transform 0.3s ease,filter 0.3s ease,border-color 0.3s ease;min-height:420px;display:block;">
+                    <!-- Video background -->
+                    <video class="absolute inset-0 w-full h-full object-cover opacity-30 group-hover:opacity-45 transition-opacity duration-700" autoplay muted loop playsinline
+                        src="https://cdn.coverr.co/videos/coverr-teacher-in-class-5891/1080p.mp4"
+                        poster="https://images.unsplash.com/photo-1509062522246-3755977927d7?w=800&q=80&auto=format&fit=crop"
+                        onerror="this.style.display='none'">
+                    </video>
+                    <!-- Dark gradient overlay -->
+                    <div class="absolute inset-0" style="background:linear-gradient(180deg,rgba(2,14,10,0.5) 0%,rgba(2,14,10,0.75) 55%,rgba(2,8,16,0.96) 100%);"></div>
                     <div class="hud-scan-line" style="background:linear-gradient(90deg,transparent,rgba(16,185,129,0.45),transparent);animation:hud-scan 6s linear 2.8s infinite;"></div>
                     <span class="absolute" style="top:6px;left:6px;width:10px;height:10px;border-top:1px solid rgba(16,185,129,0.55);border-left:1px solid rgba(16,185,129,0.55);pointer-events:none;"></span>
                     <span class="absolute" style="top:6px;right:6px;width:10px;height:10px;border-top:1px solid rgba(16,185,129,0.55);border-right:1px solid rgba(16,185,129,0.55);pointer-events:none;"></span>
                     <span class="absolute" style="bottom:6px;left:6px;width:10px;height:10px;border-bottom:1px solid rgba(16,185,129,0.55);border-left:1px solid rgba(16,185,129,0.55);pointer-events:none;"></span>
                     <span class="absolute" style="bottom:6px;right:6px;width:10px;height:10px;border-bottom:1px solid rgba(16,185,129,0.55);border-right:1px solid rgba(16,185,129,0.55);pointer-events:none;"></span>
-                    <div style="height:3px; background:linear-gradient(90deg,transparent,#10b981,rgba(16,185,129,0.2));"></div>
-                    <div class="p-7">
+                    <div style="position:relative;z-index:2;height:3px;background:linear-gradient(90deg,transparent,#10b981,rgba(16,185,129,0.2));"></div>
+                    <div class="p-7 relative" style="z-index:2;">
                         <div class="flex items-center gap-2 mb-5">
                             <span class="depth-blink" style="width:7px;height:7px;border-radius:50%;background:#10b981;box-shadow:0 0 8px 2px rgba(16,185,129,0.9);display:inline-block;animation-delay:0.7s;"></span>
                             <span class="font-mono text-tutor-500/40 text-xs tracking-widest">DECK_BETA · SVC_002</span>
@@ -605,22 +636,30 @@
                         <div class="w-14 h-14 rounded-xl mb-5 flex items-center justify-center transition-transform duration-300 group-hover:scale-110" style="background:rgba(16,185,129,0.09);border:1px solid rgba(16,185,129,0.25);">
                             <svg class="w-6 h-6 text-tutor-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
                         </div>
-                        <h3 class="font-display text-lg font-semibold mb-2 text-white group-hover:text-tutor-400 transition">Calculus Tutoring</h3>
-                        <p class="text-slate-400 text-sm leading-relaxed mb-6">Private AP calculus tutoring. Navigate complex equations with a captain who knows the charts.</p>
+                        <h3 class="font-display text-xl font-semibold mb-3 text-white group-hover:text-tutor-400 transition">Calculus Tutoring</h3>
+                        <p class="text-slate-400 text-sm leading-relaxed mb-8">Private AP calculus tutoring. Navigate complex equations with a captain who knows the charts.</p>
                         <span class="enter-deck-btn" style="color:#10b981; border-color:rgba(16,185,129,0.35);">ENTER DECK →</span>
                     </div>
                     <div class="deck-panel-flare" style="background:radial-gradient(ellipse at 20% 20%, rgba(16,185,129,0.11) 0%, transparent 65%);"></div>
                 </a>
 
                 <!-- DECK GAMMA — Romulus Beats -->
-                <a href="romulus-beats.html" class="deck-panel beats-card hud-panel underwater-entry group relative" style="animation-delay:1.15s; background:rgba(168,85,247,0.035); border:1px solid rgba(168,85,247,0.22); transition:transform 0.3s ease,filter 0.3s ease,border-color 0.3s ease;">
+                <a href="romulus-beats.html" class="deck-panel beats-card hud-panel underwater-entry group relative overflow-hidden" style="animation-delay:1.15s; border:1px solid rgba(168,85,247,0.22); transition:transform 0.3s ease,filter 0.3s ease,border-color 0.3s ease;min-height:420px;display:block;">
+                    <!-- Video background -->
+                    <video class="absolute inset-0 w-full h-full object-cover opacity-30 group-hover:opacity-45 transition-opacity duration-700" autoplay muted loop playsinline
+                        src="https://cdn.coverr.co/videos/coverr-man-listening-to-music-with-headphones-5624/1080p.mp4"
+                        poster="https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=800&q=80&auto=format&fit=crop"
+                        onerror="this.style.display='none'">
+                    </video>
+                    <!-- Dark gradient overlay -->
+                    <div class="absolute inset-0" style="background:linear-gradient(180deg,rgba(10,4,22,0.5) 0%,rgba(10,4,22,0.75) 55%,rgba(2,8,16,0.96) 100%);"></div>
                     <div class="hud-scan-line" style="background:linear-gradient(90deg,transparent,rgba(168,85,247,0.45),transparent);animation:hud-scan 4.8s linear 0.5s infinite;"></div>
                     <span class="absolute" style="top:6px;left:6px;width:10px;height:10px;border-top:1px solid rgba(168,85,247,0.55);border-left:1px solid rgba(168,85,247,0.55);pointer-events:none;"></span>
                     <span class="absolute" style="top:6px;right:6px;width:10px;height:10px;border-top:1px solid rgba(168,85,247,0.55);border-right:1px solid rgba(168,85,247,0.55);pointer-events:none;"></span>
                     <span class="absolute" style="bottom:6px;left:6px;width:10px;height:10px;border-bottom:1px solid rgba(168,85,247,0.55);border-left:1px solid rgba(168,85,247,0.55);pointer-events:none;"></span>
                     <span class="absolute" style="bottom:6px;right:6px;width:10px;height:10px;border-bottom:1px solid rgba(168,85,247,0.55);border-right:1px solid rgba(168,85,247,0.55);pointer-events:none;"></span>
-                    <div style="height:3px; background:linear-gradient(90deg,transparent,#a855f7,rgba(168,85,247,0.2));"></div>
-                    <div class="p-7">
+                    <div style="position:relative;z-index:2;height:3px;background:linear-gradient(90deg,transparent,#a855f7,rgba(168,85,247,0.2));"></div>
+                    <div class="p-7 relative" style="z-index:2;">
                         <div class="flex items-center gap-2 mb-5">
                             <span class="depth-blink" style="width:7px;height:7px;border-radius:50%;background:#a855f7;box-shadow:0 0 8px 2px rgba(168,85,247,0.9);display:inline-block;animation-delay:1.4s;"></span>
                             <span class="font-mono text-beats-500/40 text-xs tracking-widest">DECK_GAMMA · SVC_003</span>
@@ -628,8 +667,8 @@
                         <div class="w-14 h-14 rounded-xl mb-5 flex items-center justify-center transition-transform duration-300 group-hover:scale-110" style="background:rgba(168,85,247,0.09);border:1px solid rgba(168,85,247,0.25);">
                             <svg class="w-6 h-6 text-beats-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"/></svg>
                         </div>
-                        <h3 class="font-display text-lg font-semibold mb-2 text-white group-hover:text-beats-400 transition">Romulus Beats</h3>
-                        <p class="text-slate-400 text-sm leading-relaxed mb-6">Fire beats. Professional instrumentals. License the sound that moves your ship forward.</p>
+                        <h3 class="font-display text-xl font-semibold mb-3 text-white group-hover:text-beats-400 transition">Romulus Beats</h3>
+                        <p class="text-slate-400 text-sm leading-relaxed mb-8">Fire beats. Professional instrumentals. License the sound that moves your ship forward.</p>
                         <span class="enter-deck-btn" style="color:#a855f7; border-color:rgba(168,85,247,0.35);">ENTER DECK →</span>
                     </div>
                     <div class="deck-panel-flare" style="background:radial-gradient(ellipse at 20% 20%, rgba(168,85,247,0.11) 0%, transparent 65%);"></div>
@@ -649,30 +688,31 @@
         <div class="absolute bottom-0 left-0 right-0 warp-divider opacity-40"></div>
     </section>
 
-    <!-- BOARDING HATCH -->
-    <section id="boarding-section" class="relative py-24 px-6 overflow-hidden" style="background:linear-gradient(180deg,#02080f 0%,#030e1a 52%,#0b1628 100%);">
+    <!-- ═══════════════════════════════════════════════════════════════ -->
+    <!-- AIRLOCK CORRIDOR — scroll-paced boarding experience            -->
+    <!-- ═══════════════════════════════════════════════════════════════ -->
+
+    <!-- 1. HATCH TEASE — users see the hatch and must scroll past it first -->
+    <section id="airlock-tease" class="relative py-32 px-6 overflow-hidden flex flex-col items-center justify-center" style="min-height:100vh;background:linear-gradient(180deg,#02080f 0%,#030e1a 52%,#0b1628 100%);">
         <div class="absolute inset-0 pointer-events-none" style="background:radial-gradient(ellipse 70% 55% at 50% 50%,rgba(0,163,255,0.05) 0%,transparent 80%);"></div>
         <div class="hud-corner hud-tl" style="top:16px;left:16px;"></div>
         <div class="hud-corner hud-tr" style="top:16px;right:16px;"></div>
         <div class="hud-corner hud-bl" style="bottom:16px;left:16px;"></div>
         <div class="hud-corner hud-br" style="bottom:16px;right:16px;"></div>
 
-        <!-- Title -->
-        <div class="text-center mb-14 scroll-reveal">
-            <span class="font-mono text-warp-500/28 text-xs tracking-[0.4em] block mb-4">◈ BOARDING PROTOCOL INITIATED ◈</span>
-            <h2 class="font-mono font-bold text-white tracking-[0.18em]" style="font-size:clamp(1.6rem,4vw,2.8rem);text-shadow:0 0 45px rgba(0,163,255,0.32);">READY TO BOARD?</h2>
-            <p class="text-slate-400 mt-3 font-mono text-sm tracking-wider">Choose your deck. The Neptune awaits.</p>
+        <div class="text-center mb-16 scroll-reveal">
+            <span class="font-mono text-warp-500/28 text-xs tracking-[0.4em] block mb-4">◈ BOARDING PROTOCOL ◈</span>
+            <h2 class="font-mono font-bold text-white" style="font-size:clamp(2rem,5vw,3.4rem);letter-spacing:0.14em;text-shadow:0 0 55px rgba(0,163,255,0.28);">THE HATCH IS SEALED.</h2>
+            <p class="text-slate-500 mt-4 font-mono text-sm tracking-wider">Scroll to depressurise the airlock.</p>
         </div>
 
-        <!-- Hatch frame -->
-        <div id="hatch-frame" class="relative mx-auto cursor-pointer" style="width:340px;height:340px;" title="Click to open hatch">
-
-            <!-- Decorative outer ring SVG — static, z:30 -->
+        <!-- Hatch frame — opens when scrolled into view -->
+        <div id="hatch-frame" class="relative mx-auto cursor-pointer scroll-reveal" style="width:340px;height:340px;" title="Click to open">
+            <!-- Outer decorative ring -->
             <svg class="absolute inset-0 w-full h-full pointer-events-none" style="z-index:30;" viewBox="0 0 340 340">
                 <circle cx="170" cy="170" r="164" fill="none" stroke="rgba(0,163,255,0.38)" stroke-width="2"/>
                 <circle cx="170" cy="170" r="150" fill="none" stroke="rgba(0,163,255,0.1)"  stroke-width="1"/>
                 <circle cx="170" cy="170" r="133" fill="none" stroke="rgba(0,163,255,0.2)"  stroke-width="1.5"/>
-                <!-- 8 bolts at 45° intervals -->
                 <circle cx="170" cy="6"   r="5.5" fill="rgba(3,12,26,0.96)" stroke="rgba(0,163,255,0.58)" stroke-width="1.5"/>
                 <circle cx="286" cy="54"  r="5.5" fill="rgba(3,12,26,0.96)" stroke="rgba(0,163,255,0.58)" stroke-width="1.5"/>
                 <circle cx="334" cy="170" r="5.5" fill="rgba(3,12,26,0.96)" stroke="rgba(0,163,255,0.58)" stroke-width="1.5"/>
@@ -681,32 +721,22 @@
                 <circle cx="54"  cy="286" r="5.5" fill="rgba(3,12,26,0.96)" stroke="rgba(0,163,255,0.58)" stroke-width="1.5"/>
                 <circle cx="6"   cy="170" r="5.5" fill="rgba(3,12,26,0.96)" stroke="rgba(0,163,255,0.58)" stroke-width="1.5"/>
                 <circle cx="54"  cy="54"  r="5.5" fill="rgba(3,12,26,0.96)" stroke="rgba(0,163,255,0.58)" stroke-width="1.5"/>
-                <!-- Breathing glow ring -->
                 <circle cx="170" cy="170" r="164" fill="none" stroke="rgba(0,163,255,0.1)" stroke-width="10">
                     <animate attributeName="stroke-opacity" values="0.04;0.22;0.04" dur="3s" repeatCount="indefinite"/>
                 </circle>
             </svg>
-
-            <!-- Revealed content — z:10, behind the halves -->
+            <!-- Revealed content (behind the doors) -->
             <div class="hatch-inner absolute inset-0 opacity-0 rounded-full flex flex-col items-center justify-center overflow-hidden" style="z-index:10;background:radial-gradient(ellipse at center,rgba(0,163,255,0.16) 0%,rgba(2,8,16,0.97) 68%);">
-                <p style="font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:0.28em;color:rgba(0,163,255,0.45);margin-bottom:14px;">HATCH OPEN · BOARDING READY</p>
-                <div style="display:flex;flex-direction:column;gap:8px;padding:0 32px;width:100%;">
-                    <a href="website-development.html" class="text-center py-2 font-mono text-xs tracking-wider text-warp-400 hover:text-white hover:bg-warp-500/15 transition" style="border:1px solid rgba(0,163,255,0.32);border-radius:4px;">DECK ALPHA — WEB DEV</a>
-                    <a href="tutoring.html"            class="text-center py-2 font-mono text-xs tracking-wider text-tutor-400 hover:text-white hover:bg-tutor-500/15 transition" style="border:1px solid rgba(16,185,129,0.32);border-radius:4px;">DECK BETA — TUTORING</a>
-                    <a href="romulus-beats.html"       class="text-center py-2 font-mono text-xs tracking-wider text-beats-400 hover:text-white hover:bg-beats-500/15 transition" style="border:1px solid rgba(168,85,247,0.32);border-radius:4px;">DECK GAMMA — BEATS</a>
-                </div>
-                <a href="contact.html" style="margin-top:14px;font-family:'JetBrains Mono',monospace;font-size:10px;color:rgba(100,116,139,0.75);letter-spacing:0.15em;" class="hover:text-warp-400 transition">→ hail the bridge</a>
+                <p style="font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:0.28em;color:rgba(0,163,255,0.45);margin-bottom:8px;">AIRLOCK CLEAR</p>
+                <p class="font-mono text-warp-300 text-xs tracking-widest mt-2">↓ continue scrolling ↓</p>
             </div>
-
-            <!-- Circular clip mask — the two hatch faces live here, z:20 -->
+            <!-- Door halves -->
             <div class="absolute overflow-hidden" style="inset:6px;border-radius:50%;z-index:20;">
-                <!-- TOP half -->
                 <div class="hatch-top absolute top-0 left-0 right-0" style="height:50.5%;background:linear-gradient(180deg,rgba(5,14,28,0.97),rgba(7,20,40,0.96));border-bottom:1px solid rgba(0,163,255,0.52);">
                     <div style="position:absolute;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 11px,rgba(0,163,255,0.024) 11px,rgba(0,163,255,0.024) 12px);"></div>
                     <div style="position:absolute;top:0;bottom:0;left:50%;width:1px;background:rgba(0,163,255,0.1);"></div>
                     <p style="position:absolute;bottom:9px;left:0;right:0;text-align:center;font-family:'JetBrains Mono',monospace;font-size:8px;letter-spacing:0.26em;color:rgba(0,163,255,0.22);">NEPTUNE · HATCH_A</p>
                 </div>
-                <!-- BOTTOM half -->
                 <div class="hatch-bot absolute bottom-0 left-0 right-0" style="height:50.5%;background:linear-gradient(0deg,rgba(5,14,28,0.97),rgba(7,20,40,0.96));border-top:1px solid rgba(0,163,255,0.52);">
                     <div style="position:absolute;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 11px,rgba(0,163,255,0.024) 11px,rgba(0,163,255,0.024) 12px);"></div>
                     <div style="position:absolute;top:0;bottom:0;left:50%;width:1px;background:rgba(0,163,255,0.1);"></div>
@@ -714,7 +744,161 @@
                 </div>
             </div>
         </div>
-        <p class="text-center mt-8" style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.2em;color:rgba(71,85,105,0.5);">SCROLL TO TRIGGER · CLICK HATCH TO OPEN</p>
+        <p class="text-center mt-8 font-mono text-xs tracking-[0.2em]" style="color:rgba(71,85,105,0.5);">SCROLL TO TRIGGER · CLICK HATCH TO OPEN</p>
+        <!-- Downward nudge arrow -->
+        <div class="absolute bottom-10 left-1/2 -translate-x-1/2 scroll-reveal" style="animation-delay:0.8s;">
+            <svg width="28" height="28" viewBox="0 0 28 28" fill="none"><path d="M14 4 L14 22 M7 16 L14 23 L21 16" stroke="rgba(0,163,255,0.45)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><animate attributeName="opacity" values="0.3;0.9;0.3" dur="1.8s" repeatCount="indefinite"/></path></svg>
+        </div>
+    </section>
+
+    <!-- 2. SERVICE SPOTLIGHTS — three full-height panels, one per service, revealed on scroll -->
+    <section id="service-spotlights" class="relative" style="background:#02080f;">
+
+        <!-- ALPHA SPOTLIGHT — Web Dev -->
+        <div id="spotlight-alpha" class="spotlight-panel relative overflow-hidden flex items-center" style="min-height:100vh;background:linear-gradient(135deg,#020b18 0%,#051828 60%,#030e1e 100%);">
+            <!-- Video fill -->
+            <video class="absolute inset-0 w-full h-full object-cover opacity-18" autoplay muted loop playsinline
+                src="https://cdn.coverr.co/videos/coverr-developer-typing-code-2323/1080p.mp4"
+                poster="https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=1600&q=80&auto=format&fit=crop"
+                onerror="this.style.display='none'">
+            </video>
+            <!-- Colored wash -->
+            <div class="absolute inset-0" style="background:linear-gradient(135deg,rgba(0,163,255,0.12) 0%,transparent 55%,rgba(0,163,255,0.06) 100%);"></div>
+            <!-- Side accent bar -->
+            <div class="absolute left-0 top-0 bottom-0" style="width:3px;background:linear-gradient(180deg,transparent,#00A3FF,transparent);"></div>
+            <!-- Content -->
+            <div class="relative z-10 max-w-6xl mx-auto px-8 md:px-16 w-full py-24 grid md:grid-cols-2 gap-16 items-center">
+                <div>
+                    <p class="font-mono text-warp-500/35 text-xs tracking-[0.35em] mb-4">◄ DECK ALPHA · SVC_001 ►</p>
+                    <h3 class="font-display font-bold text-white mb-6" style="font-size:clamp(2.4rem,6vw,4.5rem);line-height:1.05;text-shadow:0 0 60px rgba(0,163,255,0.2);">Website<br>Development</h3>
+                    <p class="text-slate-300 text-lg leading-relaxed mb-4 max-w-lg">Every pixel intentional. Built from the ground up — no templates, no shortcuts. Adam designs and develops sites that feel alive.</p>
+                    <p class="text-slate-500 leading-relaxed mb-10 max-w-lg">Custom code. Clean architecture. Sites that load fast, look stunning, and actually convert.</p>
+                    <a href="website-development.html" class="ripple-btn inline-flex items-center gap-3 px-8 py-4 font-mono text-sm tracking-widest text-white orbit-glow" style="background:rgba(0,163,255,0.12);border:1px solid rgba(0,163,255,0.45);border-radius:6px;--og:rgba(0,163,255,0.15);">
+                        BOARD DECK ALPHA <span style="opacity:0.6;">→</span>
+                    </a>
+                </div>
+                <!-- Right: HUD readout block -->
+                <div class="hidden md:block">
+                    <div class="border border-warp-500/15 rounded-lg p-8" style="background:rgba(0,163,255,0.04);">
+                        <p class="font-mono text-warp-500/30 text-xs tracking-widest mb-6">// SYSTEM SPECS</p>
+                        <div class="space-y-4">
+                            <div class="flex justify-between font-mono text-sm"><span class="text-slate-500">STACK</span><span class="text-warp-400">HTML · CSS · JS · Full-Stack</span></div>
+                            <div class="h-px bg-warp-500/08"></div>
+                            <div class="flex justify-between font-mono text-sm"><span class="text-slate-500">DELIVERY</span><span class="text-warp-400">2–4 weeks</span></div>
+                            <div class="h-px bg-warp-500/08"></div>
+                            <div class="flex justify-between font-mono text-sm"><span class="text-slate-500">BUILT FOR</span><span class="text-warp-400">Businesses &amp; Creators</span></div>
+                            <div class="h-px bg-warp-500/08"></div>
+                            <div class="flex justify-between font-mono text-sm"><span class="text-slate-500">STATUS</span><span class="text-warp-400 depth-blink">● ACCEPTING CLIENTS</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Corner decorations -->
+            <div class="hud-corner hud-tl" style="top:20px;left:20px;"></div>
+            <div class="hud-corner hud-tr" style="top:20px;right:20px;"></div>
+            <div class="hud-corner hud-bl" style="bottom:20px;left:20px;"></div>
+            <div class="hud-corner hud-br" style="bottom:20px;right:20px;"></div>
+        </div>
+
+        <!-- BETA SPOTLIGHT — Tutoring -->
+        <div id="spotlight-beta" class="spotlight-panel relative overflow-hidden flex items-center" style="min-height:100vh;background:linear-gradient(135deg,#021410 0%,#031e16 60%,#020e0a 100%);">
+            <video class="absolute inset-0 w-full h-full object-cover opacity-18" autoplay muted loop playsinline
+                src="https://cdn.coverr.co/videos/coverr-teacher-in-class-5891/1080p.mp4"
+                poster="https://images.unsplash.com/photo-1509062522246-3755977927d7?w=1600&q=80&auto=format&fit=crop"
+                onerror="this.style.display='none'">
+            </video>
+            <div class="absolute inset-0" style="background:linear-gradient(135deg,rgba(16,185,129,0.10) 0%,transparent 55%,rgba(16,185,129,0.05) 100%);"></div>
+            <div class="absolute left-0 top-0 bottom-0" style="width:3px;background:linear-gradient(180deg,transparent,#10b981,transparent);"></div>
+            <div class="relative z-10 max-w-6xl mx-auto px-8 md:px-16 w-full py-24 grid md:grid-cols-2 gap-16 items-center">
+                <div>
+                    <p class="font-mono text-tutor-500/35 text-xs tracking-[0.35em] mb-4">◄ DECK BETA · SVC_002 ►</p>
+                    <h3 class="font-display font-bold text-white mb-6" style="font-size:clamp(2.4rem,6vw,4.5rem);line-height:1.05;text-shadow:0 0 60px rgba(16,185,129,0.2);">Calculus<br>Tutoring</h3>
+                    <p class="text-slate-300 text-lg leading-relaxed mb-4 max-w-lg">AP Calc, Calc 1 &amp; 2, multivariable. Adam knows these charts — and he can chart yours.</p>
+                    <p class="text-slate-500 leading-relaxed mb-10 max-w-lg">One-on-one sessions. Concepts built from the ground up. No confusion tolerated.</p>
+                    <a href="tutoring.html" class="ripple-btn inline-flex items-center gap-3 px-8 py-4 font-mono text-sm tracking-widest text-white orbit-glow" style="background:rgba(16,185,129,0.10);border:1px solid rgba(16,185,129,0.42);border-radius:6px;--og:rgba(16,185,129,0.14);">
+                        BOARD DECK BETA <span style="opacity:0.6;">→</span>
+                    </a>
+                </div>
+                <div class="hidden md:block">
+                    <div class="border border-tutor-500/15 rounded-lg p-8" style="background:rgba(16,185,129,0.04);">
+                        <p class="font-mono text-tutor-500/30 text-xs tracking-widest mb-6">// SESSION SPECS</p>
+                        <div class="space-y-4">
+                            <div class="flex justify-between font-mono text-sm"><span class="text-slate-500">SUBJECTS</span><span class="text-tutor-400">AP Calc · Calc 1/2 · Multivar</span></div>
+                            <div class="h-px bg-tutor-500/08"></div>
+                            <div class="flex justify-between font-mono text-sm"><span class="text-slate-500">FORMAT</span><span class="text-tutor-400">1-on-1 · Online</span></div>
+                            <div class="h-px bg-tutor-500/08"></div>
+                            <div class="flex justify-between font-mono text-sm"><span class="text-slate-500">PACE</span><span class="text-tutor-400">Your pace. Results-driven.</span></div>
+                            <div class="h-px bg-tutor-500/08"></div>
+                            <div class="flex justify-between font-mono text-sm"><span class="text-slate-500">STATUS</span><span class="text-tutor-400 depth-blink">● OPEN FOR STUDENTS</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="hud-corner hud-tl" style="top:20px;left:20px;border-color:rgba(16,185,129,0.4);"></div>
+            <div class="hud-corner hud-tr" style="top:20px;right:20px;border-color:rgba(16,185,129,0.4);"></div>
+            <div class="hud-corner hud-bl" style="bottom:20px;left:20px;border-color:rgba(16,185,129,0.4);"></div>
+            <div class="hud-corner hud-br" style="bottom:20px;right:20px;border-color:rgba(16,185,129,0.4);"></div>
+        </div>
+
+        <!-- GAMMA SPOTLIGHT — Romulus Beats -->
+        <div id="spotlight-gamma" class="spotlight-panel relative overflow-hidden flex items-center" style="min-height:100vh;background:linear-gradient(135deg,#0e0218 0%,#160528 60%,#080114 100%);">
+            <video class="absolute inset-0 w-full h-full object-cover opacity-18" autoplay muted loop playsinline
+                src="https://cdn.coverr.co/videos/coverr-man-listening-to-music-with-headphones-5624/1080p.mp4"
+                poster="https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=1600&q=80&auto=format&fit=crop"
+                onerror="this.style.display='none'">
+            </video>
+            <div class="absolute inset-0" style="background:linear-gradient(135deg,rgba(168,85,247,0.10) 0%,transparent 55%,rgba(168,85,247,0.06) 100%);"></div>
+            <div class="absolute left-0 top-0 bottom-0" style="width:3px;background:linear-gradient(180deg,transparent,#a855f7,transparent);"></div>
+            <div class="relative z-10 max-w-6xl mx-auto px-8 md:px-16 w-full py-24 grid md:grid-cols-2 gap-16 items-center">
+                <div>
+                    <p class="font-mono text-beats-500/35 text-xs tracking-[0.35em] mb-4">◄ DECK GAMMA · SVC_003 ►</p>
+                    <h3 class="font-display font-bold text-white mb-6" style="font-size:clamp(2.4rem,6vw,4.5rem);line-height:1.05;text-shadow:0 0 60px rgba(168,85,247,0.2);">Romulus<br>Beats</h3>
+                    <p class="text-slate-300 text-lg leading-relaxed mb-4 max-w-lg">Instrumentals that hit different. Dark, cinematic, hard-hitting — built in the engine room of the Neptune.</p>
+                    <p class="text-slate-500 leading-relaxed mb-10 max-w-lg">License a beat. Build something that lasts. The catalogue is growing and the quality doesn't dip.</p>
+                    <a href="romulus-beats.html" class="ripple-btn inline-flex items-center gap-3 px-8 py-4 font-mono text-sm tracking-widest text-white orbit-glow" style="background:rgba(168,85,247,0.10);border:1px solid rgba(168,85,247,0.42);border-radius:6px;--og:rgba(168,85,247,0.14);">
+                        BOARD DECK GAMMA <span style="opacity:0.6;">→</span>
+                    </a>
+                </div>
+                <div class="hidden md:block">
+                    <div class="border border-beats-500/15 rounded-lg p-8" style="background:rgba(168,85,247,0.04);">
+                        <p class="font-mono text-beats-500/30 text-xs tracking-widest mb-6">// CATALOGUE SPECS</p>
+                        <div class="space-y-4">
+                            <div class="flex justify-between font-mono text-sm"><span class="text-slate-500">GENRE</span><span class="text-beats-400">Hip-Hop · Cinematic · Trap</span></div>
+                            <div class="h-px bg-beats-500/08"></div>
+                            <div class="flex justify-between font-mono text-sm"><span class="text-slate-500">LICENSE</span><span class="text-beats-400">Lease &amp; Exclusive available</span></div>
+                            <div class="h-px bg-beats-500/08"></div>
+                            <div class="flex justify-between font-mono text-sm"><span class="text-slate-500">FORMAT</span><span class="text-beats-400">MP3 · WAV · Trackout</span></div>
+                            <div class="h-px bg-beats-500/08"></div>
+                            <div class="flex justify-between font-mono text-sm"><span class="text-slate-500">STATUS</span><span class="text-beats-400 depth-blink">● CATALOGUE LIVE</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="hud-corner hud-tl" style="top:20px;left:20px;border-color:rgba(168,85,247,0.4);"></div>
+            <div class="hud-corner hud-tr" style="top:20px;right:20px;border-color:rgba(168,85,247,0.4);"></div>
+            <div class="hud-corner hud-bl" style="bottom:20px;left:20px;border-color:rgba(168,85,247,0.4);"></div>
+            <div class="hud-corner hud-br" style="bottom:20px;right:20px;border-color:rgba(168,85,247,0.4);"></div>
+        </div>
+    </section>
+
+    <!-- 3. BRIDGE CTA — contact, after all three services have been experienced -->
+    <section id="bridge-cta" class="relative py-32 px-6 overflow-hidden text-center" style="background:linear-gradient(180deg,#030e1a 0%,#0a1628 100%);">
+        <div class="absolute inset-0 pointer-events-none" style="background:radial-gradient(ellipse 60% 50% at 50% 50%,rgba(0,163,255,0.06) 0%,transparent 80%);"></div>
+        <div class="hud-corner hud-tl" style="top:16px;left:16px;"></div>
+        <div class="hud-corner hud-tr" style="top:16px;right:16px;"></div>
+        <div class="max-w-2xl mx-auto relative z-10 scroll-reveal">
+            <span class="font-mono text-warp-500/28 text-xs tracking-[0.4em] block mb-6">◈ BRIDGE COMMS ◈</span>
+            <h2 class="font-display font-bold text-white mb-6" style="font-size:clamp(2rem,5vw,3.4rem);text-shadow:0 0 55px rgba(0,163,255,0.22);">Hail the Captain.</h2>
+            <p class="text-slate-400 text-lg mb-12 leading-relaxed">Got a project? A question? A beat you need licensed? The bridge is open.<br>Adam replies fast and doesn't waste your time.</p>
+            <div class="flex flex-wrap gap-4 justify-center">
+                <a href="contact.html" class="ripple-btn flare-container px-10 py-4 bg-warp-500 hover:bg-warp-600 text-white font-semibold rounded-xl shadow-lg shadow-warp-500/25 transition">
+                    Send a Message
+                </a>
+                <a href="reviews.html" class="ripple-btn px-10 py-4 border border-warp-500/35 text-warp-400 hover:border-warp-500 hover:text-warp-300 rounded-xl font-semibold transition">
+                    Read the Reviews
+                </a>
+            </div>
+        </div>
     </section>
 
     <!-- Footer -->
@@ -945,6 +1129,21 @@
         obs.observe(frame);
         // Manual open on click
         frame.addEventListener('click', openHatch);
+    })();
+
+    // ── SERVICE SPOTLIGHT REVEAL ──
+    (function() {
+        const panels = document.querySelectorAll('#spotlight-alpha, #spotlight-beta, #spotlight-gamma');
+        if (!panels.length) return;
+        const obs = new IntersectionObserver((entries) => {
+            entries.forEach(e => {
+                if (e.isIntersecting) {
+                    e.target.classList.add('lit');
+                    obs.unobserve(e.target);
+                }
+            });
+        }, { threshold: 0.12 });
+        panels.forEach(p => obs.observe(p));
     })();
 
     <!-- ── NAUTICAL DATE ── -->
