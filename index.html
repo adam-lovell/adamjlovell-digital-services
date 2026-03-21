@@ -148,6 +148,61 @@
         /* ── PER-CARD READOUT COLORS ── */
         .service-card.tutor-card:hover .card-readout { color: rgba(16,185,129,0.55); }
         .service-card.beats-card:hover .card-readout { color: rgba(168,85,247,0.55); }
+
+        /* ════════════════════════════════════════════ */
+        /* UNDERWATER / DECK MANIFEST                   */
+        /* ════════════════════════════════════════════ */
+        @keyframes bubble-rise {
+            0%   { transform: translateY(0)     translateX(0px)   scale(1);    opacity: 0;    }
+            8%   {                                                              opacity: 0.75; }
+            50%  { transform: translateY(-45vh) translateX(14px)  scale(1.12); opacity: 0.45; }
+            92%  {                                                              opacity: 0.08; }
+            100% { transform: translateY(-95vh) translateX(-8px)  scale(0.7);  opacity: 0;    }
+        }
+        @keyframes caustic-pulse {
+            0%,100% { opacity: 0.06; transform: skewX(-14deg) scaleX(1);   }
+            50%     { opacity: 0.18; transform: skewX(-14deg) scaleX(1.7); }
+        }
+        @keyframes sonar-ring-expand {
+            0%   { transform: scale(0.15); opacity: 0.5; }
+            100% { transform: scale(1);    opacity: 0;   }
+        }
+        @keyframes depth-blink {
+            0%,100% { opacity: 1;    }
+            46%     { opacity: 0.12; }
+            54%     { opacity: 0.12; }
+        }
+        @keyframes underwater-fadein {
+            0%   { opacity: 0; transform: translateY(28px); filter: blur(4px); }
+            100% { opacity: 1; transform: translateY(0);    filter: blur(0);   }
+        }
+        .caustic-ray {
+            position: absolute; top: 0; width: 3px; height: 72%;
+            background: linear-gradient(180deg, rgba(56,189,248,0.2), rgba(0,163,255,0.06), transparent);
+            transform-origin: top center;
+            animation: caustic-pulse 8s ease-in-out infinite;
+        }
+        .sonar-ring {
+            position: absolute; inset: 0; border-radius: 50%;
+            border: 1px solid rgba(0,163,255,0.22);
+            animation: sonar-ring-expand 5.5s cubic-bezier(0.25,0.6,0.4,1) infinite;
+            pointer-events: none;
+        }
+        .depth-blink { animation: depth-blink 2.2s ease-in-out infinite; }
+        .underwater-entry { opacity: 0; }
+        #deck-manifest.revealed .underwater-entry { animation: underwater-fadein 0.85s ease forwards; }
+        .deck-panel { cursor: pointer; transition: transform 0.3s ease, box-shadow 0.3s ease; }
+        .deck-panel:hover { transform: translateY(-6px); box-shadow: 0 28px 70px rgba(0,0,0,0.6); }
+        .deck-panel-flare { position: absolute; inset: 0; pointer-events: none; opacity: 0; transition: opacity 0.4s ease; }
+        .deck-panel:hover .deck-panel-flare { opacity: 1; }
+        .enter-deck-btn {
+            display: inline-block;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px; letter-spacing: 0.12em;
+            padding: 7px 16px; border: 1px solid; border-radius: 5px;
+            transition: letter-spacing 0.3s ease, background 0.3s ease;
+        }
+        .deck-panel:hover .enter-deck-btn { letter-spacing: 0.2em; background: rgba(255,255,255,0.04); }
     </style>
 </head>
 <body class="font-sans bg-slate-950 text-slate-100 antialiased min-h-screen">
@@ -231,60 +286,146 @@
         <div class="absolute bottom-0 left-0 right-0 warp-divider"></div>
     </section>
 
-    <!-- Services Overview -->
-    <section class="relative py-24 px-6 bg-slate-900/40">
-        <div class="hud-corner hud-tl" style="top:16px;left:24px;"></div>
-        <div class="hud-corner hud-tr" style="top:16px;right:24px;"></div>
-        <div class="hud-corner hud-bl" style="bottom:16px;left:24px;"></div>
-        <div class="hud-corner hud-br" style="bottom:16px;right:24px;"></div>
-        <span class="absolute top-4 left-1/2 -translate-x-1/2 font-mono text-warp-500/30 text-xs tracking-widest">NEPTUNE // DECK_MANIFEST // DEPARTMENTS: 3</span>
+    <!-- ═════════════════════════════════════════════════════ -->
+    <!-- DECK MANIFEST — UNDERWATER HUD                       -->
+    <!-- ═════════════════════════════════════════════════════ -->
+    <section id="deck-manifest" class="relative overflow-hidden" style="min-height:100vh; background:linear-gradient(180deg,#040e1c 0%,#051525 12%,#040f1e 40%,#030b17 70%,#02080f 100%);">
 
-        <div class="max-w-6xl mx-auto">
-            <h2 class="scroll-reveal font-display text-3xl md:text-4xl font-bold text-center mb-4">Explore the Decks</h2>
-            <p class="scroll-reveal text-slate-400 text-center max-w-2xl mx-auto mb-16" style="transition-delay:0.1s">Three disciplines. Three worlds. Board them all.</p>
-            <div class="grid md:grid-cols-3 gap-8">
+        <!-- Water surface (looking up from below) -->
+        <div class="absolute top-0 left-0 right-0 pointer-events-none overflow-hidden" style="height:90px;">
+            <svg viewBox="0 0 1440 90" preserveAspectRatio="none" style="width:100%;height:100%;">
+                <path d="M0,45 C240,10 480,80 720,45 C960,10 1200,75 1440,45 L1440,0 L0,0 Z" fill="#0d1321"/>
+                <path d="M0,60 C300,28 600,82 900,55 C1150,32 1320,70 1440,60 L1440,0 L0,0 Z" fill="rgba(13,19,33,0.55)"/>
+            </svg>
+        </div>
 
-                <!-- Web Dev Card -->
-                <a href="website-development.html" class="scroll-reveal service-card group p-8 rounded-2xl bg-slate-800/50 border border-slate-700/50 hover:border-warp-500/60 hover:shadow-xl hover:shadow-warp-500/15 transition-all" style="transition-delay:0.15s">
-                    <div class="card-flare"></div>
-                    <div class="w-14 h-14 rounded-xl bg-warp-500/10 flex items-center justify-center mb-6 group-hover:bg-warp-500/20 group-hover:animate-pulse-glow transition">
-                        <svg class="w-7 h-7 text-warp-400 group-hover:text-warp-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg>
+        <!-- Caustic light shafts from the surface above -->
+        <div class="absolute top-0 left-0 right-0 pointer-events-none overflow-hidden" style="height:58%;">
+            <div class="caustic-ray" style="left:8%;  animation-duration:9s;  animation-delay:0s;"></div>
+            <div class="caustic-ray" style="left:22%; animation-duration:12s; animation-delay:2.5s;"></div>
+            <div class="caustic-ray" style="left:46%; animation-duration:8s;  animation-delay:5.2s;"></div>
+            <div class="caustic-ray" style="left:64%; animation-duration:13s; animation-delay:1.1s;"></div>
+            <div class="caustic-ray" style="left:80%; animation-duration:10s; animation-delay:3.8s;"></div>
+            <div class="caustic-ray" style="left:93%; animation-duration:11s; animation-delay:6.4s;"></div>
+        </div>
+
+        <!-- Bubble field (generated by JS) -->
+        <div id="bubble-field" class="absolute inset-0 pointer-events-none overflow-hidden"></div>
+
+        <!-- Deep ocean vignette -->
+        <div class="absolute inset-0 pointer-events-none" style="background:radial-gradient(ellipse 85% 65% at 50% 50%, transparent 25%, rgba(2,8,15,0.7) 100%);"></div>
+
+        <!-- Sonar rings — centered pulse -->
+        <div class="absolute inset-0 flex items-center justify-center pointer-events-none overflow-hidden">
+            <div style="position:relative;width:720px;height:720px;flex-shrink:0;">
+                <div class="sonar-ring" style="animation-delay:0s;"></div>
+                <div class="sonar-ring" style="animation-delay:1.8s;"></div>
+                <div class="sonar-ring" style="animation-delay:3.6s;"></div>
+            </div>
+        </div>
+
+        <!-- HUD corners -->
+        <div class="hud-corner hud-tl" style="top:18px;left:18px;width:22px;height:22px;"></div>
+        <div class="hud-corner hud-tr" style="top:18px;right:18px;width:22px;height:22px;"></div>
+        <div class="hud-corner hud-bl" style="bottom:18px;left:18px;width:22px;height:22px;"></div>
+        <div class="hud-corner hud-br" style="bottom:18px;right:18px;width:22px;height:22px;"></div>
+
+        <!-- HUD sweep scan line (JS-triggered) -->
+        <div id="hud-sweep" class="pointer-events-none absolute left-0 right-0 z-20"
+             style="display:none; height:2px; background:linear-gradient(90deg,transparent,rgba(0,163,255,0.7),rgba(255,255,255,0.9),rgba(0,163,255,0.7),transparent); box-shadow:0 0 18px 5px rgba(0,163,255,0.45);"></div>
+
+        <!-- Main HUD content -->
+        <div class="relative z-10 max-w-6xl mx-auto px-6 pt-28 pb-24">
+
+            <!-- Telemetry status bar -->
+            <div class="underwater-entry text-center mb-5" style="animation-delay:0.15s;">
+                <span class="font-mono text-xs tracking-widest" style="color:rgba(0,163,255,0.28);">
+                    ◈ &thinsp;DEPTH: 3,200M &nbsp;·&nbsp; PRESSURE: 320 ATM &nbsp;·&nbsp; HULL: 100% &nbsp;·&nbsp; SYSTEMS: NOMINAL&thinsp; ◈
+                </span>
+            </div>
+
+            <!-- DECK MANIFEST heading -->
+            <div class="underwater-entry text-center" style="animation-delay:0.4s;">
+                <span class="font-mono text-warp-500/30 text-xs tracking-[0.4em] block mb-3">◄ NEPTUNE BRIDGE ►</span>
+                <h2 class="font-mono font-bold tracking-[0.22em] text-white" style="font-size:clamp(2rem,5vw,3.5rem); text-shadow:0 0 55px rgba(0,163,255,0.35);">
+                    DECK&nbsp;MANIFEST
+                </h2>
+                <p class="font-mono text-warp-500/40 text-sm tracking-widest mt-2">// SELECT YOUR DESTINATION //</p>
+            </div>
+
+            <!-- HUD divider rule -->
+            <div class="underwater-entry mx-auto mt-8 mb-12 max-w-xs" style="animation-delay:0.6s; height:1px; background:linear-gradient(90deg,transparent,rgba(0,163,255,0.55),rgba(255,255,255,0.75),rgba(0,163,255,0.55),transparent); position:relative;">
+                <div style="position:absolute;top:-4px;left:50%;transform:translateX(-50%);width:8px;height:8px;border-radius:50%;background:#00A3FF;box-shadow:0 0 16px 6px rgba(0,163,255,0.7);"></div>
+            </div>
+
+            <!-- Three deck panels -->
+            <div class="grid md:grid-cols-3 gap-5">
+
+                <!-- DECK ALPHA — Website Development -->
+                <a href="website-development.html" class="deck-panel underwater-entry group relative rounded-2xl overflow-hidden" style="animation-delay:0.75s; background:rgba(0,163,255,0.035); border:1px solid rgba(0,163,255,0.18);">
+                    <div style="height:3px; background:linear-gradient(90deg,transparent,#00A3FF,rgba(0,163,255,0.2));"></div>
+                    <div class="p-7">
+                        <div class="flex items-center gap-2 mb-5">
+                            <span class="depth-blink" style="width:7px;height:7px;border-radius:50%;background:#00A3FF;box-shadow:0 0 8px 2px rgba(0,163,255,0.9);display:inline-block;"></span>
+                            <span class="font-mono text-warp-500/40 text-xs tracking-widest">DECK_ALPHA · SVC_001</span>
+                        </div>
+                        <div class="w-14 h-14 rounded-xl mb-5 flex items-center justify-center transition-transform duration-300 group-hover:scale-110" style="background:rgba(0,163,255,0.09);border:1px solid rgba(0,163,255,0.25);">
+                            <svg class="w-6 h-6 text-warp-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg>
+                        </div>
+                        <h3 class="font-display text-lg font-semibold mb-2 text-white group-hover:text-warp-300 transition">Website Development</h3>
+                        <p class="text-slate-400 text-sm leading-relaxed mb-6">Custom websites built for your business. Modern, fast, and tailored to your vision.</p>
+                        <span class="enter-deck-btn" style="color:#00A3FF; border-color:rgba(0,163,255,0.35);">ENTER DECK →</span>
                     </div>
-                    <span class="font-mono text-warp-500/40 text-xs tracking-widest block mb-1">SVC_001</span>
-                    <h3 class="font-display text-xl font-semibold mb-3 group-hover:text-warp-300 transition">Website Development</h3>
-                    <p class="text-slate-400 text-sm leading-relaxed">Custom websites built for your business. Modern, fast, and tailored to your vision.</p>
-                    <span class="inline-block mt-4 text-warp-400 font-medium group-hover:translate-x-1 transition">Learn more →</span>
-                    <span class="card-readout">ESTABLISHING_LINK...</span>
+                    <div class="deck-panel-flare" style="background:radial-gradient(ellipse at 20% 20%, rgba(0,163,255,0.11) 0%, transparent 65%);"></div>
                 </a>
 
-                <!-- Tutoring Card -->
-                <a href="tutoring.html" class="scroll-reveal service-card tutor-card group p-8 rounded-2xl bg-slate-800/50 border border-slate-700/50 hover:border-tutor-500/60 hover:shadow-xl hover:shadow-tutor-500/15 transition-all" style="transition-delay:0.25s">
-                    <div class="card-flare" style="background: linear-gradient(90deg, transparent, rgba(16,185,129,0.5), transparent);"></div>
-                    <div class="w-14 h-14 rounded-xl bg-tutor-500/15 flex items-center justify-center mb-6 group-hover:bg-tutor-500/25 transition">
-                        <svg class="w-7 h-7 text-tutor-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
+                <!-- DECK BETA — Calculus Tutoring -->
+                <a href="tutoring.html" class="deck-panel underwater-entry group relative rounded-2xl overflow-hidden" style="animation-delay:0.95s; background:rgba(16,185,129,0.035); border:1px solid rgba(16,185,129,0.18);">
+                    <div style="height:3px; background:linear-gradient(90deg,transparent,#10b981,rgba(16,185,129,0.2));"></div>
+                    <div class="p-7">
+                        <div class="flex items-center gap-2 mb-5">
+                            <span class="depth-blink" style="width:7px;height:7px;border-radius:50%;background:#10b981;box-shadow:0 0 8px 2px rgba(16,185,129,0.9);display:inline-block;animation-delay:0.7s;"></span>
+                            <span class="font-mono text-tutor-500/40 text-xs tracking-widest">DECK_BETA · SVC_002</span>
+                        </div>
+                        <div class="w-14 h-14 rounded-xl mb-5 flex items-center justify-center transition-transform duration-300 group-hover:scale-110" style="background:rgba(16,185,129,0.09);border:1px solid rgba(16,185,129,0.25);">
+                            <svg class="w-6 h-6 text-tutor-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
+                        </div>
+                        <h3 class="font-display text-lg font-semibold mb-2 text-white group-hover:text-tutor-400 transition">Calculus Tutoring</h3>
+                        <p class="text-slate-400 text-sm leading-relaxed mb-6">Private AP calculus tutoring. Navigate complex equations with a captain who knows the charts.</p>
+                        <span class="enter-deck-btn" style="color:#10b981; border-color:rgba(16,185,129,0.35);">ENTER DECK →</span>
                     </div>
-                    <span class="font-mono text-tutor-500/40 text-xs tracking-widest block mb-1">SVC_002</span>
-                    <h3 class="font-display text-xl font-semibold mb-3">Calculus Tutoring</h3>
-                    <p class="text-slate-400 text-sm leading-relaxed">I offer private online tutoring services in AP calculus.</p>
-                    <span class="inline-block mt-4 text-tutor-400 font-medium group-hover:translate-x-1 transition">Learn more →</span>
-                    <span class="card-readout" style="color:transparent;">SESSION_READY...</span>
+                    <div class="deck-panel-flare" style="background:radial-gradient(ellipse at 20% 20%, rgba(16,185,129,0.11) 0%, transparent 65%);"></div>
                 </a>
 
-                <!-- Beats Card -->
-                <a href="romulus-beats.html" class="scroll-reveal service-card beats-card group p-8 rounded-2xl bg-slate-800/50 border border-slate-700/50 hover:border-beats-500/60 hover:shadow-xl hover:shadow-beats-500/15 transition-all" style="transition-delay:0.35s">
-                    <div class="card-flare" style="background: linear-gradient(90deg, transparent, rgba(168,85,247,0.5), transparent);"></div>
-                    <div class="w-14 h-14 rounded-xl bg-beats-500/15 flex items-center justify-center mb-6 group-hover:bg-beats-500/25 transition">
-                        <svg class="w-7 h-7 text-beats-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"/></svg>
+                <!-- DECK GAMMA — Romulus Beats -->
+                <a href="romulus-beats.html" class="deck-panel underwater-entry group relative rounded-2xl overflow-hidden" style="animation-delay:1.15s; background:rgba(168,85,247,0.035); border:1px solid rgba(168,85,247,0.18);">
+                    <div style="height:3px; background:linear-gradient(90deg,transparent,#a855f7,rgba(168,85,247,0.2));"></div>
+                    <div class="p-7">
+                        <div class="flex items-center gap-2 mb-5">
+                            <span class="depth-blink" style="width:7px;height:7px;border-radius:50%;background:#a855f7;box-shadow:0 0 8px 2px rgba(168,85,247,0.9);display:inline-block;animation-delay:1.4s;"></span>
+                            <span class="font-mono text-beats-500/40 text-xs tracking-widest">DECK_GAMMA · SVC_003</span>
+                        </div>
+                        <div class="w-14 h-14 rounded-xl mb-5 flex items-center justify-center transition-transform duration-300 group-hover:scale-110" style="background:rgba(168,85,247,0.09);border:1px solid rgba(168,85,247,0.25);">
+                            <svg class="w-6 h-6 text-beats-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"/></svg>
+                        </div>
+                        <h3 class="font-display text-lg font-semibold mb-2 text-white group-hover:text-beats-400 transition">Romulus Beats</h3>
+                        <p class="text-slate-400 text-sm leading-relaxed mb-6">Fire beats. Professional instrumentals. License the sound that moves your ship forward.</p>
+                        <span class="enter-deck-btn" style="color:#a855f7; border-color:rgba(168,85,247,0.35);">ENTER DECK →</span>
                     </div>
-                    <span class="font-mono text-beats-500/40 text-xs tracking-widest block mb-1">SVC_003</span>
-                    <h3 class="font-display text-xl font-semibold mb-3">Romulus Beats</h3>
-                    <p class="text-slate-400 text-sm leading-relaxed">I engineer fire beats for producers and artists. Browse and license professional instrumentals.</p>
-                    <span class="inline-block mt-4 text-beats-400 font-medium group-hover:translate-x-1 transition">Visit store →</span>
-                    <span class="card-readout" style="color:transparent;">AUDIO_STREAM...</span>
+                    <div class="deck-panel-flare" style="background:radial-gradient(ellipse at 20% 20%, rgba(168,85,247,0.11) 0%, transparent 65%);"></div>
                 </a>
 
             </div>
+
+            <!-- Coordinates footer -->
+            <div class="underwater-entry text-center mt-10" style="animation-delay:1.3s;">
+                <span class="font-mono text-xs tracking-widest" style="color:rgba(0,163,255,0.18);">
+                    LAT: 23°N &nbsp;·&nbsp; LON: 77°W &nbsp;·&nbsp; NEPTUNE_PRIME &nbsp;·&nbsp; ALL_DEPARTMENTS: READY_FOR_BOARDING
+                </span>
+            </div>
+
         </div>
+
         <div class="absolute bottom-0 left-0 right-0 warp-divider opacity-40"></div>
     </section>
 
@@ -460,6 +601,58 @@
         entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
     }, { threshold: 0.15 });
     document.querySelectorAll('.scroll-reveal').forEach(el => observer.observe(el));
+    </script>
+
+    <!-- ── DECK MANIFEST: BUBBLES + HUD SWEEP ── -->
+    <script>
+    // Bubble field
+    (function() {
+        const field = document.getElementById('bubble-field');
+        if (!field) return;
+        for (let i = 0; i < 32; i++) {
+            const b   = document.createElement('div');
+            const sz  = (Math.random() * 10 + 3).toFixed(1);
+            const dur = (Math.random() * 12 + 8).toFixed(1);
+            const del = (Math.random() * 20).toFixed(1);
+            const opB = (0.08 + Math.random() * 0.22).toFixed(2);
+            const opF = (0.015 + Math.random() * 0.04).toFixed(3);
+            b.style.cssText = [
+                'position:absolute',
+                'left:'   + (Math.random() * 96).toFixed(1) + '%',
+                'bottom:' + (Math.random() * 28).toFixed(1) + '%',
+                'width:'  + sz + 'px', 'height:' + sz + 'px',
+                'border-radius:50%',
+                'border:1px solid rgba(0,163,255,' + opB + ')',
+                'background:rgba(0,163,255,' + opF + ')',
+                'animation:bubble-rise ' + dur + 's ease-in ' + del + 's infinite',
+            ].join(';');
+            field.appendChild(b);
+        }
+    })();
+
+    // Deck manifest: sweep + reveal on scroll-enter
+    (function() {
+        const manifest = document.getElementById('deck-manifest');
+        const sweep    = document.getElementById('hud-sweep');
+        if (!manifest) return;
+        const obs = new IntersectionObserver((entries) => {
+            entries.forEach(e => {
+                if (!e.isIntersecting) return;
+                if (sweep) {
+                    sweep.style.display = 'block';
+                    sweep.style.top = '0px';
+                    setTimeout(() => {
+                        sweep.style.transition = 'top 1.7s linear';
+                        sweep.style.top = '100%';
+                    }, 30);
+                    setTimeout(() => { sweep.style.display = 'none'; sweep.style.transition = ''; }, 1800);
+                }
+                setTimeout(() => manifest.classList.add('revealed'), 80);
+                obs.unobserve(e.target);
+            });
+        }, { threshold: 0.08 });
+        obs.observe(manifest);
+    })();
     </script>
 
 </body>
