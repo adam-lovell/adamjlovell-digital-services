@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Adam J. Lovell | Freelance Portfolio</title>
+    <title>Neptune | Creative Studio</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -12,10 +12,33 @@
                     fontFamily: {
                         sans: ['DM Sans', 'system-ui', 'sans-serif'],
                         display: ['Outfit', 'system-ui', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
                     },
                     colors: {
-                        primary: { 50: '#fef7ee', 100: '#fdedd6', 200: '#fad7ac', 300: '#f6ba77', 400: '#f19340', 500: '#ed751a', 600: '#de5b10', 700: '#b84410', 800: '#933715', 900: '#772f14', 950: '#401509' },
-                        slate: { 850: '#172033', 950: '#0d1321' }
+                        warp:    { 300: '#7dd3fc', 400: '#38bdf8', 500: '#00A3FF', 600: '#0284c7', 700: '#0369a1' },
+                        beats:   { 400: '#c084fc', 500: '#a855f7', 600: '#9333ea' },
+                        tutor:   { 400: '#34d399', 500: '#10b981', 600: '#059669' },
+                        slate:   { 850: '#172033', 950: '#0d1321' }
+                    },
+                    keyframes: {
+                        'draw-x':    { '0%': { width: '0%' },        '100%': { width: '100%' } },
+                        'draw-y':    { '0%': { height: '0%' },       '100%': { height: '100%' } },
+                        'flicker':   { '0%,100%': { opacity: '1' }, '20%': { opacity: '0' }, '40%': { opacity: '.8' }, '60%': { opacity: '.2' }, '80%': { opacity: '1' } },
+                        'fadein':    { '0%': { opacity: '0', transform: 'translateY(16px)' }, '100%': { opacity: '1', transform: 'translateY(0)' } },
+                        'ripple':    { '0%': { transform: 'scale(0)', opacity: '0.6' }, '100%': { transform: 'scale(4)', opacity: '0' } },
+                        'lensflare': { '0%': { left: '-20%', opacity: '0' }, '30%': { opacity: '0.7' }, '100%': { left: '120%', opacity: '0' } },
+                        'pulse-glow':{ '0%,100%': { boxShadow: '0 0 8px 2px rgba(0,163,255,0.3)' }, '50%': { boxShadow: '0 0 24px 6px rgba(0,163,255,0.6)' } },
+                        'scan':      { '0%': { backgroundPosition: '0 0' }, '100%': { backgroundPosition: '0 100px' } },
+                        'gradient-shift': { '0%,100%': { backgroundPosition: '0% 50%' }, '50%': { backgroundPosition: '100% 50%' } },
+                    },
+                    animation: {
+                        'draw-x':     'draw-x 0.6s ease forwards',
+                        'draw-y':     'draw-y 0.6s ease forwards',
+                        'flicker':    'flicker 0.4s ease forwards',
+                        'fadein':     'fadein 0.7s ease forwards',
+                        'lensflare':  'lensflare 1.2s ease forwards',
+                        'pulse-glow': 'pulse-glow 2s ease-in-out infinite',
+                        'gradient-shift': 'gradient-shift 4s ease infinite',
                     }
                 }
             }
@@ -23,103 +46,257 @@
     </script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Outfit:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+    <style>
+        /* ── BOOT SEQUENCE ── */
+        .boot-hidden { opacity: 0; }
+
+        /* ── HUD CORNERS ── */
+        .hud-corner { position: absolute; width: 18px; height: 18px; }
+        .hud-tl { top: 12px; left: 12px; border-top: 1px solid rgba(0,163,255,0.5); border-left: 1px solid rgba(0,163,255,0.5); }
+        .hud-tr { top: 12px; right: 12px; border-top: 1px solid rgba(0,163,255,0.5); border-right: 1px solid rgba(0,163,255,0.5); }
+        .hud-bl { bottom: 12px; left: 12px; border-bottom: 1px solid rgba(0,163,255,0.5); border-left: 1px solid rgba(0,163,255,0.5); }
+        .hud-br { bottom: 12px; right: 12px; border-bottom: 1px solid rgba(0,163,255,0.5); border-right: 1px solid rgba(0,163,255,0.5); }
+
+        /* ── LENS FLARE ── */
+        .flare-container { position: relative; overflow: hidden; }
+        .flare { position: absolute; top: 50%; transform: translateY(-50%); width: 60%; height: 2px;
+            background: linear-gradient(90deg, transparent, rgba(0,163,255,0.8), rgba(255,255,255,0.9), rgba(0,163,255,0.8), transparent);
+            animation: lensflare 1.2s ease forwards; pointer-events: none; }
+
+        /* ── SERVICE CARDS ── */
+        .service-card { position: relative; overflow: hidden; }
+        .service-card::before {
+            content: '';
+            position: absolute; inset: 0;
+            background: linear-gradient(135deg, rgba(0,163,255,0.04) 0%, transparent 60%);
+            opacity: 0; transition: opacity 0.3s ease;
+        }
+        .service-card:hover::before { opacity: 1; }
+        .service-card .card-flare {
+            position: absolute; top: 30%; left: -80%;
+            width: 40%; height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(0,163,255,0.7), transparent);
+            transition: none; pointer-events: none;
+        }
+        .service-card:hover .card-flare {
+            animation: lensflare 0.8s ease forwards;
+        }
+        .card-readout {
+            position: absolute; bottom: 12px; right: 14px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 9px; color: rgba(0,163,255,0); letter-spacing: 0.05em;
+            transition: color 0.4s ease 0.1s;
+        }
+        .service-card:hover .card-readout { color: rgba(0,163,255,0.5); }
+
+        /* ── BUTTON RIPPLE ── */
+        .ripple-btn { position: relative; overflow: hidden; }
+        .ripple-btn .ripple-wave {
+            position: absolute; border-radius: 50%;
+            width: 40px; height: 40px; margin-left: -20px; margin-top: -20px;
+            background: rgba(255,255,255,0.3);
+            animation: ripple 0.6s ease-out forwards;
+            pointer-events: none;
+        }
+
+        /* ── ANIMATED GRADIENT HEADLINE ── */
+        .hero-gradient {
+            background: linear-gradient(90deg, #00A3FF, #e0f2fe, #ffffff, #38bdf8, #00A3FF);
+            background-size: 300% 300%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: gradient-shift 4s ease infinite;
+        }
+
+        /* ── SCAN LINE overlay (subtle) ── */
+        .scanlines::after {
+            content: '';
+            position: absolute; inset: 0; pointer-events: none;
+            background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,163,255,0.006) 2px, rgba(0,163,255,0.006) 4px);
+        }
+
+        /* ── WARP DIVIDER ── */
+        .warp-divider {
+            position: relative; height: 2px; overflow: visible;
+            background: linear-gradient(90deg, transparent, rgba(0,163,255,0.6), rgba(255,255,255,0.8), rgba(0,163,255,0.6), transparent);
+        }
+        .warp-divider::after {
+            content: '';
+            position: absolute; top: -3px; left: 50%; transform: translateX(-50%);
+            width: 6px; height: 6px; border-radius: 50%;
+            background: #00A3FF;
+            box-shadow: 0 0 12px 4px rgba(0,163,255,0.8);
+        }
+
+        /* ── REVIEW DOTS ── */
+        .rdot { width: 8px; height: 8px; border-radius: 50%; background: #334155; transition: background 0.3s; cursor: pointer; border: none; padding: 0; }
+        .rdot.active { background: #00A3FF; box-shadow: 0 0 8px rgba(0,163,255,0.7); }
+
+        /* ── SCROLL FADE-IN ── */
+        .scroll-reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.7s ease, transform 0.7s ease; }
+        .scroll-reveal.visible { opacity: 1; transform: translateY(0); }
+
+        /* ── BACKGROUND AMBIENT ── */
+        body {
+            background-image:
+                radial-gradient(ellipse at 15% 85%, rgba(0,163,255,0.06) 0%, transparent 45%),
+                radial-gradient(ellipse at 85% 15%, rgba(168,85,247,0.04) 0%, transparent 45%);
+        }
+        /* ── PER-CARD READOUT COLORS ── */
+        .service-card.tutor-card:hover .card-readout { color: rgba(16,185,129,0.55); }
+        .service-card.beats-card:hover .card-readout { color: rgba(168,85,247,0.55); }
+    </style>
 </head>
 <body class="font-sans bg-slate-950 text-slate-100 antialiased min-h-screen">
+
     <!-- Navigation -->
-    <nav class="fixed top-0 left-0 right-0 z-50 bg-slate-950/90 backdrop-blur-md border-b border-slate-800/50">
+    <nav class="fixed top-0 left-0 right-0 z-50 bg-slate-950/90 backdrop-blur-md border-b border-warp-500/20">
         <div class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
-            <a href="index.html" class="font-display font-bold text-xl text-primary-400">Adam J. Lovell</a>
+            <a href="index.html" class="font-mono font-bold text-xl tracking-widest text-warp-400 relative">
+                NEPTUNE
+                <span class="absolute -bottom-1 left-0 h-px bg-gradient-to-r from-warp-500 to-warp-300 w-full opacity-60"></span>
+            </a>
+            <!-- HUD sector label -->
+            <span class="hidden lg:block font-mono text-warp-500/40 text-xs tracking-widest">NEPTUNE // BRIDGE_DECK</span>
             <ul class="hidden md:flex items-center gap-8 text-sm font-medium text-slate-400">
-                <li><a href="index.html" class="text-primary-400 hover:text-primary-300 transition">Home</a></li>
+                <li><a href="index.html" class="text-warp-400 hover:text-warp-300 transition">Home</a></li>
                 <li><a href="website-development.html" class="hover:text-slate-100 transition">Web Dev</a></li>
                 <li><a href="tutoring.html" class="hover:text-slate-100 transition">Tutoring</a></li>
                 <li><a href="romulus-beats.html" class="hover:text-slate-100 transition">Romulus Beats</a></li>
                 <li><a href="reviews.html" class="hover:text-slate-100 transition">Reviews</a></li>
-                <li><a href="contact.html" class="px-4 py-2 bg-primary-500 text-white rounded-lg hover:bg-primary-600 transition">Contact</a></li>
+                <li>
+                    <a href="contact.html" class="ripple-btn px-4 py-2 bg-warp-500 text-white rounded-lg hover:bg-warp-600 transition">Contact</a>
+                </li>
             </ul>
             <button id="mobile-menu-btn" class="md:hidden p-2 text-slate-400 hover:text-white">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
             </button>
         </div>
         <div id="mobile-menu" class="md:hidden hidden border-t border-slate-800 px-6 py-4 space-y-4">
-            <a href="index.html" class="block text-primary-400">Home</a>
+            <a href="index.html" class="block text-warp-400">Home</a>
             <a href="website-development.html" class="block">Web Dev</a>
             <a href="tutoring.html" class="block">Tutoring</a>
             <a href="romulus-beats.html" class="block">Romulus Beats</a>
             <a href="reviews.html" class="block">Reviews</a>
-            <a href="contact.html" class="block text-primary-400 font-medium">Contact</a>
+            <a href="contact.html" class="block text-warp-400 font-medium">Contact</a>
         </div>
     </nav>
 
     <!-- Hero -->
-    <section class="pt-32 pb-20 px-6">
-        <div class="max-w-6xl mx-auto text-center">
-            <h1 class="font-display text-5xl md:text-7xl font-bold tracking-tight mb-6 leading-tight">
-                Building Digital Experiences<br>
-                <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary-400 to-primary-600">& Empowering Minds</span>
+    <section class="relative pt-36 pb-24 px-6 scanlines overflow-hidden">
+        <!-- Background anamorphic glow -->
+        <div class="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[200px] rounded-full bg-warp-500/5 blur-3xl pointer-events-none"></div>
+        <div class="absolute top-1/2 left-1/4 w-[300px] h-[1px] bg-gradient-to-r from-transparent via-warp-500/30 to-transparent pointer-events-none"></div>
+        <div class="absolute top-1/3 right-1/4 w-[200px] h-[1px] bg-gradient-to-r from-transparent via-warp-500/15 to-transparent pointer-events-none"></div>
+
+        <!-- HUD corners on hero -->
+        <div class="absolute top-8 left-8 hud-corner hud-tl"></div>
+        <div class="absolute top-8 right-8 hud-corner hud-tr"></div>
+
+        <!-- Boot sequence label -->
+        <div id="boot-label" class="text-center mb-4 boot-hidden">
+            <span class="font-mono text-warp-500/60 text-xs tracking-[0.3em] uppercase">// NEPTUNE // CREATIVE VESSEL // STARDATE 2026.03.21 //</span>
+        </div>
+
+        <div class="max-w-6xl mx-auto text-center relative">
+            <h1 id="boot-h1" class="boot-hidden font-display text-5xl md:text-7xl font-bold tracking-tight mb-6 leading-tight">
+                Welcome Aboard<br>
+                <span class="hero-gradient">Neptune.</span>
             </h1>
-            <p class="text-xl text-slate-400 max-w-2xl mx-auto mb-12">
-                Proven skills in website development to calculus tutoring to music mixing and mastering. I'm your one-stop shop for digital solutions and academic support.
+            <p id="boot-sub" class="boot-hidden text-xl text-slate-300 max-w-2xl mx-auto mb-12">
+                A creative vessel. Three disciplines. One journey. Browse the decks — web development, beat production, and academic tutoring — each its own world.
             </p>
-            <div class="flex flex-wrap gap-4 justify-center">
-                <a href="contact.html" class="px-8 py-4 bg-primary-500 text-white rounded-xl font-semibold hover:bg-primary-600 transition shadow-lg shadow-primary-500/25">Get in Touch</a>
-                <a href="reviews.html" class="px-8 py-4 border border-slate-600 text-slate-300 rounded-xl font-semibold hover:border-primary-500 hover:text-primary-400 transition">See Reviews</a>
+            <div id="boot-cta" class="boot-hidden flex flex-wrap gap-4 justify-center">
+                <a href="contact.html" class="flare-container ripple-btn relative px-8 py-4 bg-warp-500 text-white rounded-xl font-semibold hover:bg-warp-600 transition shadow-lg shadow-warp-500/25">
+                    Get in Touch
+                </a>
+                <a href="reviews.html" class="ripple-btn px-8 py-4 border border-warp-500/40 text-warp-400 rounded-xl font-semibold hover:border-warp-500 hover:text-warp-300 hover:shadow-lg hover:shadow-warp-500/10 transition">
+                    See Reviews
+                </a>
             </div>
 
             <!-- Review Carousel -->
-            <div class="mt-14 max-w-xl mx-auto">
+            <div id="boot-reviews" class="boot-hidden mt-14 max-w-xl mx-auto">
                 <div id="review-carousel"></div>
                 <div id="review-dots" class="flex justify-center gap-2 mt-4"></div>
             </div>
-            <a href="reviews.html" class="inline-block mt-6 text-sm text-slate-500 hover:text-primary-400 transition">View all reviews →</a>
-            <style>
-                .rdot { width: 8px; height: 8px; border-radius: 50%; background: #334155; transition: background 0.3s; cursor: pointer; border: none; padding: 0; }
-                .rdot.active { background: #f19340; }
-            </style>
+            <a href="reviews.html" id="boot-reviews-link" class="boot-hidden inline-block mt-6 text-sm text-slate-500 hover:text-warp-400 transition">View all reviews →</a>
         </div>
+
+        <!-- Bottom warp divider -->
+        <div class="absolute bottom-0 left-0 right-0 warp-divider"></div>
     </section>
 
     <!-- Services Overview -->
-    <section class="py-24 px-6 bg-slate-900/50">
+    <section class="relative py-24 px-6 bg-slate-900/40">
+        <div class="hud-corner hud-tl" style="top:16px;left:24px;"></div>
+        <div class="hud-corner hud-tr" style="top:16px;right:24px;"></div>
+        <div class="hud-corner hud-bl" style="bottom:16px;left:24px;"></div>
+        <div class="hud-corner hud-br" style="bottom:16px;right:24px;"></div>
+        <span class="absolute top-4 left-1/2 -translate-x-1/2 font-mono text-warp-500/30 text-xs tracking-widest">NEPTUNE // DECK_MANIFEST // DEPARTMENTS: 3</span>
+
         <div class="max-w-6xl mx-auto">
-            <h2 class="font-display text-3xl md:text-4xl font-bold text-center mb-4">What I Offer</h2>
-            <p class="text-slate-400 text-center max-w-2xl mx-auto mb-16">Three distinct services tailored to your needs</p>
+            <h2 class="scroll-reveal font-display text-3xl md:text-4xl font-bold text-center mb-4">Explore the Decks</h2>
+            <p class="scroll-reveal text-slate-400 text-center max-w-2xl mx-auto mb-16" style="transition-delay:0.1s">Three disciplines. Three worlds. Board them all.</p>
             <div class="grid md:grid-cols-3 gap-8">
-                <a href="website-development.html" class="group p-8 rounded-2xl bg-slate-800/50 border border-slate-700/50 hover:border-primary-500/50 hover:shadow-xl hover:shadow-primary-500/10 transition-all">
-                    <div class="w-14 h-14 rounded-xl bg-primary-500/20 flex items-center justify-center mb-6 group-hover:bg-primary-500/30 transition">
-                        <svg class="w-7 h-7 text-primary-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg>
+
+                <!-- Web Dev Card -->
+                <a href="website-development.html" class="scroll-reveal service-card group p-8 rounded-2xl bg-slate-800/50 border border-slate-700/50 hover:border-warp-500/60 hover:shadow-xl hover:shadow-warp-500/15 transition-all" style="transition-delay:0.15s">
+                    <div class="card-flare"></div>
+                    <div class="w-14 h-14 rounded-xl bg-warp-500/10 flex items-center justify-center mb-6 group-hover:bg-warp-500/20 group-hover:animate-pulse-glow transition">
+                        <svg class="w-7 h-7 text-warp-400 group-hover:text-warp-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg>
                     </div>
-                    <h3 class="font-display text-xl font-semibold mb-3">Website Development</h3>
+                    <span class="font-mono text-warp-500/40 text-xs tracking-widest block mb-1">SVC_001</span>
+                    <h3 class="font-display text-xl font-semibold mb-3 group-hover:text-warp-300 transition">Website Development</h3>
                     <p class="text-slate-400 text-sm leading-relaxed">Custom websites built for your business. Modern, fast, and tailored to your vision.</p>
-                    <span class="inline-block mt-4 text-primary-400 font-medium group-hover:translate-x-1 transition">Learn more →</span>
+                    <span class="inline-block mt-4 text-warp-400 font-medium group-hover:translate-x-1 transition">Learn more →</span>
+                    <span class="card-readout">ESTABLISHING_LINK...</span>
                 </a>
-                <a href="tutoring.html" class="group p-8 rounded-2xl bg-slate-800/50 border border-slate-700/50 hover:border-primary-500/50 hover:shadow-xl hover:shadow-primary-500/10 transition-all">
-                    <div class="w-14 h-14 rounded-xl bg-primary-500/20 flex items-center justify-center mb-6 group-hover:bg-primary-500/30 transition">
-                        <svg class="w-7 h-7 text-primary-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
+
+                <!-- Tutoring Card -->
+                <a href="tutoring.html" class="scroll-reveal service-card tutor-card group p-8 rounded-2xl bg-slate-800/50 border border-slate-700/50 hover:border-tutor-500/60 hover:shadow-xl hover:shadow-tutor-500/15 transition-all" style="transition-delay:0.25s">
+                    <div class="card-flare" style="background: linear-gradient(90deg, transparent, rgba(16,185,129,0.5), transparent);"></div>
+                    <div class="w-14 h-14 rounded-xl bg-tutor-500/15 flex items-center justify-center mb-6 group-hover:bg-tutor-500/25 transition">
+                        <svg class="w-7 h-7 text-tutor-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
                     </div>
+                    <span class="font-mono text-tutor-500/40 text-xs tracking-widest block mb-1">SVC_002</span>
                     <h3 class="font-display text-xl font-semibold mb-3">Calculus Tutoring</h3>
                     <p class="text-slate-400 text-sm leading-relaxed">I offer private online tutoring services in AP calculus.</p>
-                    <span class="inline-block mt-4 text-primary-400 font-medium group-hover:translate-x-1 transition">Learn more →</span>
+                    <span class="inline-block mt-4 text-tutor-400 font-medium group-hover:translate-x-1 transition">Learn more →</span>
+                    <span class="card-readout" style="color:transparent;">SESSION_READY...</span>
                 </a>
-                <a href="romulus-beats.html" class="group p-8 rounded-2xl bg-slate-800/50 border border-slate-700/50 hover:border-primary-500/50 hover:shadow-xl hover:shadow-primary-500/10 transition-all">
-                    <div class="w-14 h-14 rounded-xl bg-primary-500/20 flex items-center justify-center mb-6 group-hover:bg-primary-500/30 transition">
-                        <svg class="w-7 h-7 text-primary-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"/></svg>
+
+                <!-- Beats Card -->
+                <a href="romulus-beats.html" class="scroll-reveal service-card beats-card group p-8 rounded-2xl bg-slate-800/50 border border-slate-700/50 hover:border-beats-500/60 hover:shadow-xl hover:shadow-beats-500/15 transition-all" style="transition-delay:0.35s">
+                    <div class="card-flare" style="background: linear-gradient(90deg, transparent, rgba(168,85,247,0.5), transparent);"></div>
+                    <div class="w-14 h-14 rounded-xl bg-beats-500/15 flex items-center justify-center mb-6 group-hover:bg-beats-500/25 transition">
+                        <svg class="w-7 h-7 text-beats-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"/></svg>
                     </div>
+                    <span class="font-mono text-beats-500/40 text-xs tracking-widest block mb-1">SVC_003</span>
                     <h3 class="font-display text-xl font-semibold mb-3">Romulus Beats</h3>
                     <p class="text-slate-400 text-sm leading-relaxed">I engineer fire beats for producers and artists. Browse and license professional instrumentals.</p>
-                    <span class="inline-block mt-4 text-primary-400 font-medium group-hover:translate-x-1 transition">Visit store →</span>
+                    <span class="inline-block mt-4 text-beats-400 font-medium group-hover:translate-x-1 transition">Visit store →</span>
+                    <span class="card-readout" style="color:transparent;">AUDIO_STREAM...</span>
                 </a>
+
             </div>
         </div>
+        <div class="absolute bottom-0 left-0 right-0 warp-divider opacity-40"></div>
     </section>
 
     <!-- CTA -->
-    <section class="py-24 px-6">
-        <div class="max-w-4xl mx-auto text-center">
+    <section class="relative py-24 px-6 overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-b from-transparent via-warp-500/3 to-transparent pointer-events-none"></div>
+        <!-- horizontal anamorphic streak -->
+        <div class="absolute top-1/2 left-0 right-0 h-px bg-gradient-to-r from-transparent via-warp-500/20 to-transparent pointer-events-none"></div>
+        <div class="max-w-4xl mx-auto text-center scroll-reveal">
+            <span class="font-mono text-warp-500/40 text-xs tracking-widest block mb-4">// HAILING_FREQUENCY: OPEN //</span>
             <h2 class="font-display text-3xl font-bold mb-4">Ready to work together?</h2>
             <p class="text-slate-400 mb-8">Whether you need a website, tutoring, or beats, I'm here to help.</p>
-            <a href="contact.html" class="inline-flex items-center gap-2 px-8 py-4 bg-primary-500 text-white rounded-xl font-semibold hover:bg-primary-600 transition">
+            <a href="contact.html" class="flare-container ripple-btn inline-flex items-center gap-2 px-8 py-4 bg-warp-500 text-white rounded-xl font-semibold hover:bg-warp-600 transition shadow-lg shadow-warp-500/25">
                 Send a Message
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
             </a>
@@ -127,9 +304,12 @@
     </section>
 
     <!-- Footer -->
-    <footer class="border-t border-slate-800 py-12 px-6">
+    <footer class="relative border-t border-warp-500/20 py-12 px-6">
+        <div class="hud-corner hud-tl" style="top:12px;left:16px;"></div>
+        <div class="hud-corner hud-tr" style="top:12px;right:16px;"></div>
         <div class="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
-            <p class="font-display font-semibold text-primary-400">Adam J. Lovell</p>
+            <p class="font-mono font-bold tracking-widest text-warp-400">NEPTUNE</p>
+            <span class="font-mono text-warp-500/30 text-xs tracking-widest hidden md:block">STATUS: OPERATIONAL</span>
             <div class="flex flex-col md:flex-row gap-3 md:gap-8 text-sm text-slate-400 items-center md:items-start">
                 <a href="website-development.html" class="hover:text-slate-100 transition">Web Dev</a>
                 <a href="tutoring.html" class="hover:text-slate-100 transition">Tutoring</a>
@@ -137,11 +317,49 @@
                 <a href="reviews.html" class="hover:text-slate-100 transition">Reviews</a>
                 <a href="contact.html" class="hover:text-slate-100 transition">Contact</a>
             </div>
-            <p class="text-slate-500 text-sm"><a href="admin.html" class="hover:text-slate-400 transition">©</a> 2026 Adam J. Lovell</p>
+            <p class="text-slate-500 text-sm"><a href="admin.html" class="hover:text-slate-400 transition">©</a> 2026 Neptune. Founded by Adam J. Lovell.</p>
         </div>
     </footer>
 
     <script src="js/main.js"></script>
+
+    <!-- ── BOOT SEQUENCE ── -->
+    <script>
+    (function() {
+        const seq = [
+            { id: 'boot-label',        delay: 200,  type: 'flicker' },
+            { id: 'boot-h1',           delay: 700,  type: 'fadein'  },
+            { id: 'boot-sub',          delay: 1300, type: 'fadein'  },
+            { id: 'boot-cta',          delay: 1800, type: 'fadein'  },
+            { id: 'boot-reviews',      delay: 2200, type: 'fadein'  },
+            { id: 'boot-reviews-link', delay: 2500, type: 'fadein'  },
+        ];
+        seq.forEach(({ id, delay, type }) => {
+            setTimeout(() => {
+                const el = document.getElementById(id);
+                if (!el) return;
+                el.classList.remove('boot-hidden');
+                el.style.opacity = '0';
+                if (type === 'fadein') {
+                    el.style.transform = 'translateY(16px)';
+                    el.style.transition = 'opacity 0.7s ease, transform 0.7s ease';
+                    requestAnimationFrame(() => { el.style.opacity = '1'; el.style.transform = 'translateY(0)'; });
+                } else {
+                    el.style.transition = 'none';
+                    let flickers = 0;
+                    const tick = () => {
+                        el.style.opacity = Math.random() > 0.4 ? '1' : '0';
+                        if (++flickers < 6) setTimeout(tick, 60);
+                        else el.style.opacity = '1';
+                    };
+                    tick();
+                }
+            }, delay);
+        });
+    })();
+    </script>
+
+    <!-- ── REVIEW CAROUSEL ── -->
     <script>
     (async function() {
         const carousel = document.getElementById('review-carousel');
@@ -158,13 +376,17 @@
             const labels = { website: 'Web Dev', tutoring: 'Tutoring', beats: 'Beats', other: 'Other' };
 
             function renderCard(r) {
-                return `<div class="p-6 rounded-2xl bg-slate-800/60 border border-slate-700/50 text-left">
+                return `<div class="relative p-6 rounded-2xl bg-slate-800/60 border border-warp-500/20 text-left overflow-hidden">
+                    <div class="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-warp-500/40 to-transparent"></div>
                     <div class="flex items-center justify-between mb-3">
                         <span class="font-display font-semibold">${esc(r.name)}</span>
-                        <span class="text-primary-400">${stars(r.rating)}</span>
+                        <span class="text-warp-400">${stars(r.rating)}</span>
                     </div>
                     <p class="text-slate-400 text-sm leading-relaxed">${esc(r.text)}</p>
-                    <p class="text-primary-500 text-xs mt-3">${esc(labels[r.service] || r.service)}</p>
+                    <div class="flex items-center justify-between mt-3">
+                        <p class="text-warp-500/70 text-xs">${esc(labels[r.service] || r.service)}</p>
+                        <span class="font-mono text-warp-500/30 text-xs">VERIFIED_CLIENT</span>
+                    </div>
                 </div>`;
             }
 
@@ -191,7 +413,6 @@
                     btn.onclick = () => { clearInterval(timer); fade(i); timer = setInterval(advance, 5000); };
                     dotsEl.appendChild(btn);
                 });
-
                 function fade(idx) {
                     carousel.style.opacity = '0';
                     setTimeout(() => { show(idx); carousel.style.opacity = '1'; }, 400);
@@ -202,5 +423,43 @@
         } catch {}
     })();
     </script>
+
+    <!-- ── BUTTON RIPPLE ── -->
+    <script>
+    document.querySelectorAll('.ripple-btn').forEach(btn => {
+        btn.addEventListener('click', function(e) {
+            const wave = document.createElement('span');
+            wave.classList.add('ripple-wave');
+            const rect = this.getBoundingClientRect();
+            wave.style.left = (e.clientX - rect.left) + 'px';
+            wave.style.top  = (e.clientY - rect.top)  + 'px';
+            this.appendChild(wave);
+            setTimeout(() => wave.remove(), 700);
+        });
+    });
+    </script>
+
+    <!-- ── LENS FLARE on hover for CTA buttons ── -->
+    <script>
+    document.querySelectorAll('.flare-container').forEach(el => {
+        el.addEventListener('mouseenter', function() {
+            const old = this.querySelector('.flare');
+            if (old) old.remove();
+            const f = document.createElement('span');
+            f.classList.add('flare');
+            this.appendChild(f);
+            setTimeout(() => f.remove(), 1300);
+        });
+    });
+    </script>
+
+    <!-- ── SCROLL REVEAL ── -->
+    <script>
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
+    }, { threshold: 0.15 });
+    document.querySelectorAll('.scroll-reveal').forEach(el => observer.observe(el));
+    </script>
+
 </body>
 </html>
