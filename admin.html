@@ -59,9 +59,7 @@
                             <label class="block text-sm font-medium text-slate-300 mb-1">Service</label>
                             <select id="r-service" required
                                 class="w-full px-4 py-3 rounded-xl bg-slate-900/50 border border-slate-700 text-slate-100 focus:outline-none focus:ring-2 focus:ring-primary-500">
-                                <option value="tutoring">Math & Science Tutoring</option>
                                 <option value="website">Website Development</option>
-                                <option value="beats">Romulus Beats</option>
                                 <option value="other">Other</option>
                             </select>
                         </div>
@@ -169,7 +167,7 @@
     }
 
     // Render
-    const labels = { website: 'Web Dev', tutoring: 'Tutoring', beats: 'Beats', other: 'Other' };
+    const labels = { website: 'Web Dev', other: 'Other' };
     function esc(s) { const d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
     function renderList() {
         const list = document.getElementById('reviews-list');

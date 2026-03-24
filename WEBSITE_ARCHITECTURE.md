@@ -11,7 +11,7 @@
 ## BRIDGE OVERVIEW — Who Is at the Helm
 
 **Captain:** Adam J. Lovell  
-**Mission:** Operate a lean, high-margin, multi-service freelance agency (Web Dev · Music Production · AP Calculus Tutoring) under a hard 27-hour weekly work cap.  
+**Mission:** Operate a lean, high-margin freelance web development agency under a hard 27-hour weekly work cap.  
 **Operating Model:** "Product Provider" — standardized deliverables, fixed pricing, client-side automation, zero backend dependencies.  
 **Fleet Designation:** Static Multi-Page HTML Site | No build tools | No server | No framework
 
@@ -45,8 +45,6 @@ This site is a **standalone shuttlecraft on Impulse Power**. It operates without
 /
 ├── index.html                  — Bridge (Landing / Homepage)
 ├── website-development.html    — Starfleet Engineering (Web Dev service page)
-├── tutoring.html               — Sciences Division (Tutoring service page)
-├── romulus-beats.html          — Romulus Command (Beats / Music page)
 ├── reviews.html                — Crew Testimonials (Public reviews + submission)
 ├── contact.html                — Incoming Hails (Contact / Lead capture form)
 ├── admin.html                  — Captain's Ready Room (Protected review manager)
@@ -74,7 +72,7 @@ This site is a **standalone shuttlecraft on Impulse Power**. It operates without
 - Active page is highlighted in `primary-400` orange; all others are `slate-400` with hover transitions.
 - The `Contact` link is always styled as a CTA button (`bg-primary-500`).
 
-**Replication note:** Nav and footer HTML is copy-pasted across all pages — no templating engine. Any global nav change must be made in **all 7 files**.
+**Replication note:** Nav and footer HTML is copy-pasted across all pages — no templating engine. Any global nav change must be made in **all 5 files**.
 
 ---
 
@@ -117,24 +115,16 @@ This site is a **standalone shuttlecraft on Impulse Power**. It operates without
 
 ---
 
-### DECK 4 — Service Pages
+### DECK 4 — Service Page
 
 #### `website-development.html` — Web Dev
 Details custom website builds, pricing/tiers, process, and CTA to contact.
-
-#### `tutoring.html` — AP Calculus Tutoring
-Details online tutoring offering, subjects covered, session structure, and booking CTA.
-
-#### `romulus-beats.html` — Romulus Beats
-Music production / beat licensing page. Links out to external store/platform for purchasing beats.
-
-**All three pages share the same template pattern:** hero header → feature/detail sections → CTA → footer.
 
 ---
 
 ### DECK 5 — Contact / Lead Capture (`contact.html` + `js/contact.js`)
 
-**Form fields:** Name, Email, Service (dropdown: Website / Tutoring / Beats / Other), Message.
+**Form fields:** Name, Email, Service (dropdown: Website / Other), Message.
 
 **Current data flow:**
 1. User submits form.
@@ -228,7 +218,7 @@ function esc(s) { const d = document.createElement('div'); d.textContent = s; re
 
 | Issue | Impact | Fix |
 |---|---|---|
-| Nav/footer duplicated across 7 files | Any global change requires 7 edits | Migrate to a JS include or SSG (Eleventy/Astro) |
+| Nav/footer duplicated across 5 files | Any global change requires 5 edits | Migrate to a JS include or SSG (Eleventy/Astro) |
 | Tailwind loaded from CDN | Larger payload, no purging, no custom plugins | Add a build step with Tailwind CLI |
 | Admin PIN hardcoded in JS source | Visible in browser DevTools | Move to a proper auth provider (Clerk, Supabase Auth) |
 | `reviews.json` local file out of sync with JSONBlob | Potential data drift | Auto-generate from JSONBlob on deploy, or deprecate |
@@ -244,6 +234,7 @@ function esc(s) { const d = document.createElement('div'); d.textContent = s; re
 |---|---|---|
 | 2026-03-20 | Initial architecture document created | `WEBSITE_ARCHITECTURE.md` |
 | 2026-03-20 | Added Vessel Classification / Starfleet Diagnostic section | `WEBSITE_ARCHITECTURE.md` |
+| 2026-03-24 | Narrowed scope to web development only; removed tutoring and music service references | Multiple |
 
 ---
 

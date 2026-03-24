@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Neptune | Creative Studio</title>
+    <title>Neptune | Web Development Vessel</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -16,8 +16,6 @@
                     },
                     colors: {
                         warp:    { 300: '#7dd3fc', 400: '#38bdf8', 500: '#00A3FF', 600: '#0284c7', 700: '#0369a1' },
-                        beats:   { 400: '#c084fc', 500: '#a855f7', 600: '#9333ea' },
-                        tutor:   { 400: '#34d399', 500: '#10b981', 600: '#059669' },
                         slate:   { 850: '#172033', 950: '#0d1321' }
                     },
                     keyframes: {
@@ -118,17 +116,20 @@
             background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,163,255,0.006) 2px, rgba(0,163,255,0.006) 4px);
         }
 
-        /* ── WARP DIVIDER ── */
-        .warp-divider {
-            position: relative; height: 2px; overflow: visible;
-            background: linear-gradient(90deg, transparent, rgba(0,163,255,0.6), rgba(255,255,255,0.8), rgba(0,163,255,0.6), transparent);
+        /* ── GALAXY DIVIDER ── */
+        @keyframes galaxy-core {
+            0%,100% {
+                opacity: 0.72; transform: scale(1);
+                box-shadow: 0 0 45px 14px rgba(139,92,246,0.32), 0 0 90px 40px rgba(88,28,135,0.18), 0 0 180px 90px rgba(0,163,255,0.09);
+            }
+            50% {
+                opacity: 1.0; transform: scale(1.10);
+                box-shadow: 0 0 80px 28px rgba(167,139,250,0.52), 0 0 150px 70px rgba(109,40,217,0.28), 0 0 300px 140px rgba(0,163,255,0.13);
+            }
         }
-        .warp-divider::after {
-            content: '';
-            position: absolute; top: -3px; left: 50%; transform: translateX(-50%);
-            width: 6px; height: 6px; border-radius: 50%;
-            background: #00A3FF;
-            box-shadow: 0 0 12px 4px rgba(0,163,255,0.8);
+        @keyframes galaxy-arm-rotate {
+            from { transform: rotate(0deg); }
+            to   { transform: rotate(360deg); }
         }
 
         /* ── REVIEW DOTS ── */
@@ -142,55 +143,43 @@
         /* ── BACKGROUND AMBIENT ── */
         body {
             background-image:
-                radial-gradient(ellipse at 15% 85%, rgba(0,163,255,0.06) 0%, transparent 45%),
-                radial-gradient(ellipse at 85% 15%, rgba(168,85,247,0.04) 0%, transparent 45%);
+                radial-gradient(ellipse at 15% 85%, rgba(0,163,255,0.06) 0%, transparent 45%);
         }
         /* ── PER-CARD READOUT COLORS ── */
-        .service-card.tutor-card:hover .card-readout { color: rgba(16,185,129,0.55); }
-        .service-card.beats-card:hover .card-readout { color: rgba(168,85,247,0.55); }
 
         /* ════════════════════════════════════════════ */
-        /* UNDERWATER / DECK MANIFEST                   */
+        /* SPACE / DECK MANIFEST                        */
         /* ════════════════════════════════════════════ */
-        @keyframes bubble-rise {
-            0%   { transform: translateY(0)     translateX(0px)   scale(1);    opacity: 0;    }
-            8%   {                                                              opacity: 0.75; }
-            50%  { transform: translateY(-45vh) translateX(14px)  scale(1.12); opacity: 0.45; }
-            92%  {                                                              opacity: 0.08; }
-            100% { transform: translateY(-95vh) translateX(-8px)  scale(0.7);  opacity: 0;    }
-        }
-        @keyframes caustic-pulse {
-            0%,100% { opacity: 0.06; transform: skewX(-14deg) scaleX(1);   }
-            50%     { opacity: 0.18; transform: skewX(-14deg) scaleX(1.7); }
-        }
-        @keyframes sonar-ring-expand {
+        @keyframes radar-ring-expand {
             0%   { transform: scale(0.15); opacity: 0.5; }
             100% { transform: scale(1);    opacity: 0;   }
         }
-        @keyframes depth-blink {
+        @keyframes status-blink {
             0%,100% { opacity: 1;    }
             46%     { opacity: 0.12; }
             54%     { opacity: 0.12; }
         }
-        @keyframes underwater-fadein {
+        @keyframes space-entry-fadein {
             0%   { opacity: 0; transform: translateY(28px); filter: blur(4px); }
             100% { opacity: 1; transform: translateY(0);    filter: blur(0);   }
         }
-        .caustic-ray {
-            position: absolute; top: 0; width: 3px; height: 72%;
-            background: linear-gradient(180deg, rgba(56,189,248,0.2), rgba(0,163,255,0.06), transparent);
-            transform-origin: top center;
-            animation: caustic-pulse 8s ease-in-out infinite;
+        @keyframes star-twinkle {
+            0%,100% { opacity: 0.5; transform: scale(1);   }
+            50%     { opacity: 1;   transform: scale(1.5); }
+        }
+        @keyframes nebula-breathe {
+            0%,100% { opacity: 0.15; transform: scale(1);    }
+            50%     { opacity: 0.28; transform: scale(1.05); }
         }
         .sonar-ring {
             position: absolute; inset: 0; border-radius: 50%;
             border: 1px solid rgba(0,163,255,0.22);
-            animation: sonar-ring-expand 5.5s cubic-bezier(0.25,0.6,0.4,1) infinite;
+            animation: radar-ring-expand 5.5s cubic-bezier(0.25,0.6,0.4,1) infinite;
             pointer-events: none;
         }
-        .depth-blink { animation: depth-blink 2.2s ease-in-out infinite; }
+        .depth-blink { animation: status-blink 2.2s ease-in-out infinite; }
         .underwater-entry { opacity: 0; }
-        #deck-manifest.revealed .underwater-entry { animation: underwater-fadein 0.85s ease forwards; }
+        #deck-manifest.revealed .underwater-entry { animation: space-entry-fadein 0.85s ease forwards; }
         .deck-panel { cursor: pointer; transition: transform 0.3s ease, box-shadow 0.3s ease; }
         .deck-panel:hover { transform: translateY(-6px); box-shadow: 0 28px 70px rgba(0,0,0,0.6); }
         .deck-panel-flare { position: absolute; inset: 0; pointer-events: none; opacity: 0; transition: opacity 0.4s ease; }
@@ -204,62 +193,11 @@
         }
         .deck-panel:hover .enter-deck-btn { letter-spacing: 0.2em; background: rgba(255,255,255,0.04); }
 
-        /* ════════════════════════════════════════════ */
-        /* SUBMERSION SECTION                           */
-        /* ════════════════════════════════════════════ */
-        @keyframes wave-drift {
-            0%   { d: path('M0,30 C240,5  480,58 720,30 C960,5  1200,58 1440,30 L1440,80 L0,80 Z'); }
-            50%  { d: path('M0,40 C200,15 440,65 720,38 C1000,12 1240,62 1440,40 L1440,80 L0,80 Z'); }
-            100% { d: path('M0,30 C240,5  480,58 720,30 C960,5  1200,58 1440,30 L1440,80 L0,80 Z'); }
-        }
-        @keyframes shimmer-sweep {
-            0%   { background-position: -200% center; }
-            100% { background-position:  200% center; }
-        }
-        @keyframes surface-glint {
-            0%,100% { opacity: 0.05; transform: scaleX(0.6); }
-            50%     { opacity: 0.22; transform: scaleX(1.2); }
-        }
-        @keyframes fish-swim-r {
-            0%   { transform: translateX(-160px) translateY(0px);   opacity: 0; }
-            4%   { opacity: 1; }
-            48%  { transform: translateX(48vw)  translateY(-14px);  opacity: 1; }
-            52%  { transform: translateX(52vw)  translateY( 10px);  opacity: 1; }
-            96%  { opacity: 1; }
-            100% { transform: translateX(calc(100vw + 160px)) translateY(3px); opacity: 0; }
-        }
-        @keyframes fish-swim-l {
-            0%   { transform: translateX(calc(100vw + 160px)) translateY(0px) scaleX(-1); opacity: 0; }
-            4%   { opacity: 0.8; }
-            50%  { transform: translateX(50vw)  translateY( 12px) scaleX(-1); opacity: 0.8; }
-            96%  { opacity: 0.8; }
-            100% { transform: translateX(-160px) translateY(-6px) scaleX(-1); opacity: 0; }
-        }
-        @keyframes bio-drift {
-            0%   { transform: translate(0px,   0px)   scale(1);    opacity: 0;    }
-            8%   { opacity: 0.8; }
-            50%  { transform: translate(22px, -40px)  scale(1.15); opacity: 0.5;  }
-            92%  { opacity: 0.15; }
-            100% { transform: translate(-12px,-90px)  scale(0.7);  opacity: 0;    }
-        }
-        .fish { position: absolute; pointer-events: none; }
-        .bio-orb {
-            position: absolute; border-radius: 50%; pointer-events: none;
-            filter: blur(3px);
-        }
-
-        /* ── WARM HORIZON SUN ── */
-        @keyframes sun-breathe {
-            0%,100% { opacity:0.72; transform:translateX(-50%) scale(1);    }
-            50%     { opacity:1;    transform:translateX(-50%) scale(1.07); }
-        }
         /* ── HUD PANEL ── */
         .hud-panel {
             clip-path: polygon(14px 0%,calc(100% - 14px) 0%,100% 14px,100% calc(100% - 14px),calc(100% - 14px) 100%,14px 100%,0% calc(100% - 14px),0% 14px);
         }
         .hud-panel:hover { filter: drop-shadow(0 0 22px var(--phover, rgba(0,163,255,0.28))); }
-        .hud-panel.tutor-card:hover { --phover: rgba(16,185,129,0.28); }
-        .hud-panel.beats-card:hover { --phover: rgba(168,85,247,0.28); }
         /* ── SCAN LINE inside panels ── */
         @keyframes hud-scan {
             0%   { top: 0%;   opacity: 0; }
@@ -297,17 +235,12 @@
     <!-- Navigation -->
     <nav class="fixed top-0 left-0 right-0 z-50 bg-slate-950/90 backdrop-blur-md border-b border-warp-500/20">
         <div class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
-            <a href="index.html" class="font-mono font-bold text-xl tracking-widest text-warp-400 relative">
+            <a href="index.html" class="font-mono font-bold text-xl tracking-widest text-warp-400">
                 NEPTUNE
-                <span class="absolute -bottom-1 left-0 h-px bg-gradient-to-r from-warp-500 to-warp-300 w-full opacity-60"></span>
             </a>
             <!-- HUD sector label -->
-            <span class="hidden lg:block font-mono text-warp-500/40 text-xs tracking-widest">NEPTUNE // BRIDGE_DECK</span>
+            <span class="hidden lg:block font-mono text-warp-500/40 text-xs tracking-widest">CAPT. ADAM J. LOVELL // NEPTUNE</span>
             <ul class="hidden md:flex items-center gap-8 text-sm font-medium text-slate-400">
-                <li><a href="index.html" class="text-warp-400 hover:text-warp-300 transition">Home</a></li>
-                <li><a href="website-development.html" class="hover:text-slate-100 transition">Web Dev</a></li>
-                <li><a href="tutoring.html" class="hover:text-slate-100 transition">Tutoring</a></li>
-                <li><a href="romulus-beats.html" class="hover:text-slate-100 transition">Romulus Beats</a></li>
                 <li><a href="reviews.html" class="hover:text-slate-100 transition">Reviews</a></li>
                 <li>
                     <a href="contact.html" class="ripple-btn px-4 py-2 bg-warp-500 text-white rounded-lg hover:bg-warp-600 transition">Contact</a>
@@ -320,8 +253,6 @@
         <div id="mobile-menu" class="md:hidden hidden border-t border-slate-800 px-6 py-4 space-y-4">
             <a href="index.html" class="block text-warp-400">Home</a>
             <a href="website-development.html" class="block">Web Dev</a>
-            <a href="tutoring.html" class="block">Tutoring</a>
-            <a href="romulus-beats.html" class="block">Romulus Beats</a>
             <a href="reviews.html" class="block">Reviews</a>
             <a href="contact.html" class="block text-warp-400 font-medium">Contact</a>
         </div>
@@ -340,7 +271,7 @@
 
         <!-- Boot sequence label -->
         <div id="boot-label" class="text-center mb-4 boot-hidden">
-            <span id="nautical-date" class="font-mono text-warp-500/60 text-xs tracking-[0.3em] uppercase">// NEPTUNE // CREATIVE VESSEL //</span>
+            <span id="nautical-date" class="font-mono text-warp-500/60 text-xs tracking-[0.3em] uppercase">// NEPTUNE // WEB DEVELOPMENT VESSEL //</span>
         </div>
 
         <div class="max-w-6xl mx-auto text-center relative">
@@ -349,7 +280,7 @@
                 <span class="hero-gradient">Neptune</span>
             </h1>
             <p id="boot-sub" class="boot-hidden text-slate-400 max-w-xl mx-auto mb-16 leading-relaxed">
-                <span class="font-mono text-sm text-warp-500/50 tracking-widest block">// Some sail the surface. Neptune goes deeper. //</span>
+                <span class="font-mono text-sm text-warp-500/50 tracking-widest block">// Need a website built? Send the signal. Neptune comes to you. //</span>
             </p>
             <div id="boot-cta" class="boot-hidden flex flex-wrap gap-4 justify-center">
                 <a href="contact.html" class="flare-container ripple-btn relative px-8 py-4 bg-warp-500 text-white rounded-xl font-semibold hover:bg-warp-600 transition shadow-lg shadow-warp-500/25">
@@ -368,172 +299,133 @@
             <a href="reviews.html" id="boot-reviews-link" class="boot-hidden inline-block mt-6 text-sm text-slate-500 hover:text-warp-400 transition">View all reviews →</a>
         </div>
 
-        <!-- Bottom warp divider -->
-        <div class="absolute bottom-0 left-0 right-0 warp-divider"></div>
+        <!-- Galaxy divider -->
+        <div style="position:absolute;bottom:0;left:0;right:0;height:100px;overflow:visible;z-index:5;">
+            <!-- Slowly rotating galaxy arms -->
+            <div style="position:absolute;top:50%;left:50%;width:900px;height:900px;margin-left:-450px;margin-top:-450px;border-radius:50%;background:conic-gradient(from 0deg, transparent 0deg, rgba(139,92,246,0.07) 28deg, transparent 56deg, rgba(88,28,135,0.09) 116deg, transparent 144deg, rgba(0,163,255,0.06) 204deg, transparent 232deg, rgba(139,92,246,0.08) 292deg, transparent 320deg);animation:galaxy-arm-rotate 80s linear infinite;pointer-events:none;"></div>
+            <!-- Galaxy core pulse -->
+            <div style="position:absolute;top:50%;left:50%;width:210px;height:210px;margin-left:-105px;margin-top:-105px;border-radius:50%;background:radial-gradient(ellipse at center, rgba(235,215,255,0.40) 0%, rgba(139,92,246,0.32) 18%, rgba(88,28,135,0.20) 38%, rgba(0,163,255,0.10) 58%, transparent 74%);animation:galaxy-core 5s ease-in-out infinite;pointer-events:none;"></div>
+            <!-- Horizon line -->
+            <div style="position:absolute;top:50%;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent 0%,rgba(139,92,246,0.22) 15%,rgba(167,139,250,0.62) 38%,rgba(235,215,255,0.92) 50%,rgba(167,139,250,0.62) 62%,rgba(139,92,246,0.22) 85%,transparent 100%);pointer-events:none;"></div>
+            <!-- Stars in the band -->
+            <svg class="absolute inset-0 w-full h-full pointer-events-none" viewBox="0 0 1440 100" preserveAspectRatio="none">
+                <circle cx="90"   cy="26" r="0.9" fill="rgba(255,255,255,0.70)"><animate attributeName="opacity" values="0.4;1;0.4"    dur="2.3s"             repeatCount="indefinite"/></circle>
+                <circle cx="230"  cy="72" r="0.7" fill="rgba(200,180,255,0.65)"><animate attributeName="opacity" values="0.3;0.9;0.3"  dur="3.5s" begin="1.1s" repeatCount="indefinite"/></circle>
+                <circle cx="380"  cy="38" r="1.0" fill="rgba(255,255,255,0.60)"><animate attributeName="opacity" values="0.45;1;0.45" dur="2.8s" begin="0.5s" repeatCount="indefinite"/></circle>
+                <circle cx="520"  cy="62" r="0.8" fill="rgba(180,160,255,0.55)"><animate attributeName="opacity" values="0.35;0.88;0.35" dur="4.1s" begin="2.0s" repeatCount="indefinite"/></circle>
+                <circle cx="660"  cy="22" r="1.1" fill="rgba(255,255,255,0.75)"><animate attributeName="opacity" values="0.5;1;0.5"   dur="1.9s" begin="0.3s" repeatCount="indefinite"/></circle>
+                <circle cx="780"  cy="78" r="0.8" fill="rgba(210,190,255,0.60)"><animate attributeName="opacity" values="0.4;0.95;0.4" dur="3.2s" begin="1.7s" repeatCount="indefinite"/></circle>
+                <circle cx="900"  cy="42" r="0.9" fill="rgba(255,255,255,0.65)"><animate attributeName="opacity" values="0.45;1;0.45" dur="2.6s" begin="0.9s" repeatCount="indefinite"/></circle>
+                <circle cx="1050" cy="58" r="0.7" fill="rgba(180,160,255,0.55)"><animate attributeName="opacity" values="0.3;0.85;0.3" dur="4.4s" begin="2.8s" repeatCount="indefinite"/></circle>
+                <circle cx="1190" cy="30" r="1.0" fill="rgba(255,255,255,0.70)"><animate attributeName="opacity" values="0.4;1;0.4"   dur="2.1s" begin="1.4s" repeatCount="indefinite"/></circle>
+                <circle cx="1330" cy="65" r="0.8" fill="rgba(210,185,255,0.58)"><animate attributeName="opacity" values="0.35;0.9;0.35" dur="3.8s" begin="2.2s" repeatCount="indefinite"/></circle>
+            </svg>
+        </div>
     </section>
 
     <!-- ═════════════════════════════════════════════════════ -->
-    <!-- SUBMERSION TRANSITION                                 -->
+    <!-- WARP CORRIDOR TRANSITION                              -->
     <!-- ═════════════════════════════════════════════════════ -->
-    <section id="submersion" class="relative overflow-hidden" style="height:280px; background:linear-gradient(180deg,#1c0d06 0%,#0e1826 28%,#061422 58%,#040e1c 100%);">
+    <section id="warp-corridor" class="relative overflow-hidden" style="height:280px; background:linear-gradient(180deg,#0d1321 0%,#080f1e 35%,#050c1a 65%,#030b17 100%);">
 
-        <!-- Warm setting sun — large amber orb on horizon -->
-        <!-- Hard solar disc -->
-        <div class="absolute pointer-events-none" style="top:-54px;left:50%;transform:translateX(-50%);width:180px;height:180px;border-radius:50%;background:radial-gradient(ellipse at center,rgba(255,210,80,0.96) 0%,rgba(255,160,40,0.88) 36%,rgba(255,100,20,0.55) 62%,transparent 78%);animation:sun-breathe 4.5s ease-in-out infinite;box-shadow:0 0 80px 40px rgba(255,140,20,0.28),0 0 160px 80px rgba(255,80,0,0.12);"></div>
-        <!-- Wide glow halo -->
-        <div class="absolute pointer-events-none" style="top:-72px;left:50%;transform:translateX(-50%);width:520px;height:220px;border-radius:50%;background:radial-gradient(ellipse at center bottom,rgba(255,130,20,0.28) 0%,rgba(255,80,10,0.12) 45%,transparent 72%);animation:sun-breathe 4.5s ease-in-out infinite;"></div>
-        <!-- Warm sky wash -->
-        <div class="absolute top-0 left-0 right-0 pointer-events-none" style="height:120px;background:linear-gradient(180deg,rgba(210,90,10,0.22) 0%,rgba(255,130,35,0.10) 45%,transparent 100%);"></div>
-        <!-- Horizon line glow -->
-        <div class="absolute pointer-events-none" style="top:32px;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent 0%,rgba(255,140,50,0.18) 20%,rgba(255,200,80,0.55) 50%,rgba(255,140,50,0.18) 80%,transparent 100%);"></div>
+        <!-- Nebula cloud — left -->
+        <div class="absolute pointer-events-none" style="top:-40px;left:-8%;width:55%;height:200%;background:radial-gradient(ellipse at 30% 50%,rgba(88,28,135,0.14) 0%,rgba(0,163,255,0.08) 40%,transparent 70%);animation:nebula-breathe 8s ease-in-out infinite;"></div>
+        <!-- Nebula cloud — right -->
+        <div class="absolute pointer-events-none" style="top:-20px;right:-6%;width:50%;height:180%;background:radial-gradient(ellipse at 70% 40%,rgba(0,163,255,0.10) 0%,rgba(139,92,246,0.06) 45%,transparent 70%);animation:nebula-breathe 11s ease-in-out 3s infinite;"></div>
 
-        <!-- Animated water surface SVG -->
-        <div class="absolute" style="top:28px;left:0;right:0;">
-            <svg id="wave-svg" viewBox="0 0 1440 80" preserveAspectRatio="none" style="width:100%;height:80px;">
+        <!-- Distant ringed planet -->
+        <div class="absolute pointer-events-none" style="top:22px;right:18%;width:52px;height:52px;border-radius:50%;background:radial-gradient(ellipse at 35% 30%,rgba(100,150,220,0.55) 0%,rgba(40,80,160,0.40) 45%,rgba(10,20,60,0.20) 75%,transparent 100%);box-shadow:0 0 28px 8px rgba(60,130,255,0.12);"></div>
+        <div class="absolute pointer-events-none" style="top:40px;right:calc(18% - 14px);width:80px;height:12px;border-radius:50%;border:1px solid rgba(100,160,255,0.22);transform:rotateX(62deg);"></div>
+
+        <!-- Static star field SVG -->
+        <svg class="absolute inset-0 w-full h-full pointer-events-none" viewBox="0 0 1440 280" preserveAspectRatio="xMidYMid slice">
+            <circle cx="72"   cy="28"  r="1"   fill="rgba(255,255,255,0.75)"><animate attributeName="opacity" values="0.6;1;0.6"   dur="2.8s" repeatCount="indefinite"/></circle>
+            <circle cx="195"  cy="62"  r="0.8" fill="rgba(255,255,255,0.55)"><animate attributeName="opacity" values="0.4;0.9;0.4"  dur="3.6s" begin="1.2s" repeatCount="indefinite"/></circle>
+            <circle cx="340"  cy="18"  r="1.2" fill="rgba(255,255,255,0.80)"><animate attributeName="opacity" values="0.5;1;0.5"   dur="2.2s" begin="0.4s" repeatCount="indefinite"/></circle>
+            <circle cx="480"  cy="92"  r="0.7" fill="rgba(200,220,255,0.60)"><animate attributeName="opacity" values="0.4;0.85;0.4" dur="4.1s" begin="2.1s" repeatCount="indefinite"/></circle>
+            <circle cx="620"  cy="38"  r="1"   fill="rgba(255,255,255,0.70)"><animate attributeName="opacity" values="0.55;1;0.55" dur="3.0s" begin="0.8s" repeatCount="indefinite"/></circle>
+            <circle cx="750"  cy="110" r="0.9" fill="rgba(180,210,255,0.55)"><animate attributeName="opacity" values="0.4;0.9;0.4"  dur="5.2s" begin="1.5s" repeatCount="indefinite"/></circle>
+            <circle cx="870"  cy="52"  r="1.1" fill="rgba(255,255,255,0.72)"><animate attributeName="opacity" values="0.5;1;0.5"   dur="2.5s" begin="0.6s" repeatCount="indefinite"/></circle>
+            <circle cx="980"  cy="20"  r="0.8" fill="rgba(220,230,255,0.60)"><animate attributeName="opacity" values="0.45;0.9;0.45" dur="3.8s" begin="2.8s" repeatCount="indefinite"/></circle>
+            <circle cx="1100" cy="78"  r="1"   fill="rgba(255,255,255,0.68)"><animate attributeName="opacity" values="0.5;1;0.5"   dur="2.9s" begin="1.0s" repeatCount="indefinite"/></circle>
+            <circle cx="1240" cy="44"  r="0.9" fill="rgba(200,215,255,0.58)"><animate attributeName="opacity" values="0.4;0.85;0.4" dur="4.4s" begin="3.2s" repeatCount="indefinite"/></circle>
+            <circle cx="1380" cy="88"  r="1.2" fill="rgba(255,255,255,0.75)"><animate attributeName="opacity" values="0.55;1;0.55" dur="3.1s" begin="0.3s" repeatCount="indefinite"/></circle>
+            <circle cx="130"  cy="160" r="0.8" fill="rgba(180,200,255,0.45)"><animate attributeName="opacity" values="0.3;0.75;0.3" dur="4.8s" begin="2.0s" repeatCount="indefinite"/></circle>
+            <circle cx="290"  cy="195" r="1"   fill="rgba(255,255,255,0.55)"><animate attributeName="opacity" values="0.4;0.9;0.4"  dur="3.3s" begin="1.4s" repeatCount="indefinite"/></circle>
+            <circle cx="460"  cy="145" r="0.7" fill="rgba(200,220,255,0.50)"><animate attributeName="opacity" values="0.35;0.8;0.35" dur="5.5s" begin="3.5s" repeatCount="indefinite"/></circle>
+            <circle cx="640"  cy="215" r="1"   fill="rgba(255,255,255,0.60)"><animate attributeName="opacity" values="0.45;0.95;0.45" dur="2.6s" begin="0.7s" repeatCount="indefinite"/></circle>
+            <circle cx="800"  cy="170" r="0.9" fill="rgba(180,210,255,0.48)"><animate attributeName="opacity" values="0.35;0.8;0.35" dur="4.7s" begin="2.4s" repeatCount="indefinite"/></circle>
+            <circle cx="960"  cy="240" r="1.1" fill="rgba(255,255,255,0.62)"><animate attributeName="opacity" values="0.45;1;0.45"  dur="3.4s" begin="1.8s" repeatCount="indefinite"/></circle>
+            <circle cx="1150" cy="188" r="0.8" fill="rgba(210,225,255,0.52)"><animate attributeName="opacity" values="0.4;0.88;0.4" dur="5.0s" begin="4.1s" repeatCount="indefinite"/></circle>
+            <circle cx="1320" cy="155" r="1"   fill="rgba(255,255,255,0.68)"><animate attributeName="opacity" values="0.5;1;0.5"   dur="2.8s" begin="1.1s" repeatCount="indefinite"/></circle>
+            <!-- Warp speed streaks -->
+            <line x1="0"    y1="82"  x2="240"  y2="82"  stroke="rgba(0,163,255,0.08)" stroke-width="0.5"><animate attributeName="x2" values="0;300;0"       dur="6s"      repeatCount="indefinite"/><animate attributeName="opacity" values="0;0.12;0" dur="6s"      repeatCount="indefinite"/></line>
+            <line x1="1440" y1="145" x2="1200" y2="145" stroke="rgba(0,163,255,0.07)" stroke-width="0.5"><animate attributeName="x2" values="1440;1140;1440" dur="8s" begin="2s" repeatCount="indefinite"/><animate attributeName="opacity" values="0;0.10;0" dur="8s" begin="2s" repeatCount="indefinite"/></line>
+            <line x1="0"    y1="200" x2="180"  y2="200" stroke="rgba(180,130,255,0.06)" stroke-width="0.5"><animate attributeName="x2" values="0;260;0"      dur="7s" begin="1s" repeatCount="indefinite"/><animate attributeName="opacity" values="0;0.09;0" dur="7s" begin="1s" repeatCount="indefinite"/></line>
+        </svg>
+
+        <!-- HUD crossing text -->
+        <div class="absolute pointer-events-none" style="top:50%;left:50%;transform:translate(-50%,-50%);white-space:nowrap;">
+            <span class="font-mono text-xs tracking-[0.4em]" style="color:rgba(0,163,255,0.15);">◄ APPROACHING SECTOR: DEEP FIELD ►</span>
+        </div>
+
+        <!-- Depth gradient into next section -->
+        <div class="absolute inset-0 pointer-events-none" style="background:linear-gradient(180deg,transparent 0%,rgba(3,11,23,0.0) 50%,rgba(3,11,23,0.95) 100%);"></div>
+    </section>
+
+    <!-- ═════════════════════════════════════════════════════ -->
+    <!-- DECK MANIFEST — SPACE HUD                            -->
+    <!-- ═════════════════════════════════════════════════════ -->
+    <section id="deck-manifest" class="relative overflow-hidden" style="min-height:100vh; background:linear-gradient(180deg,#030b17 0%,#040d1c 20%,#03091a 50%,#020810 80%,#010609 100%);">
+
+        <!-- Nebula ambience — top left -->
+        <div class="absolute pointer-events-none" style="top:-10%;left:-5%;width:60%;height:80%;background:radial-gradient(ellipse at 20% 20%,rgba(88,28,135,0.10) 0%,rgba(0,163,255,0.06) 45%,transparent 70%);animation:nebula-breathe 12s ease-in-out infinite;"></div>
+        <!-- Nebula ambience — bottom right -->
+        <div class="absolute pointer-events-none" style="bottom:-10%;right:-5%;width:55%;height:75%;background:radial-gradient(ellipse at 80% 80%,rgba(0,163,255,0.08) 0%,rgba(139,92,246,0.05) 50%,transparent 72%);animation:nebula-breathe 16s ease-in-out 4s infinite;"></div>
+
+        <!-- Star field (generated by JS) -->
+        <div id="star-field" class="absolute inset-0 pointer-events-none overflow-hidden"></div>
+
+        <!-- Distant galaxy cluster at bottom of viewport -->
+        <div class="absolute bottom-0 left-0 right-0 pointer-events-none" style="height:200px;overflow:hidden;">
+            <svg viewBox="0 0 1440 200" preserveAspectRatio="xMidYMax meet" style="width:100%;height:100%;">
                 <defs>
-                    <linearGradient id="waveGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-                        <stop offset="0%"   stop-color="rgba(0,163,255,0.28)"/>
+                    <radialGradient id="galaxyGlow" cx="50%" cy="100%" r="60%">
+                        <stop offset="0%"   stop-color="rgba(0,163,255,0.08)"/>
+                        <stop offset="60%"  stop-color="rgba(88,28,135,0.04)"/>
                         <stop offset="100%" stop-color="rgba(0,163,255,0)"/>
-                    </linearGradient>
+                    </radialGradient>
+                    <filter id="star-glow" x="-100%" y="-100%" width="300%" height="300%">
+                        <feGaussianBlur stdDeviation="1.5" result="b"/>
+                        <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+                    </filter>
                 </defs>
-                <path id="wave1" d="M0,30 C240,5 480,58 720,30 C960,5 1200,58 1440,30 L1440,80 L0,80 Z" fill="url(#waveGrad)"/>
-                <path id="wave2" d="M0,40 C180,62 420,14 720,42 C1020,70 1260,18 1440,40 L1440,80 L0,80 Z" fill="rgba(0,163,255,0.07)"/>
-                <!-- Surface glints — catch the amber sun -->
-                <ellipse cx="320"  cy="31" rx="90"  ry="4" fill="rgba(255,210,120,0.12)"><animate attributeName="opacity" values="0.05;0.22;0.05" dur="3.2s" repeatCount="indefinite"/></ellipse>
-                <ellipse cx="720"  cy="30" rx="160" ry="5" fill="rgba(255,220,100,0.09)"><animate attributeName="opacity" values="0.07;0.28;0.07" dur="2.4s" begin="0.9s" repeatCount="indefinite"/></ellipse>
-                <ellipse cx="1180" cy="31" rx="80"  ry="3" fill="rgba(255,200,80,0.08)"><animate attributeName="opacity" values="0.04;0.18;0.04" dur="4.1s" begin="0.6s" repeatCount="indefinite"/></ellipse>
+                <!-- Distant nebula glow -->
+                <ellipse cx="720"  cy="200" rx="380" ry="80"  fill="url(#galaxyGlow)"/>
+                <ellipse cx="280"  cy="195" rx="140" ry="30"  fill="rgba(0,163,255,0.04)"><animate attributeName="opacity" values="0.5;1;0.5"   dur="8s"  repeatCount="indefinite"/></ellipse>
+                <ellipse cx="1160" cy="195" rx="140" ry="30"  fill="rgba(139,92,246,0.04)"><animate attributeName="opacity" values="0.5;1;0.5"   dur="10s" begin="3s" repeatCount="indefinite"/></ellipse>
+                <!-- Deep-field stars -->
+                <circle cx="120"  cy="155" r="1.2" fill="rgba(255,255,255,0.55)" filter="url(#star-glow)"><animate attributeName="opacity" values="0.4;0.9;0.4"   dur="3.5s"            repeatCount="indefinite"/></circle>
+                <circle cx="290"  cy="132" r="0.9" fill="rgba(200,220,255,0.50)"><animate attributeName="opacity" values="0.35;0.85;0.35" dur="4.8s" begin="1.2s" repeatCount="indefinite"/></circle>
+                <circle cx="440"  cy="168" r="1.0" fill="rgba(255,255,255,0.60)" filter="url(#star-glow)"><animate attributeName="opacity" values="0.45;1;0.45"   dur="2.9s" begin="0.4s" repeatCount="indefinite"/></circle>
+                <circle cx="590"  cy="148" r="0.8" fill="rgba(180,210,255,0.48)"><animate attributeName="opacity" values="0.3;0.75;0.3"   dur="5.6s" begin="2.5s" repeatCount="indefinite"/></circle>
+                <circle cx="720"  cy="170" r="1.5" fill="rgba(255,255,255,0.62)" filter="url(#star-glow)"><animate attributeName="opacity" values="0.5;1;0.5"    dur="2.4s" begin="0.9s" repeatCount="indefinite"/></circle>
+                <circle cx="860"  cy="142" r="0.9" fill="rgba(220,230,255,0.52)"><animate attributeName="opacity" values="0.35;0.82;0.35" dur="4.2s" begin="3.1s" repeatCount="indefinite"/></circle>
+                <circle cx="1000" cy="162" r="1.1" fill="rgba(255,255,255,0.58)" filter="url(#star-glow)"><animate attributeName="opacity" values="0.42;0.95;0.42" dur="3.7s" begin="1.7s" repeatCount="indefinite"/></circle>
+                <circle cx="1150" cy="150" r="0.8" fill="rgba(200,215,255,0.48)"><animate attributeName="opacity" values="0.3;0.78;0.3"   dur="5.1s" begin="4.0s" repeatCount="indefinite"/></circle>
+                <circle cx="1310" cy="165" r="1.2" fill="rgba(255,255,255,0.60)" filter="url(#star-glow)"><animate attributeName="opacity" values="0.45;0.95;0.45" dur="3.1s" begin="0.6s" repeatCount="indefinite"/></circle>
+                <!-- Asteroid/debris silhouettes -->
+                <ellipse cx="180"  cy="198" rx="22" ry="7"  fill="rgba(2,6,14,0.96)"/>
+                <ellipse cx="380"  cy="199" rx="16" ry="5"  fill="rgba(3,7,16,0.94)"/>
+                <ellipse cx="650"  cy="199" rx="18" ry="6"  fill="rgba(2,6,14,0.96)"/>
+                <ellipse cx="790"  cy="198" rx="14" ry="5"  fill="rgba(3,8,17,0.92)"/>
+                <ellipse cx="1060" cy="199" rx="20" ry="6"  fill="rgba(2,6,14,0.96)"/>
+                <ellipse cx="1280" cy="198" rx="25" ry="8"  fill="rgba(2,6,14,0.96)"/>
             </svg>
         </div>
 
-        <!-- Caustic shafts (warm-tinted near surface, cool below) -->
-        <div class="absolute" style="top:80px;left:0;right:0;bottom:0;overflow:hidden;pointer-events:none;">
-            <div class="caustic-ray" style="left:15%; animation-duration:7s;"></div>
-            <div class="caustic-ray" style="left:38%; animation-duration:10s; animation-delay:2s;"></div>
-            <div class="caustic-ray" style="left:62%; animation-duration:8s;  animation-delay:4.1s;"></div>
-            <div class="caustic-ray" style="left:83%; animation-duration:9s;  animation-delay:1.5s;"></div>
-        </div>
-
-        <!-- Warm gold shimmer at waterline -->
-        <div class="absolute pointer-events-none" style="top:36px;left:0;right:0;height:6px;background:linear-gradient(90deg,transparent 0%,rgba(255,200,80,0.22) 25%,rgba(255,220,100,0.65) 50%,rgba(255,200,80,0.22) 75%,transparent 100%);background-size:200% 100%;animation:shimmer-sweep 3.8s linear infinite;"></div>
-
-        <!-- Depth gradient overlay -->
-        <div class="absolute inset-0 pointer-events-none" style="background:linear-gradient(180deg,transparent 0%,rgba(4,14,28,0.0) 42%,rgba(4,14,28,0.92) 100%);"></div>
-    </section>
-
-    <!-- ═════════════════════════════════════════════════════ -->
-    <!-- DECK MANIFEST — UNDERWATER HUD                       -->
-    <!-- ═════════════════════════════════════════════════════ -->
-    <section id="deck-manifest" class="relative overflow-hidden" style="min-height:100vh; background:linear-gradient(180deg,#040e1c 0%,#051525 12%,#040f1e 40%,#030b17 70%,#02080f 100%);">
-
-        <!-- Water surface (looking up from below) -->
-        <div class="absolute top-0 left-0 right-0 pointer-events-none overflow-hidden" style="height:90px;">
-            <svg viewBox="0 0 1440 90" preserveAspectRatio="none" style="width:100%;height:100%;">
-                <path d="M0,45 C240,10 480,80 720,45 C960,10 1200,75 1440,45 L1440,0 L0,0 Z" fill="#0d1321"/>
-                <path d="M0,60 C300,28 600,82 900,55 C1150,32 1320,70 1440,60 L1440,0 L0,0 Z" fill="rgba(13,19,33,0.55)"/>
-            </svg>
-        </div>
-
-        <!-- Caustic light shafts from the surface above -->
-        <div class="absolute top-0 left-0 right-0 pointer-events-none overflow-hidden" style="height:58%;">
-            <div class="caustic-ray" style="left:8%;  animation-duration:9s;  animation-delay:0s;"></div>
-            <div class="caustic-ray" style="left:22%; animation-duration:12s; animation-delay:2.5s;"></div>
-            <div class="caustic-ray" style="left:46%; animation-duration:8s;  animation-delay:5.2s;"></div>
-            <div class="caustic-ray" style="left:64%; animation-duration:13s; animation-delay:1.1s;"></div>
-            <div class="caustic-ray" style="left:80%; animation-duration:10s; animation-delay:3.8s;"></div>
-            <div class="caustic-ray" style="left:93%; animation-duration:11s; animation-delay:6.4s;"></div>
-        </div>
-
-        <!-- Bubble field (generated by JS) -->
-        <div id="bubble-field" class="absolute inset-0 pointer-events-none overflow-hidden"></div>
-
-        <!-- Fish layer (generated by JS) -->
-        <div id="fish-layer" class="absolute inset-0 pointer-events-none overflow-hidden"></div>
-
-        <!-- Seabed architecture — kelp, coral, anemones -->
-        <div class="absolute bottom-0 left-0 right-0 pointer-events-none" style="height:250px;overflow:hidden;">
-            <svg viewBox="0 0 1440 250" preserveAspectRatio="xMidYMax meet" style="width:100%;height:100%;">
-                <!-- Rocky base silhouette -->
-                <path d="M0,182 C65,162 125,192 205,170 C285,148 340,185 430,164 C520,143 572,178 668,158 C768,138 825,174 938,154 C1042,136 1098,172 1182,152 C1266,132 1352,168 1440,148 L1440,250 L0,250 Z" fill="rgba(4,10,20,0.98)"/>
-                <path d="M0,200 C95,186 175,205 285,190 C395,175 475,200 595,186 C715,172 795,198 912,184 C1032,170 1120,195 1268,182 C1356,175 1402,192 1440,188 L1440,250 L0,250 Z" fill="rgba(2,6,14,0.99)"/>
-
-                <!-- KELP / SEAWEED — 9 strands -->
-                <g><animateTransform attributeName="transform" type="rotate" values="-5 88 172;5 88 172;-5 88 172" keyTimes="0;0.5;1" calcMode="spline" keySplines="0.45 0 0.55 1;0.45 0 0.55 1" dur="7s" repeatCount="indefinite"/>
-                    <path d="M88,172 C86,150 91,128 84,106 C79,88 86,68 80,48 C76,32 83,16 77,2" fill="none" stroke="rgba(16,185,129,0.45)" stroke-width="2.8" stroke-linecap="round"/>
-                    <path d="M85,134 C75,123 67,118 62,110" fill="none" stroke="rgba(16,185,129,0.3)" stroke-width="1.8" stroke-linecap="round"/>
-                    <path d="M82,108 C93,97 101,92 105,84" fill="none" stroke="rgba(16,185,129,0.3)" stroke-width="1.8" stroke-linecap="round"/>
-                    <path d="M80,78 C70,67 63,62 58,54" fill="none" stroke="rgba(16,185,129,0.22)" stroke-width="1.5" stroke-linecap="round"/>
-                </g>
-                <g><animateTransform attributeName="transform" type="rotate" values="4 152 176;-5 152 176;4 152 176" keyTimes="0;0.5;1" calcMode="spline" keySplines="0.45 0 0.55 1;0.45 0 0.55 1" dur="5.5s" repeatCount="indefinite"/>
-                    <path d="M152,176 C150,158 155,140 148,122 C143,106 149,90 145,73" fill="none" stroke="rgba(56,189,248,0.4)" stroke-width="2.2" stroke-linecap="round"/>
-                    <path d="M149,144 C139,134 131,130 127,123" fill="none" stroke="rgba(56,189,248,0.26)" stroke-width="1.6" stroke-linecap="round"/>
-                    <path d="M147,118 C157,108 164,104 168,97" fill="none" stroke="rgba(56,189,248,0.26)" stroke-width="1.6" stroke-linecap="round"/>
-                </g>
-                <g><animateTransform attributeName="transform" type="rotate" values="-6 312 166;6 312 166;-6 312 166" keyTimes="0;0.5;1" calcMode="spline" keySplines="0.45 0 0.55 1;0.45 0 0.55 1" dur="8.5s" repeatCount="indefinite"/>
-                    <path d="M312,166 C310,142 315,118 308,96 C302,76 309,54 303,34 C298,18 305,4 299,0" fill="none" stroke="rgba(16,185,129,0.42)" stroke-width="3.2" stroke-linecap="round"/>
-                    <path d="M309,128 C298,116 289,112 284,104" fill="none" stroke="rgba(16,185,129,0.28)" stroke-width="2" stroke-linecap="round"/>
-                    <path d="M306,100 C317,89 325,85 330,77" fill="none" stroke="rgba(16,185,129,0.28)" stroke-width="2" stroke-linecap="round"/>
-                    <path d="M304,72 C294,61 287,56 282,48" fill="none" stroke="rgba(16,185,129,0.22)" stroke-width="1.5" stroke-linecap="round"/>
-                    <path d="M301,46 C312,36 320,32 324,26" fill="none" stroke="rgba(16,185,129,0.2)" stroke-width="1.5" stroke-linecap="round"/>
-                </g>
-                <g><animateTransform attributeName="transform" type="rotate" values="5 440 162;-5 440 162;5 440 162" keyTimes="0;0.5;1" calcMode="spline" keySplines="0.45 0 0.55 1;0.45 0 0.55 1" dur="6.8s" repeatCount="indefinite"/>
-                    <path d="M440,162 C438,143 443,124 436,107 C431,91 437,74 432,57" fill="none" stroke="rgba(56,189,248,0.38)" stroke-width="2.4" stroke-linecap="round"/>
-                    <path d="M437,130 C427,120 419,116 414,108" fill="none" stroke="rgba(56,189,248,0.24)" stroke-width="1.6" stroke-linecap="round"/>
-                    <path d="M434,105 C445,95 452,91 456,85" fill="none" stroke="rgba(56,189,248,0.24)" stroke-width="1.6" stroke-linecap="round"/>
-                </g>
-                <g><animateTransform attributeName="transform" type="rotate" values="-4 672 156;4 672 156;-4 672 156" keyTimes="0;0.5;1" calcMode="spline" keySplines="0.45 0 0.55 1;0.45 0 0.55 1" dur="9.2s" repeatCount="indefinite"/>
-                    <path d="M672,156 C670,130 675,104 668,80 C662,60 669,38 663,18" fill="none" stroke="rgba(16,185,129,0.44)" stroke-width="3" stroke-linecap="round"/>
-                    <path d="M669,120 C658,108 649,104 644,96" fill="none" stroke="rgba(16,185,129,0.28)" stroke-width="2" stroke-linecap="round"/>
-                    <path d="M666,92 C677,81 685,77 690,69" fill="none" stroke="rgba(16,185,129,0.28)" stroke-width="2" stroke-linecap="round"/>
-                    <path d="M664,64 C654,53 647,48 642,41" fill="none" stroke="rgba(16,185,129,0.22)" stroke-width="1.5" stroke-linecap="round"/>
-                </g>
-                <g><animateTransform attributeName="transform" type="rotate" values="6 810 168;-4 810 168;6 810 168" keyTimes="0;0.5;1" calcMode="spline" keySplines="0.45 0 0.55 1;0.45 0 0.55 1" dur="7.8s" repeatCount="indefinite"/>
-                    <path d="M810,168 C808,150 813,132 806,114 C801,99 807,82 802,65" fill="none" stroke="rgba(0,163,255,0.38)" stroke-width="2.2" stroke-linecap="round"/>
-                    <path d="M807,138 C797,127 789,123 784,116" fill="none" stroke="rgba(0,163,255,0.24)" stroke-width="1.6" stroke-linecap="round"/>
-                    <path d="M805,112 C815,102 822,98 827,92" fill="none" stroke="rgba(0,163,255,0.24)" stroke-width="1.6" stroke-linecap="round"/>
-                </g>
-                <g><animateTransform attributeName="transform" type="rotate" values="-5 1022 158;5 1022 158;-5 1022 158" keyTimes="0;0.5;1" calcMode="spline" keySplines="0.45 0 0.55 1;0.45 0 0.55 1" dur="8.8s" repeatCount="indefinite"/>
-                    <path d="M1022,158 C1020,134 1025,110 1018,88 C1012,68 1019,46 1013,26" fill="none" stroke="rgba(16,185,129,0.4)" stroke-width="2.9" stroke-linecap="round"/>
-                    <path d="M1019,122 C1008,110 999,106 994,98" fill="none" stroke="rgba(16,185,129,0.26)" stroke-width="1.8" stroke-linecap="round"/>
-                    <path d="M1016,95 C1027,84 1035,80 1040,72" fill="none" stroke="rgba(16,185,129,0.26)" stroke-width="1.8" stroke-linecap="round"/>
-                    <path d="M1014,68 C1004,57 997,52 992,45" fill="none" stroke="rgba(16,185,129,0.2)" stroke-width="1.5" stroke-linecap="round"/>
-                </g>
-                <g><animateTransform attributeName="transform" type="rotate" values="4 1282 165;-5 1282 165;4 1282 165" keyTimes="0;0.5;1" calcMode="spline" keySplines="0.45 0 0.55 1;0.45 0 0.55 1" dur="6.2s" repeatCount="indefinite"/>
-                    <path d="M1282,165 C1280,148 1285,130 1278,112 C1273,97 1279,80 1274,63" fill="none" stroke="rgba(56,189,248,0.4)" stroke-width="2.4" stroke-linecap="round"/>
-                    <path d="M1279,135 C1269,124 1261,120 1256,113" fill="none" stroke="rgba(56,189,248,0.26)" stroke-width="1.6" stroke-linecap="round"/>
-                    <path d="M1277,109 C1287,99 1294,95 1298,89" fill="none" stroke="rgba(56,189,248,0.26)" stroke-width="1.6" stroke-linecap="round"/>
-                </g>
-                <g><animateTransform attributeName="transform" type="rotate" values="-3 1385 158;5 1385 158;-3 1385 158" keyTimes="0;0.5;1" calcMode="spline" keySplines="0.45 0 0.55 1;0.45 0 0.55 1" dur="5.2s" repeatCount="indefinite"/>
-                    <path d="M1385,158 C1383,143 1387,127 1381,111 C1377,98 1382,82 1378,68" fill="none" stroke="rgba(16,185,129,0.34)" stroke-width="2" stroke-linecap="round"/>
-                    <path d="M1382,129 C1373,119 1366,115 1362,109" fill="none" stroke="rgba(16,185,129,0.21)" stroke-width="1.5" stroke-linecap="round"/>
-                </g>
-
-                <!-- CORAL formations (violet/purple branching) -->
-                <g transform="translate(205,168)"><path d="M0,0 L2,-26 M2,-26 L-11,-46 M2,-26 L15,-44 M-11,-46 L-19,-60 M-11,-46 L-4,-61 M15,-44 L11,-58 M15,-44 L23,-57" fill="none" stroke="rgba(168,85,247,0.48)" stroke-width="2.4" stroke-linecap="round"/><circle cx="-19" cy="-60" r="2.8" fill="rgba(168,85,247,0.55)"/><circle cx="-4" cy="-61" r="2.2" fill="rgba(168,85,247,0.45)"/><circle cx="11" cy="-58" r="2.2" fill="rgba(168,85,247,0.45)"/><circle cx="23" cy="-57" r="2.8" fill="rgba(168,85,247,0.55)"/></g>
-                <g transform="translate(560,160)"><path d="M0,0 L1,-30 M1,-30 L-13,-52 M1,-30 L16,-50 M-13,-52 L-23,-67 M-13,-52 L-6,-68 M16,-50 L12,-66 M16,-50 L25,-64" fill="none" stroke="rgba(168,85,247,0.44)" stroke-width="2.5" stroke-linecap="round"/><circle cx="-23" cy="-67" r="3" fill="rgba(168,85,247,0.58)"/><circle cx="-6" cy="-68" r="2.2" fill="rgba(168,85,247,0.45)"/><circle cx="12" cy="-66" r="2.2" fill="rgba(168,85,247,0.45)"/><circle cx="25" cy="-64" r="3" fill="rgba(168,85,247,0.58)"/></g>
-                <g transform="translate(904,156)"><path d="M0,0 L-2,-28 M-2,-28 L-14,-48 M-2,-28 L13,-46 M-14,-48 L-21,-62 M-14,-48 L-7,-63 M13,-46 L9,-61 M13,-46 L21,-59" fill="none" stroke="rgba(168,85,247,0.42)" stroke-width="2.2" stroke-linecap="round"/><circle cx="-21" cy="-62" r="2.6" fill="rgba(168,85,247,0.52)"/><circle cx="-7" cy="-63" r="2" fill="rgba(168,85,247,0.42)"/><circle cx="9" cy="-61" r="2" fill="rgba(168,85,247,0.42)"/><circle cx="21" cy="-59" r="2.6" fill="rgba(168,85,247,0.52)"/></g>
-                <g transform="translate(1200,162)"><path d="M0,0 L2,-24 M2,-24 L-9,-43 M2,-24 L14,-41 M-9,-43 L-17,-56 M-9,-43 L-3,-58 M14,-41 L10,-56 M14,-41 L21,-54" fill="none" stroke="rgba(168,85,247,0.44)" stroke-width="2" stroke-linecap="round"/><circle cx="-17" cy="-56" r="2.4" fill="rgba(168,85,247,0.5)"/><circle cx="-3" cy="-58" r="2" fill="rgba(168,85,247,0.4)"/><circle cx="10" cy="-56" r="2" fill="rgba(168,85,247,0.4)"/><circle cx="21" cy="-54" r="2.4" fill="rgba(168,85,247,0.5)"/></g>
-
-                <!-- ANEMONES — glowing, pulsing tips -->
-                <g transform="translate(382,163)"><path d="M0,0 L-6,-18 M0,0 L-2,-21 M0,0 L4,-20 M0,0 L8,-17 M0,0 L-9,-15" fill="none" stroke="rgba(0,163,255,0.42)" stroke-width="1.6" stroke-linecap="round"/><circle cx="-6" cy="-18" r="3"><animate attributeName="r" values="2.5;3.8;2.5" dur="2.8s" repeatCount="indefinite"/><animate attributeName="fill" values="rgba(0,163,255,0.38);rgba(0,163,255,0.7);rgba(0,163,255,0.38)" dur="2.8s" repeatCount="indefinite"/></circle><circle cx="-2" cy="-21" r="2.5"><animate attributeName="r" values="2;3.2;2" dur="3.2s" begin="0.5s" repeatCount="indefinite"/><animate attributeName="fill" values="rgba(0,163,255,0.32);rgba(0,163,255,0.62);rgba(0,163,255,0.32)" dur="3.2s" begin="0.5s" repeatCount="indefinite"/></circle><circle cx="4" cy="-20" r="3"><animate attributeName="r" values="2.5;3.8;2.5" dur="2.5s" begin="1s" repeatCount="indefinite"/><animate attributeName="fill" values="rgba(0,163,255,0.38);rgba(0,163,255,0.7);rgba(0,163,255,0.38)" dur="2.5s" begin="1s" repeatCount="indefinite"/></circle><circle cx="8" cy="-17" r="2.5"><animate attributeName="r" values="2;3.2;2" dur="3s" begin="0.8s" repeatCount="indefinite"/><animate attributeName="fill" values="rgba(0,163,255,0.3);rgba(0,163,255,0.6);rgba(0,163,255,0.3)" dur="3s" begin="0.8s" repeatCount="indefinite"/></circle><circle cx="-9" cy="-15" r="2.5"><animate attributeName="r" values="2;3.2;2" dur="2.7s" begin="0.3s" repeatCount="indefinite"/><animate attributeName="fill" values="rgba(0,163,255,0.3);rgba(0,163,255,0.6);rgba(0,163,255,0.3)" dur="2.7s" begin="0.3s" repeatCount="indefinite"/></circle></g>
-                <g transform="translate(762,168)"><path d="M0,0 L-5,-16 M0,0 L-1,-19 M0,0 L5,-17 M0,0 L8,-14" fill="none" stroke="rgba(16,185,129,0.48)" stroke-width="1.6" stroke-linecap="round"/><circle cx="-5" cy="-16" r="3"><animate attributeName="r" values="2.4;3.6;2.4" dur="3s" repeatCount="indefinite"/><animate attributeName="fill" values="rgba(16,185,129,0.42);rgba(16,185,129,0.72);rgba(16,185,129,0.42)" dur="3s" repeatCount="indefinite"/></circle><circle cx="-1" cy="-19" r="2.5"><animate attributeName="r" values="2;3.2;2" dur="2.6s" begin="0.6s" repeatCount="indefinite"/><animate attributeName="fill" values="rgba(16,185,129,0.36);rgba(16,185,129,0.65);rgba(16,185,129,0.36)" dur="2.6s" begin="0.6s" repeatCount="indefinite"/></circle><circle cx="5" cy="-17" r="3"><animate attributeName="r" values="2.4;3.7;2.4" dur="3.4s" begin="1.1s" repeatCount="indefinite"/><animate attributeName="fill" values="rgba(16,185,129,0.42);rgba(16,185,129,0.72);rgba(16,185,129,0.42)" dur="3.4s" begin="1.1s" repeatCount="indefinite"/></circle><circle cx="8" cy="-14" r="2.2"><animate attributeName="r" values="1.8;2.8;1.8" dur="2.9s" begin="0.4s" repeatCount="indefinite"/><animate attributeName="fill" values="rgba(16,185,129,0.3);rgba(16,185,129,0.6);rgba(16,185,129,0.3)" dur="2.9s" begin="0.4s" repeatCount="indefinite"/></circle></g>
-                <g transform="translate(1105,160)"><path d="M0,0 L-7,-17 M0,0 L-2,-20 M0,0 L5,-18 M0,0 L9,-15 M0,0 L-10,-13" fill="none" stroke="rgba(0,163,255,0.4)" stroke-width="1.6" stroke-linecap="round"/><circle cx="-7" cy="-17" r="2.9"><animate attributeName="r" values="2.3;3.5;2.3" dur="3.1s" repeatCount="indefinite"/><animate attributeName="fill" values="rgba(0,163,255,0.36);rgba(0,163,255,0.68);rgba(0,163,255,0.36)" dur="3.1s" repeatCount="indefinite"/></circle><circle cx="-2" cy="-20" r="2.5"><animate attributeName="r" values="2;3;2" dur="2.7s" begin="0.8s" repeatCount="indefinite"/><animate attributeName="fill" values="rgba(0,163,255,0.3);rgba(0,163,255,0.6);rgba(0,163,255,0.3)" dur="2.7s" begin="0.8s" repeatCount="indefinite"/></circle><circle cx="5" cy="-18" r="2.9"><animate attributeName="r" values="2.3;3.5;2.3" dur="3.5s" begin="0.4s" repeatCount="indefinite"/><animate attributeName="fill" values="rgba(0,163,255,0.36);rgba(0,163,255,0.68);rgba(0,163,255,0.36)" dur="3.5s" begin="0.4s" repeatCount="indefinite"/></circle><circle cx="9" cy="-15" r="2.2"><animate attributeName="r" values="1.8;2.8;1.8" dur="2.4s" begin="1.2s" repeatCount="indefinite"/><animate attributeName="fill" values="rgba(0,163,255,0.28);rgba(0,163,255,0.56);rgba(0,163,255,0.28)" dur="2.4s" begin="1.2s" repeatCount="indefinite"/></circle><circle cx="-10" cy="-13" r="2.2"><animate attributeName="r" values="1.8;2.8;1.8" dur="3.3s" begin="0.9s" repeatCount="indefinite"/><animate attributeName="fill" values="rgba(0,163,255,0.28);rgba(0,163,255,0.56);rgba(0,163,255,0.28)" dur="3.3s" begin="0.9s" repeatCount="indefinite"/></circle></g>
-
-                <!-- Small boulders -->
-                <ellipse cx="488" cy="196" rx="30" ry="12" fill="rgba(5,11,22,0.92)" stroke="rgba(0,163,255,0.05)" stroke-width="1"/>
-                <ellipse cx="730" cy="204" rx="24" ry="10" fill="rgba(4,9,19,0.94)" stroke="rgba(0,163,255,0.04)" stroke-width="1"/>
-                <ellipse cx="1055" cy="198" rx="32" ry="13" fill="rgba(5,11,22,0.92)" stroke="rgba(0,163,255,0.05)" stroke-width="1"/>
-                <ellipse cx="248" cy="206" rx="19" ry="8" fill="rgba(4,9,19,0.93)"/>
-                <ellipse cx="1345" cy="202" rx="26" ry="11" fill="rgba(5,11,22,0.9)"/>
-                <!-- Seafloor ambient glow strip -->
-                <rect x="0" y="214" width="1440" height="36" fill="rgba(0,163,255,0.012)"/>
-            </svg>
-        </div>
-
-        <!-- Bioluminescent particles (generated by JS) -->
-        <div id="bio-layer" class="absolute inset-0 pointer-events-none overflow-hidden"></div>
-
-        <!-- Deep ocean vignette -->
-        <div class="absolute inset-0 pointer-events-none" style="background:radial-gradient(ellipse 85% 65% at 50% 50%, transparent 25%, rgba(2,8,15,0.7) 100%);"></div>
+        <!-- Deep space vignette -->
+        <div class="absolute inset-0 pointer-events-none" style="background:radial-gradient(ellipse 85% 65% at 50% 50%, transparent 25%, rgba(1,4,10,0.7) 100%);"></div>
 
         <!-- Sonar rings — centered pulse -->
         <div class="absolute inset-0 flex items-center justify-center pointer-events-none overflow-hidden">
@@ -560,7 +452,7 @@
             <!-- Telemetry status bar -->
             <div class="underwater-entry text-center mb-5" style="animation-delay:0.15s;">
                 <span class="font-mono text-xs tracking-widest" style="color:rgba(0,163,255,0.28);">
-                    ◈ &thinsp;DEPTH: 3,200M &nbsp;·&nbsp; PRESSURE: 320 ATM &nbsp;·&nbsp; HULL: 100% &nbsp;·&nbsp; SYSTEMS: NOMINAL&thinsp; ◈
+                    ◈ &thinsp;SECTOR: DEEP FIELD &nbsp;·&nbsp; SPEED: WARP 0.4 &nbsp;·&nbsp; HULL: 100% &nbsp;·&nbsp; SYSTEMS: NOMINAL&thinsp; ◈
                 </span>
             </div>
 
@@ -612,80 +504,17 @@
                     <div class="deck-panel-flare" style="background:radial-gradient(ellipse at 20% 20%, rgba(0,163,255,0.11) 0%, transparent 65%);"></div>
                 </a>
 
-                <!-- DECK BETA — Calculus Tutoring -->
-                <a href="tutoring.html" class="deck-panel tutor-card hud-panel underwater-entry group relative overflow-hidden" style="animation-delay:0.95s; border:1px solid rgba(16,185,129,0.22); transition:transform 0.3s ease,filter 0.3s ease,border-color 0.3s ease;min-height:420px;display:block;">
-                    <!-- Video background -->
-                    <video class="absolute inset-0 w-full h-full object-cover opacity-30 group-hover:opacity-45 transition-opacity duration-700" autoplay muted loop playsinline
-                        src="https://cdn.coverr.co/videos/coverr-teacher-in-class-5891/1080p.mp4"
-                        poster="https://images.unsplash.com/photo-1509062522246-3755977927d7?w=800&q=80&auto=format&fit=crop"
-                        onerror="this.style.display='none'">
-                    </video>
-                    <!-- Dark gradient overlay -->
-                    <div class="absolute inset-0" style="background:linear-gradient(180deg,rgba(2,14,10,0.5) 0%,rgba(2,14,10,0.75) 55%,rgba(2,8,16,0.96) 100%);"></div>
-                    <div class="hud-scan-line" style="background:linear-gradient(90deg,transparent,rgba(16,185,129,0.45),transparent);animation:hud-scan 6s linear 2.8s infinite;"></div>
-                    <span class="absolute" style="top:6px;left:6px;width:10px;height:10px;border-top:1px solid rgba(16,185,129,0.55);border-left:1px solid rgba(16,185,129,0.55);pointer-events:none;"></span>
-                    <span class="absolute" style="top:6px;right:6px;width:10px;height:10px;border-top:1px solid rgba(16,185,129,0.55);border-right:1px solid rgba(16,185,129,0.55);pointer-events:none;"></span>
-                    <span class="absolute" style="bottom:6px;left:6px;width:10px;height:10px;border-bottom:1px solid rgba(16,185,129,0.55);border-left:1px solid rgba(16,185,129,0.55);pointer-events:none;"></span>
-                    <span class="absolute" style="bottom:6px;right:6px;width:10px;height:10px;border-bottom:1px solid rgba(16,185,129,0.55);border-right:1px solid rgba(16,185,129,0.55);pointer-events:none;"></span>
-                    <div style="position:relative;z-index:2;height:3px;background:linear-gradient(90deg,transparent,#10b981,rgba(16,185,129,0.2));"></div>
-                    <div class="p-7 relative" style="z-index:2;">
-                        <div class="flex items-center gap-2 mb-5">
-                            <span class="depth-blink" style="width:7px;height:7px;border-radius:50%;background:#10b981;box-shadow:0 0 8px 2px rgba(16,185,129,0.9);display:inline-block;animation-delay:0.7s;"></span>
-                            <span class="font-mono text-tutor-500/40 text-xs tracking-widest">DECK_BETA · SVC_002</span>
-                        </div>
-                        <div class="w-14 h-14 rounded-xl mb-5 flex items-center justify-center transition-transform duration-300 group-hover:scale-110" style="background:rgba(16,185,129,0.09);border:1px solid rgba(16,185,129,0.25);">
-                            <svg class="w-6 h-6 text-tutor-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
-                        </div>
-                        <h3 class="font-display text-xl font-semibold mb-3 text-white group-hover:text-tutor-400 transition">Calculus Tutoring</h3>
-                        <p class="text-slate-400 text-sm leading-relaxed mb-8">Private AP calculus tutoring. Navigate complex equations with a captain who knows the charts.</p>
-                        <span class="enter-deck-btn" style="color:#10b981; border-color:rgba(16,185,129,0.35);">ENTER DECK →</span>
-                    </div>
-                    <div class="deck-panel-flare" style="background:radial-gradient(ellipse at 20% 20%, rgba(16,185,129,0.11) 0%, transparent 65%);"></div>
-                </a>
-
-                <!-- DECK GAMMA — Romulus Beats -->
-                <a href="romulus-beats.html" class="deck-panel beats-card hud-panel underwater-entry group relative overflow-hidden" style="animation-delay:1.15s; border:1px solid rgba(168,85,247,0.22); transition:transform 0.3s ease,filter 0.3s ease,border-color 0.3s ease;min-height:420px;display:block;">
-                    <!-- Video background -->
-                    <video class="absolute inset-0 w-full h-full object-cover opacity-30 group-hover:opacity-45 transition-opacity duration-700" autoplay muted loop playsinline
-                        src="https://cdn.coverr.co/videos/coverr-man-listening-to-music-with-headphones-5624/1080p.mp4"
-                        poster="https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=800&q=80&auto=format&fit=crop"
-                        onerror="this.style.display='none'">
-                    </video>
-                    <!-- Dark gradient overlay -->
-                    <div class="absolute inset-0" style="background:linear-gradient(180deg,rgba(10,4,22,0.5) 0%,rgba(10,4,22,0.75) 55%,rgba(2,8,16,0.96) 100%);"></div>
-                    <div class="hud-scan-line" style="background:linear-gradient(90deg,transparent,rgba(168,85,247,0.45),transparent);animation:hud-scan 4.8s linear 0.5s infinite;"></div>
-                    <span class="absolute" style="top:6px;left:6px;width:10px;height:10px;border-top:1px solid rgba(168,85,247,0.55);border-left:1px solid rgba(168,85,247,0.55);pointer-events:none;"></span>
-                    <span class="absolute" style="top:6px;right:6px;width:10px;height:10px;border-top:1px solid rgba(168,85,247,0.55);border-right:1px solid rgba(168,85,247,0.55);pointer-events:none;"></span>
-                    <span class="absolute" style="bottom:6px;left:6px;width:10px;height:10px;border-bottom:1px solid rgba(168,85,247,0.55);border-left:1px solid rgba(168,85,247,0.55);pointer-events:none;"></span>
-                    <span class="absolute" style="bottom:6px;right:6px;width:10px;height:10px;border-bottom:1px solid rgba(168,85,247,0.55);border-right:1px solid rgba(168,85,247,0.55);pointer-events:none;"></span>
-                    <div style="position:relative;z-index:2;height:3px;background:linear-gradient(90deg,transparent,#a855f7,rgba(168,85,247,0.2));"></div>
-                    <div class="p-7 relative" style="z-index:2;">
-                        <div class="flex items-center gap-2 mb-5">
-                            <span class="depth-blink" style="width:7px;height:7px;border-radius:50%;background:#a855f7;box-shadow:0 0 8px 2px rgba(168,85,247,0.9);display:inline-block;animation-delay:1.4s;"></span>
-                            <span class="font-mono text-beats-500/40 text-xs tracking-widest">DECK_GAMMA · SVC_003</span>
-                        </div>
-                        <div class="w-14 h-14 rounded-xl mb-5 flex items-center justify-center transition-transform duration-300 group-hover:scale-110" style="background:rgba(168,85,247,0.09);border:1px solid rgba(168,85,247,0.25);">
-                            <svg class="w-6 h-6 text-beats-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"/></svg>
-                        </div>
-                        <h3 class="font-display text-xl font-semibold mb-3 text-white group-hover:text-beats-400 transition">Romulus Beats</h3>
-                        <p class="text-slate-400 text-sm leading-relaxed mb-8">Fire beats. Professional instrumentals. License the sound that moves your ship forward.</p>
-                        <span class="enter-deck-btn" style="color:#a855f7; border-color:rgba(168,85,247,0.35);">ENTER DECK →</span>
-                    </div>
-                    <div class="deck-panel-flare" style="background:radial-gradient(ellipse at 20% 20%, rgba(168,85,247,0.11) 0%, transparent 65%);"></div>
-                </a>
-
             </div>
 
             <!-- Coordinates footer -->
             <div class="underwater-entry text-center mt-10" style="animation-delay:1.3s;">
                 <span class="font-mono text-xs tracking-widest" style="color:rgba(0,163,255,0.18);">
-                    LAT: 23°N &nbsp;·&nbsp; LON: 77°W &nbsp;·&nbsp; NEPTUNE_PRIME &nbsp;·&nbsp; ALL_DEPARTMENTS: READY_FOR_BOARDING
+                    SECTOR: DELTA-7 &nbsp;·&nbsp; BEARING: 023° &nbsp;·&nbsp; VESSEL: NEPTUNE_PRIME &nbsp;·&nbsp; STATUS: READY_FOR_BOARDING
                 </span>
             </div>
 
         </div>
 
-        <div class="absolute bottom-0 left-0 right-0 warp-divider opacity-40"></div>
     </section>
 
     <!-- ═══════════════════════════════════════════════════════════════ -->
@@ -800,85 +629,6 @@
             <div class="hud-corner hud-br" style="bottom:20px;right:20px;"></div>
         </div>
 
-        <!-- BETA SPOTLIGHT — Tutoring -->
-        <div id="spotlight-beta" class="spotlight-panel relative overflow-hidden flex items-center" style="min-height:100vh;background:linear-gradient(135deg,#021410 0%,#031e16 60%,#020e0a 100%);">
-            <video class="absolute inset-0 w-full h-full object-cover opacity-18" autoplay muted loop playsinline
-                src="https://cdn.coverr.co/videos/coverr-teacher-in-class-5891/1080p.mp4"
-                poster="https://images.unsplash.com/photo-1509062522246-3755977927d7?w=1600&q=80&auto=format&fit=crop"
-                onerror="this.style.display='none'">
-            </video>
-            <div class="absolute inset-0" style="background:linear-gradient(135deg,rgba(16,185,129,0.10) 0%,transparent 55%,rgba(16,185,129,0.05) 100%);"></div>
-            <div class="absolute left-0 top-0 bottom-0" style="width:3px;background:linear-gradient(180deg,transparent,#10b981,transparent);"></div>
-            <div class="relative z-10 max-w-6xl mx-auto px-8 md:px-16 w-full py-24 grid md:grid-cols-2 gap-16 items-center">
-                <div>
-                    <p class="font-mono text-tutor-500/35 text-xs tracking-[0.35em] mb-4">◄ DECK BETA · SVC_002 ►</p>
-                    <h3 class="font-display font-bold text-white mb-6" style="font-size:clamp(2.4rem,6vw,4.5rem);line-height:1.05;text-shadow:0 0 60px rgba(16,185,129,0.2);">Calculus<br>Tutoring</h3>
-                    <p class="text-slate-300 text-lg leading-relaxed mb-4 max-w-lg">AP Calc, Calc 1 &amp; 2, multivariable. Adam knows these charts — and he can chart yours.</p>
-                    <p class="text-slate-500 leading-relaxed mb-10 max-w-lg">One-on-one sessions. Concepts built from the ground up. No confusion tolerated.</p>
-                    <a href="tutoring.html" class="ripple-btn inline-flex items-center gap-3 px-8 py-4 font-mono text-sm tracking-widest text-white orbit-glow" style="background:rgba(16,185,129,0.10);border:1px solid rgba(16,185,129,0.42);border-radius:6px;--og:rgba(16,185,129,0.14);">
-                        BOARD DECK BETA <span style="opacity:0.6;">→</span>
-                    </a>
-                </div>
-                <div class="hidden md:block">
-                    <div class="border border-tutor-500/15 rounded-lg p-8" style="background:rgba(16,185,129,0.04);">
-                        <p class="font-mono text-tutor-500/30 text-xs tracking-widest mb-6">// SESSION SPECS</p>
-                        <div class="space-y-4">
-                            <div class="flex justify-between font-mono text-sm"><span class="text-slate-500">SUBJECTS</span><span class="text-tutor-400">AP Calc · Calc 1/2 · Multivar</span></div>
-                            <div class="h-px bg-tutor-500/08"></div>
-                            <div class="flex justify-between font-mono text-sm"><span class="text-slate-500">FORMAT</span><span class="text-tutor-400">1-on-1 · Online</span></div>
-                            <div class="h-px bg-tutor-500/08"></div>
-                            <div class="flex justify-between font-mono text-sm"><span class="text-slate-500">PACE</span><span class="text-tutor-400">Your pace. Results-driven.</span></div>
-                            <div class="h-px bg-tutor-500/08"></div>
-                            <div class="flex justify-between font-mono text-sm"><span class="text-slate-500">STATUS</span><span class="text-tutor-400 depth-blink">● OPEN FOR STUDENTS</span></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="hud-corner hud-tl" style="top:20px;left:20px;border-color:rgba(16,185,129,0.4);"></div>
-            <div class="hud-corner hud-tr" style="top:20px;right:20px;border-color:rgba(16,185,129,0.4);"></div>
-            <div class="hud-corner hud-bl" style="bottom:20px;left:20px;border-color:rgba(16,185,129,0.4);"></div>
-            <div class="hud-corner hud-br" style="bottom:20px;right:20px;border-color:rgba(16,185,129,0.4);"></div>
-        </div>
-
-        <!-- GAMMA SPOTLIGHT — Romulus Beats -->
-        <div id="spotlight-gamma" class="spotlight-panel relative overflow-hidden flex items-center" style="min-height:100vh;background:linear-gradient(135deg,#0e0218 0%,#160528 60%,#080114 100%);">
-            <video class="absolute inset-0 w-full h-full object-cover opacity-18" autoplay muted loop playsinline
-                src="https://cdn.coverr.co/videos/coverr-man-listening-to-music-with-headphones-5624/1080p.mp4"
-                poster="https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=1600&q=80&auto=format&fit=crop"
-                onerror="this.style.display='none'">
-            </video>
-            <div class="absolute inset-0" style="background:linear-gradient(135deg,rgba(168,85,247,0.10) 0%,transparent 55%,rgba(168,85,247,0.06) 100%);"></div>
-            <div class="absolute left-0 top-0 bottom-0" style="width:3px;background:linear-gradient(180deg,transparent,#a855f7,transparent);"></div>
-            <div class="relative z-10 max-w-6xl mx-auto px-8 md:px-16 w-full py-24 grid md:grid-cols-2 gap-16 items-center">
-                <div>
-                    <p class="font-mono text-beats-500/35 text-xs tracking-[0.35em] mb-4">◄ DECK GAMMA · SVC_003 ►</p>
-                    <h3 class="font-display font-bold text-white mb-6" style="font-size:clamp(2.4rem,6vw,4.5rem);line-height:1.05;text-shadow:0 0 60px rgba(168,85,247,0.2);">Romulus<br>Beats</h3>
-                    <p class="text-slate-300 text-lg leading-relaxed mb-4 max-w-lg">Instrumentals that hit different. Dark, cinematic, hard-hitting — built in the engine room of the Neptune.</p>
-                    <p class="text-slate-500 leading-relaxed mb-10 max-w-lg">License a beat. Build something that lasts. The catalogue is growing and the quality doesn't dip.</p>
-                    <a href="romulus-beats.html" class="ripple-btn inline-flex items-center gap-3 px-8 py-4 font-mono text-sm tracking-widest text-white orbit-glow" style="background:rgba(168,85,247,0.10);border:1px solid rgba(168,85,247,0.42);border-radius:6px;--og:rgba(168,85,247,0.14);">
-                        BOARD DECK GAMMA <span style="opacity:0.6;">→</span>
-                    </a>
-                </div>
-                <div class="hidden md:block">
-                    <div class="border border-beats-500/15 rounded-lg p-8" style="background:rgba(168,85,247,0.04);">
-                        <p class="font-mono text-beats-500/30 text-xs tracking-widest mb-6">// CATALOGUE SPECS</p>
-                        <div class="space-y-4">
-                            <div class="flex justify-between font-mono text-sm"><span class="text-slate-500">GENRE</span><span class="text-beats-400">Hip-Hop · Cinematic · Trap</span></div>
-                            <div class="h-px bg-beats-500/08"></div>
-                            <div class="flex justify-between font-mono text-sm"><span class="text-slate-500">LICENSE</span><span class="text-beats-400">Lease &amp; Exclusive available</span></div>
-                            <div class="h-px bg-beats-500/08"></div>
-                            <div class="flex justify-between font-mono text-sm"><span class="text-slate-500">FORMAT</span><span class="text-beats-400">MP3 · WAV · Trackout</span></div>
-                            <div class="h-px bg-beats-500/08"></div>
-                            <div class="flex justify-between font-mono text-sm"><span class="text-slate-500">STATUS</span><span class="text-beats-400 depth-blink">● CATALOGUE LIVE</span></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="hud-corner hud-tl" style="top:20px;left:20px;border-color:rgba(168,85,247,0.4);"></div>
-            <div class="hud-corner hud-tr" style="top:20px;right:20px;border-color:rgba(168,85,247,0.4);"></div>
-            <div class="hud-corner hud-bl" style="bottom:20px;left:20px;border-color:rgba(168,85,247,0.4);"></div>
-            <div class="hud-corner hud-br" style="bottom:20px;right:20px;border-color:rgba(168,85,247,0.4);"></div>
-        </div>
     </section>
 
     <!-- 3. BRIDGE CTA — contact, after all three services have been experienced -->
@@ -889,7 +639,7 @@
         <div class="max-w-2xl mx-auto relative z-10 scroll-reveal">
             <span class="font-mono text-warp-500/28 text-xs tracking-[0.4em] block mb-6">◈ BRIDGE COMMS ◈</span>
             <h2 class="font-display font-bold text-white mb-6" style="font-size:clamp(2rem,5vw,3.4rem);text-shadow:0 0 55px rgba(0,163,255,0.22);">Hail the Captain.</h2>
-            <p class="text-slate-400 text-lg mb-12 leading-relaxed">Got a project? A question? A beat you need licensed? The bridge is open.<br>Adam replies fast and doesn't waste your time.</p>
+            <p class="text-slate-400 text-lg mb-12 leading-relaxed">Got a project? A question? The bridge is open.<br>Adam replies fast and doesn't waste your time.</p>
             <div class="flex flex-wrap gap-4 justify-center">
                 <a href="contact.html" class="ripple-btn flare-container px-10 py-4 bg-warp-500 hover:bg-warp-600 text-white font-semibold rounded-xl shadow-lg shadow-warp-500/25 transition">
                     Send a Message
@@ -910,8 +660,6 @@
             <span class="font-mono text-warp-500/30 text-xs tracking-widest hidden md:block">STATUS: OPERATIONAL</span>
             <div class="flex flex-col md:flex-row gap-3 md:gap-8 text-sm text-slate-400 items-center md:items-start">
                 <a href="website-development.html" class="hover:text-slate-100 transition">Web Dev</a>
-                <a href="tutoring.html" class="hover:text-slate-100 transition">Tutoring</a>
-                <a href="romulus-beats.html" class="hover:text-slate-100 transition">Romulus Beats</a>
                 <a href="reviews.html" class="hover:text-slate-100 transition">Reviews</a>
                 <a href="contact.html" class="hover:text-slate-100 transition">Contact</a>
             </div>
@@ -971,7 +719,7 @@
 
             const stars  = r => '★'.repeat(r) + '☆'.repeat(5 - r);
             const esc    = s => { const d = document.createElement('div'); d.textContent = s; return d.innerHTML; };
-            const labels = { website: 'Web Dev', tutoring: 'Tutoring', beats: 'Beats', other: 'Other' };
+            const labels = { website: 'Web Dev', other: 'Other' };
 
             function renderCard(r) {
                 return `<div class="relative p-6 rounded-2xl bg-slate-800/60 border border-warp-500/20 text-left overflow-hidden">
@@ -1059,30 +807,30 @@
     document.querySelectorAll('.scroll-reveal').forEach(el => observer.observe(el));
     </script>
 
-    <!-- ── DECK MANIFEST: BUBBLES + HUD SWEEP ── -->
+    <!-- ── DECK MANIFEST: STAR FIELD + HUD SWEEP ── -->
     <script>
-    // Bubble field
+    // Star field
     (function() {
-        const field = document.getElementById('bubble-field');
+        const field = document.getElementById('star-field');
         if (!field) return;
-        for (let i = 0; i < 32; i++) {
-            const b   = document.createElement('div');
-            const sz  = (Math.random() * 10 + 3).toFixed(1);
-            const dur = (Math.random() * 12 + 8).toFixed(1);
-            const del = (Math.random() * 20).toFixed(1);
-            const opB = (0.08 + Math.random() * 0.22).toFixed(2);
-            const opF = (0.015 + Math.random() * 0.04).toFixed(3);
-            b.style.cssText = [
+        const colors = ['255,255,255','180,210,255','200,220,255','220,230,255','180,200,255','210,200,255'];
+        for (let i = 0; i < 140; i++) {
+            const s   = document.createElement('div');
+            const sz  = (Math.random() * 2.2 + 0.5).toFixed(1);
+            const dur = (Math.random() * 5 + 2).toFixed(1);
+            const del = (Math.random() * 9).toFixed(1);
+            const op  = (0.30 + Math.random() * 0.70).toFixed(2);
+            const col = colors[Math.floor(Math.random() * colors.length)];
+            s.style.cssText = [
                 'position:absolute',
-                'left:'   + (Math.random() * 96).toFixed(1) + '%',
-                'bottom:' + (Math.random() * 28).toFixed(1) + '%',
+                'left:' + (Math.random() * 99).toFixed(1) + '%',
+                'top:'  + (Math.random() * 92).toFixed(1) + '%',
                 'width:'  + sz + 'px', 'height:' + sz + 'px',
                 'border-radius:50%',
-                'border:1px solid rgba(0,163,255,' + opB + ')',
-                'background:rgba(0,163,255,' + opF + ')',
-                'animation:bubble-rise ' + dur + 's ease-in ' + del + 's infinite',
+                'background:rgba(' + col + ',' + op + ')',
+                'animation:star-twinkle ' + dur + 's ease-in-out ' + del + 's infinite',
             ].join(';');
-            field.appendChild(b);
+            field.appendChild(s);
         }
     })();
 
@@ -1145,11 +893,12 @@
         }, { threshold: 0.12 });
         panels.forEach(p => obs.observe(p));
     })();
+    </script>
 
     <!-- ── NAUTICAL DATE ── -->
     <script>
     (function() {
-        // Julian Day Number used in naval / maritime logs
+        // Stardate (Julian Day Number)
         const now = new Date();
         const a   = Math.floor((14 - (now.getUTCMonth()+1)) / 12);
         const y   = now.getUTCFullYear() + 4800 - a;
@@ -1160,102 +909,11 @@
             - Math.floor(y/100) + Math.floor(y/400)
             - 32045;
         const el = document.getElementById('nautical-date');
-        if (el) el.textContent = '// NEPTUNE // CREATIVE VESSEL // JDN ' + jdn + ' //';
+        if (el) el.textContent = '// NEPTUNE // WEB DEVELOPMENT VESSEL // STC ' + jdn + ' //';
     })();
     </script>
 
-    <!-- ── ANIMATED WAVE ── -->
-    <script>
-    (function() {
-        const w1 = document.getElementById('wave1');
-        const w2 = document.getElementById('wave2');
-        if (!w1 || !w2) return;
-        let t = 0;
-        function tick() {
-            t += 0.008;
-            const A1 = 28, A2 = 18;
-            // wave 1
-            const p1 = `M0,${30+A1*Math.sin(t)} C240,${4+A1*Math.sin(t+1)} 480,${58+A1*Math.sin(t+2)} 720,${30+A1*Math.sin(t+3)} C960,${4+A1*Math.sin(t+4)} 1200,${58+A1*Math.sin(t+5)} 1440,${30+A1*Math.sin(t+6)} L1440,80 L0,80 Z`;
-            w1.setAttribute('d', p1);
-            // wave 2
-            const p2 = `M0,${40+A2*Math.sin(-t+0.5)} C180,${62+A2*Math.sin(-t+1.5)} 420,${14+A2*Math.sin(-t+2.5)} 720,${42+A2*Math.sin(-t+3.5)} C1020,${70+A2*Math.sin(-t+4.5)} 1260,${18+A2*Math.sin(-t+5.5)} 1440,${40+A2*Math.sin(-t+6.5)} L1440,80 L0,80 Z`;
-            w2.setAttribute('d', p2);
-            requestAnimationFrame(tick);
-        }
-        tick();
-    })();
-    </script>
 
-    <!-- ── FISH + BIOLUMINESCENCE ── -->
-    <script>
-    (function() {
-        // Fish SVG paths (3 silhouette variants)
-        const fishPaths = [
-            // Slender fish
-            '<svg viewBox="0 0 60 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M58,10 C50,3 38,1 20,10 C38,19 50,17 58,10 Z" fill="currentColor" opacity="0.5"/><path d="M4,10 L14,4 L14,16 Z" fill="currentColor" opacity="0.4"/></svg>',
-            // Rounder fish
-            '<svg viewBox="0 0 52 22" fill="none" xmlns="http://www.w3.org/2000/svg"><ellipse cx="28" cy="11" rx="20" ry="9" fill="currentColor" opacity="0.45"/><path d="M6,11 L16,3 L16,19 Z" fill="currentColor" opacity="0.4"/><circle cx="42" cy="9" r="1.2" fill="rgba(255,255,255,0.5)"/></svg>',
-            // Long narrow
-            '<svg viewBox="0 0 72 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M70,7 C58,2 40,1 18,7 C40,13 58,12 70,7 Z" fill="currentColor" opacity="0.45"/><path d="M2,7 L12,2 L12,12 Z" fill="currentColor" opacity="0.35"/></svg>',
-        ];
-        const fishColors = ['#38bdf8','#7dd3fc','#00A3FF','#c084fc','#34d399'];
-        const fishLayer  = document.getElementById('fish-layer');
-        const bioLayer   = document.getElementById('bio-layer');
-
-        function spawnFish() {
-            if (!fishLayer) return;
-            const goRight  = Math.random() > 0.45;
-            const depth    = 15 + Math.random() * 65; // % from top of section
-            const scale    = 0.55 + Math.random() * 0.85;
-            const duration = 22 + Math.random() * 32; // seconds
-            const delay    = Math.random() * 18;
-            const color    = fishColors[Math.floor(Math.random() * fishColors.length)];
-            const svg      = fishPaths[Math.floor(Math.random() * fishPaths.length)];
-            const el       = document.createElement('div');
-            el.className   = 'fish';
-            el.style.cssText = [
-                'top:'    + depth + '%',
-                'left:0', 'width:72px',
-                'color:'  + color,
-                'transform-origin:center center',
-                'animation:' + (goRight ? 'fish-swim-r' : 'fish-swim-l') + ' ' + duration + 's linear ' + delay + 's infinite',
-            ].join(';');
-            el.innerHTML = svg;
-            fishLayer.appendChild(el);
-        }
-
-        // Spawn 8 fish
-        for (let i = 0; i < 8; i++) spawnFish();
-
-        // Bioluminescent orbs
-        const bioColors = [
-            'rgba(0,163,255,__)',
-            'rgba(56,189,248,__)',
-            'rgba(168,85,247,__)',
-            'rgba(52,211,153,__)',
-        ];
-        if (bioLayer) {
-            for (let i = 0; i < 22; i++) {
-                const orb  = document.createElement('div');
-                const sz   = (3 + Math.random() * 9).toFixed(1);
-                const dur  = (14 + Math.random() * 20).toFixed(1);
-                const del  = (Math.random() * 25).toFixed(1);
-                const op   = (0.4 + Math.random() * 0.5).toFixed(2);
-                const col  = bioColors[Math.floor(Math.random() * bioColors.length)].replace('__', op);
-                orb.className = 'bio-orb';
-                orb.style.cssText = [
-                    'left:'   + (Math.random() * 94).toFixed(1) + '%',
-                    'top:'    + (20 + Math.random() * 70).toFixed(1) + '%',
-                    'width:'  + sz + 'px', 'height:' + sz + 'px',
-                    'background:' + col,
-                    'box-shadow:0 0 ' + (parseInt(sz)*3) + 'px ' + col,
-                    'animation:bio-drift ' + dur + 's ease-in-out ' + del + 's infinite',
-                ].join(';');
-                bioLayer.appendChild(orb);
-            }
-        }
-    })();
-    </script>
 
 </body>
 </html>

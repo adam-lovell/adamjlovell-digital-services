@@ -1,8 +1,6 @@
 // Reviews: load from reviews.json, submit via Formspree
 const serviceLabels = {
     website: 'Website Development',
-    tutoring: 'Math & Science Tutoring',
-    beats: 'Romulus Beats',
     other: 'Other',
 };
 
